@@ -1,0 +1,51 @@
+---
+import { siteConfig } from "../config/site";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/" aria-label="Xychen home">xychen<span>.</span></a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {siteConfig.navigation.map((item) => (
+        <a
+          href={item.href}
+          aria-current={currentPath === item.href ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-label="Switch color theme"
+        aria-pressed="false"
+      >
+        <span data-theme-icon aria-hidden="true">☼</span>
+        <span class="sr-only" data-theme-label>Switch to light theme</span>
+      </button>
+
+      <details class="mobile-menu">
+        <summary aria-label="Open navigation menu">
+          <span aria-hidden="true">☰</span>
+        </summary>
+        <nav aria-label="Mobile navigation">
+          {siteConfig.navigation.map((item) => (
+            <a
+              href={item.href}
+              aria-current={currentPath === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
