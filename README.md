@@ -35,18 +35,14 @@ npm run preview
 ```text
 src/
   components/   Shared interface components
-  config/       Site-wide configuration
-  layouts/      Shared page layouts and metadata
-  pages/        File-based routes
+  config/       Site-wide and content-category configuration
   content/      Markdown articles and source metadata
-  components/   Shared interface components
-  config/       Site-wide configuration and content categories
   layouts/      Shared page layouts and metadata
   pages/        File-based routes
   scripts/      Small browser-side interactions
   styles/       Global design system
 public/         Static public assets
-.github/       Pull-request automation
+.github/        Pull-request automation
 ```
 
 ## Content integrity
@@ -54,7 +50,7 @@ public/         Static public assets
 - External information should identify its source.
 - Time-sensitive information should include relevant dates.
 - Rumors, leaks, and unverified claims must be labeled as unconfirmed.
-- Placeholder sections must not be presented as published or verified content.
+- Drafts and placeholder sections must not be presented as published or verified content.
 
 ## Writing and publishing articles
 
@@ -63,7 +59,7 @@ public/         Static public assets
 - Set `publicationStatus` to `published` only when the article is ready for the public site; drafts are excluded from generated pages.
 - Use `verificationStatus: editorial` for original commentary that does not present external claims as verified facts.
 - Use `verificationStatus: verified` for sourced information and include one or more sources with a name, URL, source type, and date checked.
-- Use `verificationStatus: unconfirmed` for rumors or unverified claims. These entries require source metadata and are visibly labelled as unconfirmed on the article page and cards.
+- Use `verificationStatus: unconfirmed` for rumors or unverified claims. These entries require source metadata and are visibly labelled as unconfirmed on article pages and cards.
 - Published articles automatically appear in the content library, category pages, and their own static article page.
 
 ## Deployment
