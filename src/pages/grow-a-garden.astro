@@ -5,21 +5,59 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 <BaseLayout
   title="Grow a Garden"
   description="The Xychen section for Roblox Grow a Garden guides, tips, game information, and updates."
+  sectionTheme="garden"
 >
-  <section class="page-hero">
+  <section class="page-hero garden-page-hero">
     <div class="container">
-      <p class="eyebrow">Roblox · Game coverage</p>
+      <p class="eyebrow"><span class="status-dot"></span> Roblox game hub</p>
       <h1>Grow a <span>Garden.</span></h1>
-      <p class="page-lead">A dedicated section for guides, useful details, discoveries, and game updates.</p>
+      <p class="page-lead">
+        A focused place for game guides, useful details, discoveries, and update coverage.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/content/category/guides/">Browse guides <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="/content/category/updates/">Game updates</a>
+      </div>
     </div>
   </section>
-  <section class="section-block">
-    <div class="container narrow-content prose">
-      <h2>What belongs here</h2>
-      <p>Game mechanics, beginner-friendly guides, tips, item and feature explanations, and update coverage can be organized here as the research and publishing workflow is added.</p>
-      <h2>Source and status labels</h2>
-      <p>Official announcements will be distinguished from community reports. Any leak, rumor, or unverified claim must carry a clear unconfirmed label, a date, and its source.</p>
-      <p class="notice">This section is a structural starting point. It does not yet contain a verified game database or published update feed.</p>
+
+  <section class="section-block garden-overview">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Explore the game</p>
+          <h2>What this section covers.</h2>
+        </div>
+        <p class="section-intro">
+          Game-specific information will be organized by topic, with dates and sources attached where they are relevant.
+        </p>
+      </div>
+
+      <div class="feature-grid garden-feature-grid">
+        <article class="feature-card">
+          <span class="card-index">01 / LEARN</span>
+          <h3>Guides & mechanics</h3>
+          <p>Step-by-step explanations for game systems and common tasks.</p>
+        </article>
+        <article class="feature-card">
+          <span class="card-index">02 / EXPLORE</span>
+          <h3>Items & discoveries</h3>
+          <p>Useful details, findings, and explanations gathered from reliable sources.</p>
+        </article>
+        <article class="feature-card">
+          <span class="card-index">03 / FOLLOW</span>
+          <h3>Updates & events</h3>
+          <p>Dated coverage that distinguishes official information from community reports.</p>
+        </article>
+      </div>
+
+      <div class="garden-status-panel" role="note">
+        <span class="garden-status-mark" aria-hidden="true">i</span>
+        <div>
+          <strong>Content is being prepared.</strong>
+          <p>This section does not yet contain a verified game database or a published update feed. No placeholder information is presented as confirmed game data.</p>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
