@@ -1,5 +1,15 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ContentCard from "@components/ContentCard.astro";
+
+const gardenArticles = (await getCollection("articles"))
+  .filter(
+    (article) =>
+      article.data.publicationStatus === "published" &&
+      article.data.game === "Grow a Garden",
+  )
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <BaseLayout
@@ -72,22 +82,16 @@ import BaseLayout from "@layouts/BaseLayout.astro";
           Game-specific articles are listed here after their information and sources have been reviewed.
         </p>
       </div>
-      <div class="content-grid">
-        <article class="content-card">
-          <a class="content-card-link" href="/content/getting-started-grow-a-garden/">
-            <div class="content-card-meta">
-              <span class="content-card-category">Guides & tutorials</span>
-              <time datetime="2026-11-17">November 17, 2026</time>
-            </div>
-            <h2>Getting Started in Grow a Garden</h2>
-            <p>A straightforward introduction to buying seeds, planting crops, harvesting, and understanding offline growth.</p>
-            <div class="content-card-footer">
-              <span class="content-verification content-verification--verified">Source checked</span>
-              <span class="content-card-read">Read guide <span aria-hidden="true">↗</span></span>
-            </div>
-          </a>
-        </article>
-      </div>
+{gardenArticles.length > 0 ? (
+        <div class="content-grid">
+          {gardenArticles.map((article) => <ContentCard article={article} />)}
+        </div>
+      ) : (
+        <div class="content-empty-state">
+          <h3>No published Grow a Garden articles yet.</h3>
+          <p>Reviewed game guides and information will appear here.</p>
+        </div>
+      )}
       <p class="garden-content-more"><a href="/content/">Browse the full content library ↗</a></p>
     </div>
   </section>
