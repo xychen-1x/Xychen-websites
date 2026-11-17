@@ -1,0 +1,12 @@
+---
+import { siteConfig } from "../config/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a class="wordmark footer-wordmark" href="/">{siteConfig.name}<span>.</span></a>
+    <p>Game coverage, guides, and discoveries.</p>
+    <small>© {year} Xychen. All rights reserved.</small>
+  </div>
+</footer>
