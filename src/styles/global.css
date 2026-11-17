@@ -640,6 +640,21 @@ img, svg { max-width: 100%; }
 }
 .garden-page-hero .hero-actions { margin-top: 30px; }
 .garden-overview { padding-top: 82px; }
+.garden-content-section {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+.garden-content-more {
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.garden-content-more a {
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+.garden-content-more a:hover { text-decoration: underline; }
 .garden-feature-grid .feature-card { min-height: 235px; }
 .garden-status-panel {
   display: flex;
