@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContentCard from "@components/ContentCard.astro";
+import { contentCategories } from "@config/content";
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection("articles");
+  const publishedArticles = allArticles.filter(
+    (article) => article.data.publicationStatus === "published",
+  );
+
+  return contentCategories.map((category) => ({
+    params: { category: category.slug },
+    props: {
+      category,
+      articles: publishedArticles.filter(
+        (article) => article.data.category === category.slug,
+      ),
+    },
+  }));
+}
+
+const { category, articles } = Astro.props as {
+  category: (typeof contentCategories)[number];
+  articles: CollectionEntry<"articles">[];
+};
+---
+
+<BaseLayout
+  title={category.label}
+  description={category.description}
+>
+  <section class="page-hero">
+    <div class="container">
+      <a class="article-back-link" href="/content/">← All content</a>
+      <p class="eyebrow">Content category</p>
+      <h1>{category.label}</h1>
+      <p class="page-lead">{category.description}</p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="container">
+      {articles.length > 0 ? (
+        <div class="content-grid">
+          {articles.map((article) => <ContentCard article={article} />)}
+        </div>
+      ) : (
+        <div class="content-empty-state">
+          <h2>No published articles in this category yet.</h2>
+          <p>Only reviewed and published content appears here.</p>
+          <a class="button button-secondary" href="/content/">Browse all content</a>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
