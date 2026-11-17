@@ -1,39 +1,97 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ContentCard from "@components/ContentCard.astro";
+import { contentCategories } from "@config/content";
 
-const categories = [
-  { number: "01", title: "Guides & tutorials", description: "Step-by-step help for game features, mechanics, and common tasks." },
-  { number: "02", title: "Tips & useful details", description: "Focused explanations and practical information you can quickly scan." },
-  { number: "03", title: "Discoveries", description: "Interesting mechanics, findings, and details worth documenting." },
-  { number: "04", title: "Game updates", description: "Changes and update coverage with dates and source references." },
-  { number: "05", title: "News & announcements", description: "Important developments, with official information distinguished from community reporting." },
-];
+const articles = (await getCollection("articles"))
+  .filter((article) => article.data.publicationStatus === "published")
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const categoryCounts = Object.fromEntries(
+  contentCategories.map((category) => [
+    category.slug,
+    articles.filter((article) => article.data.category === category.slug).length,
+  ]),
+) as Record<(typeof contentCategories)[number]["slug"], number>;
 ---
 
 <BaseLayout
   title="Content"
-  description="Browse the types of game guides, tips, discoveries, and updates planned for Xychen."
+  description="Browse published game guides, tips, discoveries, and updates from Xychen."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Content library</p>
       <h1>Information, <span>organized.</span></h1>
-      <p class="page-lead">Different kinds of content have different formats, so each one can be easier to read and use.</p>
+      <p class="page-lead">
+        Game guides, useful details, discoveries, and updates — grouped by topic
+        and published with clear dates and source information.
+      </p>
     </div>
   </section>
+
   <section class="section-block">
-    <div class="container category-list">
-      {categories.map((category) => (
-        <article class="category-row">
-          <span class="category-number">{category.number}</span>
-          <div>
-            <h2>{category.title}</h2>
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Browse by topic</p>
+          <h2>Content categories</h2>
+        </div>
+        <p class="section-intro">
+          Choose a category to see its published articles. Empty categories stay
+          available as the library grows.
+        </p>
+      </div>
+
+      <div class="content-category-grid">
+        {contentCategories.map((category, index) => (
+          <a
+            class="content-category-card"
+            href={`/content/category/${category.slug}/`}
+          >
+            <span class="content-category-index">
+              {String(index + 1).padStart(2, "0")} / CATEGORY
+            </span>
+            <h2>{category.label}</h2>
             <p>{category.description}</p>
-          </div>
-          <span class="category-status">Planned</span>
-        </article>
-      ))}
-      <p class="notice">The content library is being prepared. No sample articles are presented as published or verified content.</p>
+            <span class="content-category-count">
+              {categoryCounts[category.slug]} published
+              <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block content-latest-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The library</p>
+          <h2>Latest content</h2>
+        </div>
+        <p class="section-intro">
+          Only published articles appear here. Drafts remain out of the public
+          website.
+        </p>
+      </div>
+
+      {articles.length > 0 ? (
+        <div class="content-grid">
+          {articles.map((article) => <ContentCard article={article} />)}
+        </div>
+      ) : (
+        <div class="content-empty-state">
+          <p class="eyebrow">Library is being prepared</p>
+          <h2>No articles published yet.</h2>
+          <p>
+            This section will show guides, tips, discoveries, and game updates
+            after they have been researched and approved for publication.
+          </p>
+        </div>
+      )}
     </div>
   </section>
 </BaseLayout>
