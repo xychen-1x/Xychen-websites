@@ -35,13 +35,14 @@ npm run preview
 ```text
 src/
   components/   Shared interface components
-  config/       Site-wide configuration
+  config/       Site-wide and content-category configuration
+  content/      Markdown articles and source metadata
   layouts/      Shared page layouts and metadata
   pages/        File-based routes
   scripts/      Small browser-side interactions
   styles/       Global design system
 public/         Static public assets
-.github/       Pull-request automation
+.github/        Pull-request automation
 ```
 
 ## Content integrity
@@ -49,11 +50,21 @@ public/         Static public assets
 - External information should identify its source.
 - Time-sensitive information should include relevant dates.
 - Rumors, leaks, and unverified claims must be labeled as unconfirmed.
-- Placeholder sections must not be presented as published or verified content.
+- Drafts and placeholder sections must not be presented as published or verified content.
+
+## Writing and publishing articles
+
+- Add Markdown articles under `src/content/articles/`.
+- Every article must provide a title, description, publication date, and category.
+- Set `publicationStatus` to `published` only when the article is ready for the public site; drafts are excluded from generated pages.
+- Use `verificationStatus: editorial` for original commentary that does not present external claims as verified facts.
+- Use `verificationStatus: verified` for sourced information and include one or more sources with a name, URL, source type, and date checked.
+- Use `verificationStatus: unconfirmed` for rumors or unverified claims. These entries require source metadata and are visibly labelled as unconfirmed on article pages and cards.
+- Published articles automatically appear in the content library, category pages, and their own static article page.
 
 ## Deployment
 
-The project is configured for static output and can be imported into Vercel. Confirm the Vercel project settings and production domain before enabling production deployment.
+The project uses static output and is deployed on Vercel. Pull requests run the Astro type-check and production build before changes can be merged.
 
 ## Contribution workflow
 

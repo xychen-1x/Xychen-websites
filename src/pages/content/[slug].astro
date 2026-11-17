@@ -1,0 +1,87 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getContentCategoryLabel } from "@config/content";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+
+  return articles
+    .filter((article) => article.data.publicationStatus === "published")
+    .map((article) => ({
+      params: { slug: article.id },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props as {
+  article: CollectionEntry<"articles">;
+};
+const { Content } = await render(article);
+const categoryLabel = getContentCategoryLabel(article.data.category);
+const publishedDate = new Intl.DateTimeFormat("en-PH", {
+  dateStyle: "long",
+}).format(article.data.pubDate);
+const updatedDate = article.data.updatedDate
+  ? new Intl.DateTimeFormat("en-PH", { dateStyle: "long" }).format(
+      article.data.updatedDate,
+    )
+  : null;
+---
+
+<BaseLayout title={article.data.title} description={article.data.description}>
+  <section class="article-hero">
+    <div class="container narrow-content">
+      <a class="article-back-link" href="/content/">← All content</a>
+      <p class="eyebrow">{categoryLabel}</p>
+      <h1>{article.data.title}</h1>
+      <p class="article-description">{article.data.description}</p>
+      <div class="article-meta">
+        <span>{publishedDate}</span>
+        {updatedDate && <span>Updated {updatedDate}</span>}
+        {article.data.game && <span>{article.data.game}</span>}
+      </div>
+      {article.data.verificationStatus === "unconfirmed" && (
+        <p class="verification-notice" role="note">
+          UNCONFIRMED: This information has not been verified as an official fact.
+          Check the dated sources below for context.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="container narrow-content">
+      <article class="article-body">
+        <Content />
+      </article>
+
+      {article.data.sources.length > 0 && (
+        <section class="article-sources" aria-labelledby="article-sources-title">
+          <h2 id="article-sources-title">Sources & verification</h2>
+          <ul>
+            {article.data.sources.map((source) => (
+              <li>
+                <a href={source.url} target="_blank" rel="noopener noreferrer">
+                  {source.name} <span aria-hidden="true">↗</span>
+                </a>
+                <small>
+                  {source.kind === "official"
+                    ? "Official source"
+                    : source.kind === "publisher"
+                      ? "Publisher"
+                      : "Community source"}
+                  · Checked{" "}
+                  {new Intl.DateTimeFormat("en-PH", {
+                    dateStyle: "medium",
+                  }).format(source.checkedAt)}
+                </small>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </section>
+</BaseLayout>
