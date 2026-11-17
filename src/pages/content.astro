@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const categories = [
+  { number: "01", title: "Guides & tutorials", description: "Step-by-step help for game features, mechanics, and common tasks." },
+  { number: "02", title: "Tips & useful details", description: "Focused explanations and practical information you can quickly scan." },
+  { number: "03", title: "Discoveries", description: "Interesting mechanics, findings, and details worth documenting." },
+  { number: "04", title: "Game updates", description: "Changes and update coverage with dates and source references." },
+  { number: "05", title: "News & announcements", description: "Important developments, with official information distinguished from community reporting." },
+];
+---
+
+<BaseLayout
+  title="Content"
+  description="Browse the types of game guides, tips, discoveries, and updates planned for Xychen."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Content library</p>
+      <h1>Information, <span>organized.</span></h1>
+      <p class="page-lead">Different kinds of content have different formats, so each one can be easier to read and use.</p>
+    </div>
+  </section>
+  <section class="section-block">
+    <div class="container category-list">
+      {categories.map((category) => (
+        <article class="category-row">
+          <span class="category-number">{category.number}</span>
+          <div>
+            <h2>{category.title}</h2>
+            <p>{category.description}</p>
+          </div>
+          <span class="category-status">Planned</span>
+        </article>
+      ))}
+      <p class="notice">The content library is being prepared. No sample articles are presented as published or verified content.</p>
+    </div>
+  </section>
+</BaseLayout>
