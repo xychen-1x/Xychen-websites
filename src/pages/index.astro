@@ -7,18 +7,42 @@ import BaseLayout from "@layouts/BaseLayout.astro";
   description="Explore Roblox game coverage, practical guides, discoveries, and updates from Xychen."
 >
   <section class="hero-section">
-    <div class="container hero-content">
-      <p class="eyebrow"><span class="status-dot"></span> Independent creator website</p>
-      <h1>Explore games.<br /><span>Understand more.</span></h1>
-      <p class="hero-description">
-        Guides, useful details, game discoveries, and updates — organized in one place.
-      </p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="/content/">Explore content <span aria-hidden="true">↗</span></a>
-        <a class="button button-secondary" href="/about/">About Xychen</a>
+    <div class="container hero-layout">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="status-dot"></span> Independent creator website</p>
+        <h1>Explore games.<br /><span>Understand more.</span></h1>
+        <p class="hero-description">
+          Guides, useful details, game discoveries, and updates — organized in one place.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/content/">Explore content <span aria-hidden="true">↗</span></a>
+          <a class="button button-secondary" href="/about/">About Xychen</a>
+        </div>
       </div>
+
+      <aside class="hero-side-panel" aria-label="What you can explore">
+        <p class="panel-kicker">Inside Xychen</p>
+        <h2>Find a useful place to start.</h2>
+        <ul class="hero-topic-list">
+          <li>
+            <span class="topic-index">01</span>
+            <span><strong>Guides & tutorials</strong><small>Understand game features step by step.</small></span>
+            <span class="topic-arrow" aria-hidden="true">↗</span>
+          </li>
+          <li>
+            <span class="topic-index">02</span>
+            <span><strong>Tips & discoveries</strong><small>Explore details worth knowing.</small></span>
+            <span class="topic-arrow" aria-hidden="true">↗</span>
+          </li>
+          <li>
+            <span class="topic-index">03</span>
+            <span><strong>Games & updates</strong><small>Keep up with selected game coverage.</small></span>
+            <span class="topic-arrow" aria-hidden="true">↗</span>
+          </li>
+        </ul>
+        <p class="panel-footnote">Clear sources. Dates where they matter. Unconfirmed claims labelled.</p>
+      </aside>
     </div>
-    <div class="hero-mark" aria-hidden="true">X</div>
   </section>
 
   <section class="section-block">
@@ -38,7 +62,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
           <p>How-tos, tips, explainers, and researched game information.</p>
           <span class="card-arrow" aria-hidden="true">↗</span>
         </a>
-        <a class="feature-card" href="/grow-a-garden/">
+        <a class="feature-card feature-card--garden" href="/grow-a-garden/">
           <span class="card-index">02 / ROBLOX</span>
           <h3>Grow a Garden</h3>
           <p>A dedicated place for game details, guides, and update coverage.</p>
