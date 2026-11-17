@@ -6,15 +6,18 @@ import "@styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  sectionTheme?: "default" | "garden";
 }
 
 const {
   title = "Xychen",
   description = "Roblox game coverage, practical guides, discoveries, and updates from Xychen.",
+  sectionTheme = "default",
 } = Astro.props;
 
 const pageTitle = title === "Xychen" ? title : `${title} | Xychen`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const isGardenSection = sectionTheme === "garden";
 ---
 
 <!doctype html>
@@ -22,7 +25,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101114" />
+    <meta name="theme-color" content={isGardenSection ? "#10180c" : "#0b1020"} />
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
@@ -35,7 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     <meta property="og:url" content={canonicalURL} />
     <meta name="twitter:card" content="summary" />
   </head>
-  <body>
+  <body class:list={["site-shell", isGardenSection && "site-shell--garden"]}>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
     <main id="main-content">
