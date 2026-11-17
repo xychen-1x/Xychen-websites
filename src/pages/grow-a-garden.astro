@@ -55,9 +55,40 @@ import BaseLayout from "@layouts/BaseLayout.astro";
         <span class="garden-status-mark" aria-hidden="true">i</span>
         <div>
           <strong>Content is being prepared.</strong>
-          <p>This section does not yet contain a verified game database or a published update feed. No placeholder information is presented as confirmed game data.</p>
+          <p>Published guides and game information are shown below. Update coverage and larger reference sections will be added as their sources are checked.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section-block garden-content-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Published guides</p>
+          <h2>Learn the basics.</h2>
+        </div>
+        <p class="section-intro">
+          Game-specific articles are listed here after their information and sources have been reviewed.
+        </p>
+      </div>
+      <div class="content-grid">
+        <article class="content-card">
+          <a class="content-card-link" href="/content/getting-started-grow-a-garden/">
+            <div class="content-card-meta">
+              <span class="content-card-category">Guides & tutorials</span>
+              <time datetime="2026-11-17">November 17, 2026</time>
+            </div>
+            <h2>Getting Started in Grow a Garden</h2>
+            <p>A straightforward introduction to buying seeds, planting crops, harvesting, and understanding offline growth.</p>
+            <div class="content-card-footer">
+              <span class="content-verification content-verification--verified">Source checked</span>
+              <span class="content-card-read">Read guide <span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </article>
+      </div>
+      <p class="garden-content-more"><a href="/content/">Browse the full content library ↗</a></p>
     </div>
   </section>
 </BaseLayout>
