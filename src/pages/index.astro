@@ -136,15 +136,13 @@ const verificationLabel = latestArticle
       <div>
         <p class="eyebrow">Community</p>
         <h2 id="home-community-title">Continue the conversation.</h2>
-        <p>Xychen Community is the Discord space connected to this website.</p>
+        <a class="home-community-discord" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer">
+          <span class="home-community-discord-mark" aria-hidden="true">◉</span>
+          <span>Join Xychen Community on Discord</span>
+        </a>
       </div>
-      <a
-        class="button button-secondary"
-        href="https://discord.com/invite/xychen-server-1417846380432719915"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Visit Xychen Community <span aria-hidden="true">↗</span>
+      <a class="home-community-marquee" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer" aria-label="Continue the conversation in Xychen Community on Discord">
+        <span aria-hidden="true">CONTINUE THE CONVERSATION ✳ JOIN XYCHEN COMMUNITY ✳ CONTINUE THE CONVERSATION ✳ JOIN XYCHEN COMMUNITY ✳</span>
       </a>
     </div>
   </section>
@@ -387,17 +385,61 @@ const verificationLabel = latestArticle
   }
 
   .home-community {
-    padding-block: 64px;
+    overflow: hidden;
+    padding-block: 64px 54px;
     border-top: 1px solid var(--line);
     background: var(--surface);
   }
 
   .home-community-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
     gap: 32px;
   }
+
+  .home-community-discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  .home-community-discord-mark {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 1.25rem;
+  }
+
+  .home-community-marquee {
+    display: block;
+    overflow: hidden;
+    padding-block: 20px;
+    border-block: 1px solid var(--line);
+    color: var(--text);
+    font-size: clamp(1.5rem, 4.5vw, 3.8rem);
+    font-weight: 850;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+  }
+
+  .home-community-marquee span {
+    display: block;
+    width: max-content;
+    animation: community-marquee 26s linear infinite;
+  }
+
+  @keyframes community-marquee {
+    to { transform: translateX(-25%); }
+  }
+
+  .home-community-marquee:hover span { animation-play-state: paused; }
 
   .home-community h2 {
     font-size: clamp(1.8rem, 3.5vw, 2.7rem);
@@ -489,7 +531,9 @@ const verificationLabel = latestArticle
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .home-explore-row {
+    .home-explore-row,
+    .home-community-marquee span {
+      animation: none;
       transition: none;
     }
   }
