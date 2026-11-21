@@ -24,34 +24,38 @@ const verificationLabel = latestArticle
 
 <BaseLayout
   title="Xychen"
-  description="Game guides, useful details, and discoveries from Xychen — starting with Roblox and growing beyond it."
+  description="Games, guides, and discoveries from Xychen — starting with Roblox and growing beyond it."
 >
-  <section class="home-hero">
+  <section class="home-hero" aria-labelledby="home-title">
     <div class="container home-hero-layout">
       <div class="home-hero-copy">
         <p class="eyebrow">The website of Xychen</p>
-        <h1>Games I play.<br /><span>Things I share.</span></h1>
+        <h1 id="home-title">Games I play.<br /><span>Things I share.</span></h1>
         <p class="home-hero-description">
           Guides, discoveries, and useful details from Roblox and other games —
           collected in one place.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="/content/">Browse content <span aria-hidden="true">↗</span></a>
+          <a class="button button-primary" href="/content/">
+            Browse content <span aria-hidden="true">↗</span>
+          </a>
           <a class="button button-secondary" href="/about/">About Xychen</a>
         </div>
       </div>
 
       <figure class="home-hero-visual">
-        <img
-          src={assets.heroArtwork}
-          alt=""
-          width="720"
-          height="560"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-        <figcaption>ROBLOX · GUIDES · DISCOVERIES</figcaption>
+        <div class="home-hero-art">
+          <img
+            src={assets.heroArtwork}
+            alt=""
+            width="720"
+            height="560"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <figcaption>ROBLOX <span aria-hidden="true">·</span> GUIDES <span aria-hidden="true">·</span> DISCOVERIES</figcaption>
       </figure>
     </div>
   </section>
@@ -100,7 +104,9 @@ const verificationLabel = latestArticle
           <p class="eyebrow">From the library</p>
           <h2 id="home-latest-title">Latest content</h2>
         </div>
-        <a class="home-text-link" href="/content/">View all content <span aria-hidden="true">↗</span></a>
+        <a class="home-text-link" href="/content/">
+          View all content <span aria-hidden="true">↗</span>
+        </a>
       </div>
 
       {latestArticle ? (
@@ -154,24 +160,25 @@ const verificationLabel = latestArticle
   .home-hero-layout {
     min-height: 570px;
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
     align-items: center;
-    gap: clamp(28px, 6vw, 88px);
-    padding-block: clamp(72px, 9vw, 112px);
+    gap: clamp(36px, 6vw, 88px);
+    padding-block: clamp(76px, 9vw, 112px);
   }
 
   .home-hero-copy {
     min-width: 0;
+    max-width: 700px;
   }
 
   .home-hero-copy h1 {
     max-width: 760px;
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(3.3rem, 7.2vw, 6.3rem);
+    font-size: clamp(3.45rem, 7.3vw, 6.5rem);
     font-weight: 500;
-    line-height: 0.99;
-    letter-spacing: -0.075em;
+    line-height: 0.96;
+    letter-spacing: -0.07em;
   }
 
   .home-hero-copy h1 span {
@@ -180,7 +187,7 @@ const verificationLabel = latestArticle
 
   .home-hero-description {
     max-width: 520px;
-    margin: 26px 0 0;
+    margin: 27px 0 0;
     color: var(--muted);
     font-size: clamp(1.02rem, 1.8vw, 1.16rem);
     line-height: 1.75;
@@ -188,9 +195,16 @@ const verificationLabel = latestArticle
 
   .home-hero-visual {
     width: 100%;
-    max-width: 470px;
+    max-width: 480px;
     justify-self: end;
     margin: 0;
+  }
+
+  .home-hero-art {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+    background: var(--surface);
   }
 
   .home-hero-visual img {
@@ -201,10 +215,10 @@ const verificationLabel = latestArticle
   }
 
   .home-hero-visual figcaption {
-    margin-top: 12px;
+    margin-top: 13px;
     color: var(--muted);
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     letter-spacing: 0.12em;
     text-align: center;
   }
@@ -240,7 +254,7 @@ const verificationLabel = latestArticle
     grid-template-columns: 42px minmax(0, 1fr) 24px;
     align-items: center;
     gap: 16px;
-    min-height: 94px;
+    min-height: 96px;
     padding: 17px 4px;
     border-bottom: 1px solid var(--line);
     transition: color 150ms ease, padding 150ms ease;
@@ -344,6 +358,10 @@ const verificationLabel = latestArticle
     margin-top: 18px;
   }
 
+  .home-latest-main > div {
+    min-width: 0;
+  }
+
   .home-latest-main h3 {
     margin: 0;
     font-size: clamp(1.35rem, 2.5vw, 1.9rem);
@@ -372,6 +390,7 @@ const verificationLabel = latestArticle
   .home-community {
     padding-block: 64px;
     border-top: 1px solid var(--line);
+    background: var(--surface);
   }
 
   .home-community-inner {
@@ -390,6 +409,22 @@ const verificationLabel = latestArticle
     color: var(--muted);
   }
 
+  @media (max-width: 900px) {
+    .home-hero-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);
+      gap: 34px;
+    }
+
+    .home-hero-copy h1 {
+      font-size: clamp(3.2rem, 7vw, 5rem);
+    }
+
+    .home-explore-layout {
+      grid-template-columns: minmax(190px, 0.7fr) minmax(0, 1.3fr);
+      gap: 42px;
+    }
+  }
+
   @media (max-width: 760px) {
     .home-hero-layout {
       min-height: 0;
@@ -403,7 +438,7 @@ const verificationLabel = latestArticle
     }
 
     .home-hero-visual {
-      max-width: 390px;
+      max-width: 430px;
       justify-self: center;
     }
 
@@ -451,6 +486,12 @@ const verificationLabel = latestArticle
 
     .home-community {
       padding-block: 52px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-explore-row {
+      transition: none;
     }
   }
 </style>
