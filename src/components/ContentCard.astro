@@ -17,26 +17,44 @@ const verificationLabel = {
   unconfirmed: "Unconfirmed",
   editorial: "Original",
 }[article.data.verificationStatus];
+
+const categoryIndex = {
+  guides: "01",
+  tips: "02",
+  discoveries: "03",
+  updates: "04",
+  announcements: "05",
+}[article.data.category] ?? "00";
 ---
 
 <article class="content-card">
   <a class="content-card-link" href={`/content/${article.id}/`}>
-    <div class="content-card-meta">
-      <span class="content-card-category">{categoryLabel}</span>
-      <time datetime={article.data.pubDate.toISOString()}>{publishedDate}</time>
+    <div
+      class:list={["content-card-visual", `content-card-visual--${article.data.category}`]}
+      aria-hidden="true"
+    >
+      <span class="content-card-visual-index">{categoryIndex} / XYCHEN CONTENT</span>
+      <span class="content-card-visual-title">{categoryLabel}</span>
+      <span class="content-card-visual-mark"></span>
     </div>
-    <h2>{article.data.title}</h2>
-    <p>{article.data.description}</p>
-    <div class="content-card-footer">
-      <span
-        class:list={[
-          "content-verification",
-          `content-verification--${article.data.verificationStatus}`,
-        ]}
-      >
-        {verificationLabel}
-      </span>
-      <span class="content-card-read">Read article <span aria-hidden="true">↗</span></span>
+    <div class="content-card-copy">
+      <div class="content-card-meta">
+        <span class="content-card-category">{categoryLabel}</span>
+        <time datetime={article.data.pubDate.toISOString()}>{publishedDate}</time>
+      </div>
+      <h2>{article.data.title}</h2>
+      <p>{article.data.description}</p>
+      <div class="content-card-footer">
+        <span
+          class:list={[
+            "content-verification",
+            `content-verification--${article.data.verificationStatus}`,
+          ]}
+        >
+          {verificationLabel}
+        </span>
+        <span class="content-card-read">Read article <span aria-hidden="true">↗</span></span>
+      </div>
     </div>
   </a>
 </article>
