@@ -16,5 +16,6 @@ export const siteConfig = {
     { label: "Facebook", href: "https://www.facebook.com/share/r/1J6D51VMqP/" },
     { label: "X", href: "https://x.com/Xychen1nx" },
     { label: "GitHub", href: "https://github.com/xychen-1x" },
+    { label: "Discord", href: "https://discord.com/invite/xychen-server-1417846380432719915" },
   ],
 } as const;
