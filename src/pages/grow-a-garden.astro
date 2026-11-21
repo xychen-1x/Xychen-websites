@@ -1,5 +1,15 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ContentCard from "@components/ContentCard.astro";
+
+const gardenArticles = (await getCollection("articles"))
+  .filter(
+    (article) =>
+      article.data.publicationStatus === "published" &&
+      article.data.game === "Grow a Garden",
+  )
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <BaseLayout
@@ -54,10 +64,35 @@ import BaseLayout from "@layouts/BaseLayout.astro";
       <div class="garden-status-panel" role="note">
         <span class="garden-status-mark" aria-hidden="true">i</span>
         <div>
-          <strong>Content is being prepared.</strong>
-          <p>This section does not yet contain a verified game database or a published update feed. No placeholder information is presented as confirmed game data.</p>
+          <strong>The Grow a Garden library is starting with a sourced beginner guide.</strong>
+          <p>The guide below is based on the official game listing. More detailed mechanics, item references, and update coverage will be added only after their sources are checked.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section-block garden-content-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Published guides</p>
+          <h2>Learn the basics.</h2>
+        </div>
+        <p class="section-intro">
+          Game-specific articles are listed here after their information and sources have been reviewed.
+        </p>
+      </div>
+{gardenArticles.length > 0 ? (
+        <div class="content-grid">
+          {gardenArticles.map((article) => <ContentCard article={article} />)}
+        </div>
+      ) : (
+        <div class="content-empty-state">
+          <h3>No published Grow a Garden articles yet.</h3>
+          <p>Reviewed game guides and information will appear here.</p>
+        </div>
+      )}
+      <p class="garden-content-more"><a href="/content/">Browse the full content library ↗</a></p>
     </div>
   </section>
 </BaseLayout>
