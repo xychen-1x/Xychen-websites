@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">XYCHEN Dream Portal mark</title>
+  <rect width="64" height="64" rx="18" fill="#EAF0DF"/>
   <path d="M12 56V29a20 20 0 0 1 40 0v27h-7V29a13 13 0 0 0-26 0v27Z" fill="#263B2A"/>
   <circle cx="32" cy="14" r="7" fill="#B8DC72"/>
   <path d="M24 56V36a8 8 0 0 1 16 0v20" fill="none" stroke="#B8DC72" stroke-width="3" stroke-linecap="round"/>
