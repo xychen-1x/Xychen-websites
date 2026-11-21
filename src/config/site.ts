@@ -1,12 +1,11 @@
 export const siteConfig = {
-  name: "Xychen",
+  name: "XYCHEN",
   description:
-    "A creator-led website for Roblox content, game guides, discoveries, and updates.",
+    "A community creator platform for gaming content, Discord community, and creative projects.",
   navigation: [
     { label: "Home", href: "/" },
-    { label: "About", href: "/about/" },
-    { label: "Content", href: "/content/" },
-    { label: "Grow a Garden", href: "/grow-a-garden/" },
-    { label: "Links", href: "/links/" },
+    { label: "Gaming", href: "/content/" },
+    { label: "Community", href: "/#community" },
+    { label: "Creator", href: "/about/" },
   ],
 } as const;
