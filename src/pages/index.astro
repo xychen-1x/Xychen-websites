@@ -5,7 +5,7 @@ import "@styles/home.css";
 
 const articles = (await getCollection("articles"))
   .filter((article) => article.data.publicationStatus === "published")
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
 
 const categoryLabels: Record<string, string> = {
@@ -25,75 +25,82 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
 
 <BaseLayout
   title="XYCHEN"
-  description="Gaming, community, and creator projects from Xychen — one place to explore, learn, and connect."
+  description="A welcoming place for gaming, community, and creator projects. Explore, discover, and connect with XYCHEN."
 >
-  <section class="xy-hero">
-    <div class="container xy-hero-inner">
-      <div class="xy-hero-copy">
-        <p class="xy-eyebrow"><span aria-hidden="true"></span> Gaming · Community · Creator</p>
-        <h1>A place to <em>play, connect,</em> and explore.</h1>
-        <p class="xy-hero-lead">
-          XYCHEN brings gaming content, community spaces, and creator projects together in one organized hub.
-        </p>
-        <div class="xy-hero-actions">
-          <a class="xy-button xy-button-primary" href="/content/">Explore gaming <span aria-hidden="true">↗</span></a>
-          <a class="xy-button xy-button-secondary" href="#community">Find the community</a>
-        </div>
-      </div>
-
-      <div class="xy-hero-art" aria-hidden="true">
-        <div class="xy-art-orbit xy-art-orbit-one"></div>
-        <div class="xy-art-orbit xy-art-orbit-two"></div>
-        <div class="xy-art-core"><span>Y</span></div>
-        <div class="xy-art-chip xy-art-chip-top">GAME / DISCOVER</div>
-        <div class="xy-art-chip xy-art-chip-bottom">COMMUNITY / CREATE</div>
-      </div>
+  <section class="xy-hero" aria-labelledby="xy-hero-title">
+    <div class="xy-hero-landscape" aria-hidden="true">
+      <span class="xy-sun"></span>
+      <span class="xy-hill xy-hill-back"></span>
+      <span class="xy-hill xy-hill-front"></span>
+      <span class="xy-cloud xy-cloud-one"></span>
+      <span class="xy-cloud xy-cloud-two"></span>
     </div>
-    <div class="xy-hero-bottom" aria-hidden="true"><span>01</span><span>Explore what’s inside</span><span>↓</span></div>
+
+    <div class="container xy-hero-inner">
+      <p class="xy-hero-eyebrow"><span></span> A place to play, connect, and explore</p>
+      <h1 id="xy-hero-title">XYCHEN</h1>
+      <p class="xy-hero-lead">
+        Gaming discoveries, a welcoming community, and creative projects — all gathered in one place.
+      </p>
+      <div class="xy-hero-actions">
+        <a class="xy-button xy-button-primary" href="/content/">Explore gaming <span aria-hidden="true">↗</span></a>
+        <a class="xy-button xy-button-secondary" href="#community">Meet the community</a>
+      </div>
+      <span class="xy-hero-caption" aria-hidden="true">YOUR LITTLE CORNER OF THE INTERNET</span>
+    </div>
   </section>
 
-  <section class="xy-pillars section-block" aria-labelledby="xy-pillars-title">
-    <div class="container">
-      <div class="xy-section-heading">
-        <div>
-          <p class="xy-eyebrow">The platform</p>
-          <h2 id="xy-pillars-title">Three parts. One place.</h2>
+  <section class="xy-pillar-section" aria-label="Explore XYCHEN">
+    <div class="container xy-pillar-grid">
+      <a class="xy-pillar-card xy-pillar-gaming" href="/content/">
+        <div class="xy-pillar-art xy-pillar-art-gaming" aria-hidden="true">
+          <span class="xy-art-sun"></span>
+          <span class="xy-art-island"></span>
+          <span class="xy-art-spark xy-spark-one"></span>
+          <span class="xy-art-spark xy-spark-two"></span>
+          <span class="xy-art-tag">PLAY & DISCOVER</span>
         </div>
-        <p>Each section has a clear purpose, from useful game information to the people and projects around it.</p>
-      </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">01 · Gaming</span>
+          <h2>Find your next discovery.</h2>
+          <p>Explore guides, tips, discoveries, and carefully sourced updates for games Xychen covers.</p>
+          <span class="xy-pillar-link">Explore gaming <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
 
-      <div class="xy-pillar-grid">
-        <article class="xy-pillar-card xy-pillar-gaming">
-          <div class="xy-pillar-visual xy-visual-gaming" aria-hidden="true">
-            <span class="xy-visual-label">01 / PLAY</span>
-            <div class="xy-game-shape xy-game-shape-one"></div>
-            <div class="xy-game-shape xy-game-shape-two"></div>
-            <div class="xy-game-shape xy-game-shape-three"></div>
-          </div>
-          <div class="xy-pillar-copy">
-            <p class="xy-card-kicker">Gaming</p>
-            <h3>Learn the game. Find something new.</h3>
-            <p>Guides, tips, discoveries, and carefully sourced updates for games Xychen covers — starting with Roblox and Grow a Garden.</p>
-            <a class="xy-text-link" href="/content/">Explore gaming <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
+      <a
+        class="xy-pillar-card xy-pillar-community"
+        id="community"
+        href="https://discord.com/invite/xychen-server-1417846380432719915"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="xy-pillar-art xy-pillar-art-community" aria-hidden="true">
+          <span class="xy-community-flower xy-flower-one"></span>
+          <span class="xy-community-flower xy-flower-two"></span>
+          <span class="xy-art-tag">MEET & CONNECT</span>
+        </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">02 · Community</span>
+          <h2>Good things grow together.</h2>
+          <p>Visit the Discord community to chat, connect, and keep up with the people around XYCHEN.</p>
+          <span class="xy-pillar-link">Visit the community <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
 
-        <article class="xy-pillar-card xy-pillar-community" id="community">
-          <div class="xy-pillar-visual xy-visual-community" aria-hidden="true">
-            <span class="xy-visual-label">02 / CONNECT</span>
-            <div class="xy-community-orb xy-community-orb-one"></div>
-            <div class="xy-community-orb xy-community-orb-two"></div>
-            <div class="xy-community-orb xy-community-orb-three"></div>
-            <div class="xy-community-center">✳</div>
-          </div>
-          <div class="xy-pillar-copy">
-            <p class="xy-card-kicker">Community</p>
-            <h3>Continue the conversation.</h3>
-            <p>The Discord server is the place for community interaction and conversation beyond the content published on this website.</p>
-            <a class="xy-text-link" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer">Visit Discord <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
-      </div>
+      <a class="xy-pillar-card xy-pillar-creator" href="/about/">
+        <div class="xy-pillar-art xy-pillar-art-creator" aria-hidden="true">
+          <span class="xy-creator-window"></span>
+          <span class="xy-creator-star">✳</span>
+          <span class="xy-art-tag">MAKE & SHARE</span>
+        </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">03 · Creator</span>
+          <h2>A little about the creator.</h2>
+          <p>Get to know Xychen, explore projects, and find the official social channels.</p>
+          <span class="xy-pillar-link">Meet Xychen <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -101,10 +108,10 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
     <div class="container">
       <div class="xy-section-heading">
         <div>
-          <p class="xy-eyebrow">Recently published</p>
-          <h2 id="xy-latest-title">Latest from XYCHEN.</h2>
+          <p class="xy-section-eyebrow">Fresh from the library</p>
+          <h2 id="xy-latest-title">Latest discoveries</h2>
         </div>
-        <a class="xy-text-link" href="/content/">All gaming content <span aria-hidden="true">↗</span></a>
+        <a class="xy-text-link" href="/content/">Browse all gaming content <span aria-hidden="true">↗</span></a>
       </div>
 
       {articles.length > 0 ? (
@@ -124,24 +131,22 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
         </div>
       ) : (
         <div class="xy-empty-state">
-          <h3>New gaming content is being prepared.</h3>
-          <p>Published guides and discoveries will appear here when they are ready.</p>
+          <h3>New discoveries are on the way.</h3>
+          <p>Published guides and gaming updates will appear here when they are ready.</p>
         </div>
       )}
     </div>
   </section>
 
-  <section class="xy-creator-section section-block" aria-labelledby="xy-creator-title">
-    <div class="container xy-creator-inner">
+  <section class="xy-creator-note section-block" aria-labelledby="xy-creator-note-title">
+    <div class="container xy-creator-note-inner">
+      <span class="xy-note-flower" aria-hidden="true">✳</span>
       <div>
-        <p class="xy-eyebrow">Behind XYCHEN</p>
-        <h2 id="xy-creator-title">Made and curated by Xychen.</h2>
-        <p>Learn more about the creator, explore current projects, and find official social links.</p>
+        <p class="xy-section-eyebrow">A little more about XYCHEN</p>
+        <h2 id="xy-creator-note-title">Built around curiosity and community.</h2>
+        <p>Start with a game, stay for the discoveries, and find the people and projects that make this place what it is.</p>
       </div>
-      <div class="xy-creator-actions">
-        <a class="xy-button xy-button-secondary" href="/about/">About Xychen</a>
-        <a class="xy-text-link" href="/links/">Social links <span aria-hidden="true">↗</span></a>
-      </div>
+      <a class="xy-button xy-button-secondary" href="/about/">About XYCHEN <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </BaseLayout>
