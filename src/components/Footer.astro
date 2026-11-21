@@ -1,11 +1,15 @@
 ---
 import { siteConfig } from "../config/site";
+import { assets } from "../config/assets";
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <a class="wordmark footer-wordmark" href="/">{siteConfig.name}<span>.</span></a>
+    <a class="wordmark footer-wordmark" href="/" aria-label="Xychen home">
+      <img class="wordmark-mark" src={assets.brandMark} alt="" width="30" height="30" />
+      <span class="wordmark-name">{siteConfig.name}</span>
+    </a>
     <p>Game content, guides, and discoveries.</p>
     <a
       href="https://discord.com/invite/xychen-server-1417846380432719915"

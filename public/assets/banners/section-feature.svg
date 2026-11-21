@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" fill="none">
+  <defs>
+    <linearGradient id="banner" x1="120" y1="32" x2="1080" y2="330" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8EADD2" stop-opacity=".22"/>
+      <stop offset=".55" stop-color="#8EADD2" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#526C89" stop-opacity=".16"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="#202630"/>
+  <path d="M0 0h1200v360H0z" fill="url(#banner)"/>
+  <path d="m720-74 290 74-74 290-290-74 74-290Z" stroke="#AFC5DF" stroke-opacity=".3" stroke-width="2"/>
+  <path d="m876-32 244 62-62 244-244-62 62-244Z" stroke="#AFC5DF" stroke-opacity=".18" stroke-width="2"/>
+  <path d="m1012 52 136 34-34 136-136-34 34-136Z" fill="#8EADD2" fill-opacity=".1"/>
+  <path d="M0 286c166-68 284-76 422-31 91 30 164 37 242 8" stroke="#AFC5DF" stroke-opacity=".24" stroke-width="2"/>
+  <circle cx="102" cy="80" r="3" fill="#AFC5DF" fill-opacity=".7"/>
+  <circle cx="150" cy="80" r="3" fill="#AFC5DF" fill-opacity=".4"/>
+  <circle cx="198" cy="80" r="3" fill="#AFC5DF" fill-opacity=".25"/>
+</svg>
