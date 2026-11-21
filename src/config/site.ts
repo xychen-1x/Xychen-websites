@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "XYCHEN",
   description:
-    "A community creator platform for gaming content, Discord community, and creative projects.",
+    "A cozy community creator platform for gaming, shared discoveries, and creative projects.",
   navigation: [
     { label: "Home", href: "/" },
     { label: "Gaming", href: "/content/" },
