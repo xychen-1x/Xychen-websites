@@ -39,31 +39,12 @@ const socialIcons = {
       <ul class="footer-social-grid">
         {siteConfig.socials.map((social) => (
           <li>
-            <a class="footer-social-link" href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Xychen on ${social.label}`}>
-              <span class="footer-social-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false" set:html={socialIcons[social.label as keyof typeof socialIcons]} />
-              </span>
-              <span class="footer-social-name">{social.label}</span>
+            <a class="footer-social-link" href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label === "Discord" ? "Xychen Community on Discord" : `Xychen on ${social.label}`}>
+              <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true" set:html={socialIcons[social.label as keyof typeof socialIcons]} />
             </a>
           </li>
         ))}
       </ul>
-    </section>
-
-    <section class="footer-column footer-community" aria-labelledby="footer-community-title">
-      <h2 class="footer-heading" id="footer-community-title">Community</h2>
-      <a
-        class="footer-social-link footer-discord-link"
-        href="https://discord.com/invite/xychen-server-1417846380432719915"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Join Xychen Community on Discord"
-      >
-        <span class="footer-social-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false" set:html={socialIcons.Discord} />
-        </span>
-        <span class="footer-social-name">Xychen Community</span>
-      </a>
     </section>
   </div>
 
@@ -81,9 +62,9 @@ const socialIcons = {
 
   .footer-main {
     display: grid;
-    grid-template-columns: minmax(160px, 0.9fr) minmax(120px, 0.65fr) minmax(390px, 1.8fr) minmax(120px, 0.65fr);
+    grid-template-columns: minmax(170px, 0.9fr) minmax(130px, 0.65fr) minmax(390px, 1.8fr);
     align-items: start;
-    gap: clamp(24px, 3.5vw, 48px);
+    gap: clamp(28px, 4vw, 58px);
     padding-block: 58px 64px;
   }
 
@@ -119,32 +100,28 @@ const socialIcons = {
   }
 
   .footer-link-list a:hover,
-  .footer-bottom a:hover {
-    color: var(--accent);
-  }
+  .footer-bottom a:hover { color: var(--accent); }
 
   .footer-social-grid {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(8px, 1.2vw, 16px);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+  .footer-social-grid li { min-width: 0; }
+
   .footer-social-link {
+    display: grid;
     width: 100%;
-    min-height: 76px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 7px;
-    padding: 6px 2px 8px;
+    min-height: 52px;
+    place-items: center;
     border-radius: 10px;
     color: var(--text);
-    text-align: center;
-    transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+    transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
   }
 
   .footer-social-link:hover {
@@ -153,28 +130,16 @@ const socialIcons = {
     transform: translateY(-2px);
   }
 
-  .footer-social-icon {
-    width: 30px;
-    height: 30px;
-    display: grid;
-    place-items: center;
-    color: currentColor;
-  }
-
-  .footer-social-icon svg {
+  .footer-social-link svg {
     display: block;
-    width: 25px;
-    height: 25px;
+    width: 26px;
+    height: 26px;
     fill: currentColor;
   }
 
-  .footer-social-name {
-    font-size: 0.78rem;
-    line-height: 1.3;
-  }
-
-  .footer-discord-link {
-    max-width: 90px;
+  .footer-social-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .footer-bottom {
@@ -192,88 +157,41 @@ const socialIcons = {
     font-size: 0.76rem;
   }
 
-  .footer-bottom a {
-    transition: color 150ms ease;
-  }
+  .footer-bottom a { transition: color 150ms ease; }
 
-  @media (max-width: 1050px) {
+  @media (max-width: 900px) {
     .footer-main {
-      grid-template-columns: minmax(170px, 1fr) minmax(130px, 0.7fr) minmax(230px, 1.2fr);
-      row-gap: 42px;
-    }
-
-    .footer-community {
-      grid-column: 3;
+      grid-template-columns: minmax(150px, 0.8fr) minmax(120px, 0.6fr) minmax(260px, 1.2fr);
+      gap: 28px;
     }
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 680px) {
     .footer-main {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 38px 28px;
+      grid-template-columns: 1fr 1fr;
+      gap: 38px 24px;
       padding-block: 48px 52px;
     }
 
-    .footer-brand {
-      grid-column: 1 / -1;
-    }
-
-    .footer-find {
-      grid-column: 1 / -1;
-    }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-find { grid-column: 1 / -1; }
 
     .footer-social-grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      max-width: 100%;
-      gap: 12px;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
     }
 
-    .footer-community {
-      grid-column: auto;
-    }
+    .footer-social-link { min-height: 48px; }
+    .footer-social-link svg { width: 23px; height: 23px; }
   }
 
-  @media (max-width: 480px) {
-    .footer-main {
-      grid-template-columns: 1fr 1fr;
-      gap: 34px 20px;
-    }
-
-    .footer-brand,
-    .footer-find {
-      grid-column: 1 / -1;
-    }
-
-    .footer-social-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      max-width: none;
-      gap: 18px 10px;
-    }
-
-    .footer-community {
-      grid-column: 1 / -1;
-    }
-
-    .footer-discord-link {
-      max-width: 90px;
-    }
-
-    .footer-bottom {
-      align-items: flex-start;
-      flex-direction: column;
-      justify-content: center;
-      gap: 8px;
-      padding-block: 16px;
-    }
+  @media (max-width: 380px) {
+    .footer-social-grid { gap: 1px; }
+    .footer-social-link svg { width: 21px; height: 21px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .footer-social-link {
-      transition: none;
-    }
-
-    .footer-social-link:hover {
-      transform: none;
-    }
+    .footer-social-link { transition: none; }
+    .footer-social-link:hover { transform: none; }
   }
 </style>
