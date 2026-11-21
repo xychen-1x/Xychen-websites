@@ -20,9 +20,9 @@ const categoryCounts = Object.fromEntries(
   title="Content"
   description="Browse published game guides, tips, discoveries, and updates from Xychen."
 >
-  <section class="page-hero">
+  <section class="page-hero content-library-hero">
     <div class="container">
-      <p class="eyebrow">Content library</p>
+      <p class="eyebrow">Content library · {articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
       <h1>Information, <span>organized.</span></h1>
       <p class="page-lead">
         Game guides, useful details, discoveries, and updates — grouped by topic
@@ -39,8 +39,8 @@ const categoryCounts = Object.fromEntries(
           <h2>Content categories</h2>
         </div>
         <p class="section-intro">
-          Choose a category to see its published articles. Empty categories stay
-          available as the library grows.
+          Choose a category to see its published articles. Categories without
+          published articles remain visible as the library grows.
         </p>
       </div>
 
