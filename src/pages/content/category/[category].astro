@@ -32,25 +32,37 @@ const { category, articles } = Astro.props as {
   title={category.label}
   description={category.description}
 >
-  <section class="page-hero">
+  <section class="page-hero category-page-hero">
     <div class="container">
       <a class="article-back-link" href="/content/">← All content</a>
-      <p class="eyebrow">Content category</p>
+      <p class="eyebrow">Content category · {articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
       <h1>{category.label}</h1>
       <p class="page-lead">{category.description}</p>
     </div>
   </section>
 
-  <section class="section-block">
+  <section class="section-block category-results-section">
     <div class="container">
       {articles.length > 0 ? (
-        <div class="content-grid">
-          {articles.map((article) => <ContentCard article={article} />)}
-        </div>
+        <>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Published library</p>
+              <h2>Latest in {category.label.toLowerCase()}</h2>
+            </div>
+            <p class="section-intro">
+              Articles are shown with their publication dates and verification labels.
+            </p>
+          </div>
+          <div class="content-grid">
+            {articles.map((article) => <ContentCard article={article} />)}
+          </div>
+        </>
       ) : (
         <div class="content-empty-state">
-          <h2>No published articles in this category yet.</h2>
-          <p>Only reviewed and published content appears here.</p>
+          <p class="eyebrow">Nothing published here yet</p>
+          <h2>This category is being prepared.</h2>
+          <p>New articles will appear after their information and sources have been reviewed.</p>
           <a class="button button-secondary" href="/content/">Browse all content</a>
         </div>
       )}
