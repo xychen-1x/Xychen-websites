@@ -725,3 +725,132 @@ img, svg { max-width: 100%; }
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Phase 03.3: reusable editorial content visuals */
+.content-card-link {
+  min-height: 0;
+  padding: 0;
+}
+
+.content-card-visual {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.content-card-visual::before,
+.content-card-visual::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+}
+
+.content-card-visual::before {
+  width: 178px;
+  aspect-ratio: 1;
+  top: -72px;
+  right: -28px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 22px color-mix(in srgb, var(--accent) 7%, transparent),
+    0 0 0 46px color-mix(in srgb, var(--accent) 5%, transparent);
+}
+
+.content-card-visual::after {
+  width: 82px;
+  height: 82px;
+  right: 36px;
+  bottom: -40px;
+  transform: rotate(35deg);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.content-card-visual--guides { --visual-accent: #7298c5; }
+.content-card-visual--tips { --visual-accent: #8a9b83; }
+.content-card-visual--discoveries { --visual-accent: #a18ac0; }
+.content-card-visual--updates { --visual-accent: #bd9863; }
+.content-card-visual--announcements { --visual-accent: #b77e83; }
+
+.content-card-visual {
+  --visual-accent: var(--accent);
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--visual-accent) 12%, var(--surface)), var(--surface) 72%);
+}
+
+.content-card-visual-index {
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.content-card-visual-title {
+  max-width: 75%;
+  color: var(--text);
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 780;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.content-card-copy {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 21px 22px 22px;
+}
+
+.content-card-copy .content-card-meta { gap: 7px 12px; }
+.content-card-copy h2 { margin-top: 24px; }
+.content-card-copy .content-card-footer { margin-top: auto; }
+
+.content-category-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.content-category-card::after {
+  position: absolute;
+  z-index: -1;
+  top: -42px;
+  right: -42px;
+  width: 116px;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px color-mix(in srgb, var(--accent) 5%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.content-library-hero,
+.category-page-hero,
+.games-page-hero {
+  background-image:
+    linear-gradient(115deg, color-mix(in srgb, var(--surface) 62%, transparent), transparent 68%),
+    url("/assets/backgrounds/grid-texture.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 240px 240px;
+}
+
+.category-results-section { padding-top: 76px; }
+.game-directory-card { width: min(100%, 720px); }
+.game-directory-card h2 { margin-top: 54px; }
+
+@media (max-width: 760px) {
+  .content-card-visual { min-height: 132px; }
+  .content-card-copy { min-height: 0; padding: 19px; }
+  .content-card-copy h2 { margin-top: 22px; }
+}
