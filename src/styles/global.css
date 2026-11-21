@@ -287,12 +287,25 @@ img, svg { max-width: 100%; }
   list-style: none;
 }
 .hero-topic-list li {
+  border-top: 1px solid var(--line);
+}
+.hero-topic-link {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) 20px;
   align-items: center;
   gap: 12px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
+  min-height: 76px;
+  padding: 14px 8px;
+  margin-inline: -8px;
+  border-radius: 7px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.hero-topic-link:hover {
+  background: var(--accent-soft);
+}
+.hero-topic-link:hover strong,
+.hero-topic-link:hover .topic-arrow {
+  color: var(--accent);
 }
 .topic-index { color: var(--accent); font-size: 0.72rem; font-weight: 850; }
 .hero-topic-list strong,
