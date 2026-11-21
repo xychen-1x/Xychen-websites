@@ -9,4 +9,12 @@ export const siteConfig = {
     { label: "Grow a Garden", href: "/grow-a-garden/" },
     { label: "Links", href: "/links/" },
   ],
+  socials: [
+    { label: "TikTok", href: "https://tiktok.com/@x1ychen" },
+    { label: "YouTube", href: "https://youtube.com/@xychenxycz?si=XgBh1tSi5EL_RFgq" },
+    { label: "Instagram", href: "https://www.instagram.com/xychen.n?igsh=MTk0c3FmYzljMGUx" },
+    { label: "Facebook", href: "https://www.facebook.com/share/r/1J6D51VMqP/" },
+    { label: "X", href: "https://x.com/Xychen1nx" },
+    { label: "GitHub", href: "https://github.com/xychen-1x/Xychen-websites" },
+  ],
 } as const;
