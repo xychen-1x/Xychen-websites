@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { assets } from "@config/assets";
 ---
 
 <BaseLayout
@@ -21,6 +22,16 @@ import BaseLayout from "@layouts/BaseLayout.astro";
       </div>
 
       <aside class="hero-side-panel" aria-label="What you can explore">
+        <img
+          class="hero-artwork"
+          src={assets.heroArtwork}
+          alt=""
+          width="720"
+          height="560"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
         <p class="panel-kicker">Inside Xychen</p>
         <h2>Find a useful place to start.</h2>
         <ul class="hero-topic-list">
