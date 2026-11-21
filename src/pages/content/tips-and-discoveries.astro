@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContentCard from "@components/ContentCard.astro";
+
+const articles = (await getCollection("articles"))
+  .filter(
+    (article) =>
+      article.data.publicationStatus === "published" &&
+      ["tips", "discoveries"].includes(article.data.category),
+  )
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout
+  title="Tips & discoveries"
+  description="Browse published game tips, useful details, and discoveries from Xychen."
+>
+  <section class="page-hero">
+    <div class="container">
+      <a class="article-back-link" href="/content/">← All content</a>
+      <p class="eyebrow">Combined content category</p>
+      <h1>Tips & <span>discoveries.</span></h1>
+      <p class="page-lead">
+        Practical details, useful explanations, and interesting game findings
+        gathered in one place.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="container">
+      {articles.length > 0 ? (
+        <div class="content-grid">
+          {articles.map((article) => <ContentCard article={article} />)}
+        </div>
+      ) : (
+        <div class="content-empty-state">
+          <h2>No published tips or discoveries yet.</h2>
+          <p>Only reviewed and published articles appear here.</p>
+          <a class="button button-secondary" href="/content/">Browse all content</a>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
