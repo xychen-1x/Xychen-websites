@@ -1,12 +1,16 @@
 ---
 import { siteConfig } from "../config/site";
+import { assets } from "../config/assets";
 
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="wordmark" href="/" aria-label="Xychen home">xychen<span>.</span></a>
+    <a class="wordmark" href="/" aria-label="Xychen home">
+      <img class="wordmark-mark" src={assets.brandMark} alt="" width="34" height="34" />
+      <span class="wordmark-name">Xychen</span>
+    </a>
 
     <nav class="desktop-nav" aria-label="Main navigation">
       {siteConfig.navigation.map((item) => (
