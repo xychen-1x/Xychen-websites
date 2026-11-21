@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="15" fill="#202630"/>
-  <path d="M12 10h13.5L52 54H38.5L12 10Z" fill="#8EADD2"/>
-  <path d="M52 10H38.5L12 54h13.5L52 10Z" fill="#E7EDF4"/>
-  <path d="m27.2 32 4.8-8.1 4.8 8.1-4.8 8.1-4.8-8.1Z" fill="#26313E"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">XYCHEN Dream Portal</title>
+  <rect width="64" height="64" rx="18" fill="#EAF0DF"/>
+  <path d="M14 54V29a18 18 0 0 1 36 0v25h-8V29a10 10 0 0 0-20 0v25Z" fill="#263B2A"/>
+  <circle cx="32" cy="17" r="6" fill="#B8DC72"/>
+  <path d="M25 54V35a7 7 0 0 1 14 0v19" fill="none" stroke="#B8DC72" stroke-width="3" stroke-linecap="round"/>
 </svg>

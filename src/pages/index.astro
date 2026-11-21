@@ -1,551 +1,152 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { assets } from "@config/assets";
-import { getContentCategoryLabel } from "@config/content";
+import "@styles/home.css";
 
-const publishedArticles = (await getCollection("articles"))
+const articles = (await getCollection("articles"))
   .filter((article) => article.data.publicationStatus === "published")
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
 
-const latestArticle = publishedArticles[0];
-const latestDate = latestArticle
-  ? new Intl.DateTimeFormat("en-PH", { dateStyle: "medium" }).format(latestArticle.data.pubDate)
-  : null;
+const categoryLabels: Record<string, string> = {
+  guides: "Guide",
+  tips: "Tips",
+  discoveries: "Discovery",
+  updates: "Update",
+  announcements: "Announcement",
+};
 
-const verificationLabel = latestArticle
-  ? {
-      verified: "Source checked",
-      unconfirmed: "Unconfirmed",
-      editorial: "Original",
-    }[latestArticle.data.verificationStatus]
-  : null;
+const dateFormatter = new Intl.DateTimeFormat("en-PH", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 ---
 
 <BaseLayout
-  title="Xychen"
-  description="Games, guides, and discoveries from Xychen, starting with Roblox and growing beyond it."
+  title="XYCHEN"
+  description="A welcoming place for gaming, community, and creator projects. Explore, discover, and connect with XYCHEN."
 >
-  <section class="home-hero" aria-labelledby="home-title">
-    <div class="container home-hero-layout">
-      <div class="home-hero-copy">
-        <p class="eyebrow">The website of Xychen</p>
-        <h1 id="home-title">Games I play.<br /><span>Things I share.</span></h1>
-        <p class="home-hero-description">
-          Guides, discoveries, and useful details from Roblox and other games, collected in one place.
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="/content/">
-            Browse content <span aria-hidden="true">↗</span>
-          </a>
-          <a class="button button-secondary" href="/about/">About Xychen</a>
-        </div>
-      </div>
+  <section class="xy-hero" aria-labelledby="xy-hero-title">
+    <div class="xy-hero-landscape" aria-hidden="true">
+      <span class="xy-sun"></span>
+      <span class="xy-hill xy-hill-back"></span>
+      <span class="xy-hill xy-hill-front"></span>
+      <span class="xy-cloud xy-cloud-one"></span>
+      <span class="xy-cloud xy-cloud-two"></span>
+    </div>
 
-      <figure class="home-hero-visual">
-        <div class="home-hero-art">
-          <img
-            src={assets.heroArtwork}
-            alt="Xychen character illustration"
-            width="512"
-            height="512"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-        <figcaption>ROBLOX <span aria-hidden="true">·</span> GUIDES <span aria-hidden="true">·</span> DISCOVERIES</figcaption>
-      </figure>
+    <div class="container xy-hero-inner">
+      <p class="xy-hero-eyebrow"><span></span> A place to play, connect, and explore</p>
+      <h1 id="xy-hero-title">XYCHEN</h1>
+      <p class="xy-hero-lead">
+        Gaming discoveries, a welcoming community, and creative projects — all gathered in one place.
+      </p>
+      <div class="xy-hero-actions">
+        <a class="xy-button xy-button-primary" href="/content/">Explore gaming <span aria-hidden="true">↗</span></a>
+        <a class="xy-button xy-button-secondary" href="#community">Meet the community</a>
+      </div>
+      <span class="xy-hero-caption" aria-hidden="true">YOUR LITTLE CORNER OF THE INTERNET</span>
     </div>
   </section>
 
-  <section class="home-explore section-block" aria-labelledby="home-explore-title">
-    <div class="container home-explore-layout">
-      <div class="home-section-intro">
-        <p class="eyebrow">Explore</p>
-        <h2 id="home-explore-title">Choose where to start.</h2>
-        <p>Browse the library, visit a game section, or see what else is covered.</p>
-      </div>
+  <section class="xy-pillar-section" aria-label="Explore XYCHEN">
+    <div class="container xy-pillar-grid">
+      <a class="xy-pillar-card xy-pillar-gaming" href="/content/">
+        <div class="xy-pillar-art xy-pillar-art-gaming" aria-hidden="true">
+          <span class="xy-art-sun"></span>
+          <span class="xy-art-island"></span>
+          <span class="xy-art-spark xy-spark-one"></span>
+          <span class="xy-art-spark xy-spark-two"></span>
+          <span class="xy-art-tag">PLAY & DISCOVER</span>
+        </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">01 · Gaming</span>
+          <h2>Find your next discovery.</h2>
+          <p>Explore guides, tips, discoveries, and carefully sourced updates for games Xychen covers.</p>
+          <span class="xy-pillar-link">Explore gaming <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
 
-      <nav class="home-explore-list" aria-label="Explore the website">
-        <a class="home-explore-row" href="/content/">
-          <span class="home-explore-number">01</span>
-          <span class="home-explore-copy">
-            <strong>Content library</strong>
-            <small>Guides, tips, discoveries, and updates.</small>
-          </span>
-          <span class="home-explore-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="home-explore-row home-explore-row--garden" href="/grow-a-garden/">
-          <span class="home-explore-number">02</span>
-          <span class="home-explore-copy">
-            <strong>Grow a Garden</strong>
-            <small>Roblox game guides and information.</small>
-          </span>
-          <span class="home-explore-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="home-explore-row" href="/games/">
-          <span class="home-explore-number">03</span>
-          <span class="home-explore-copy">
-            <strong>Game directory</strong>
-            <small>See the games with dedicated coverage.</small>
-          </span>
-          <span class="home-explore-arrow" aria-hidden="true">↗</span>
-        </a>
-      </nav>
+      <a
+        class="xy-pillar-card xy-pillar-community"
+        id="community"
+        href="https://discord.com/invite/xychen-server-1417846380432719915"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="xy-pillar-art xy-pillar-art-community" aria-hidden="true">
+          <span class="xy-community-flower xy-flower-one"></span>
+          <span class="xy-community-flower xy-flower-two"></span>
+          <span class="xy-art-tag">MEET & CONNECT</span>
+        </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">02 · Community</span>
+          <h2>Good things grow together.</h2>
+          <p>Visit the Discord community to chat, connect, and keep up with the people around XYCHEN.</p>
+          <span class="xy-pillar-link">Visit the community <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
+
+      <a class="xy-pillar-card xy-pillar-creator" href="/about/">
+        <div class="xy-pillar-art xy-pillar-art-creator" aria-hidden="true">
+          <span class="xy-creator-window"></span>
+          <span class="xy-creator-star">✳</span>
+          <span class="xy-art-tag">MAKE & SHARE</span>
+        </div>
+        <div class="xy-pillar-copy">
+          <span class="xy-pillar-kicker">03 · Creator</span>
+          <h2>A little about the creator.</h2>
+          <p>Get to know Xychen, explore projects, and find the official social channels.</p>
+          <span class="xy-pillar-link">Meet Xychen <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
     </div>
   </section>
 
-  <section class="home-latest section-block" aria-labelledby="home-latest-title">
+  <section class="xy-latest section-block" aria-labelledby="xy-latest-title">
     <div class="container">
-      <div class="home-section-heading">
+      <div class="xy-section-heading">
         <div>
-          <p class="eyebrow">From the library</p>
-          <h2 id="home-latest-title">Latest content</h2>
+          <p class="xy-section-eyebrow">Fresh from the library</p>
+          <h2 id="xy-latest-title">Latest discoveries</h2>
         </div>
-        <a class="home-text-link" href="/content/">
-          View all content <span aria-hidden="true">↗</span>
-        </a>
+        <a class="xy-text-link" href="/content/">Browse all gaming content <span aria-hidden="true">↗</span></a>
       </div>
 
-      {latestArticle ? (
-        <article class="home-latest-article">
-          <div class="home-latest-meta">
-            <span>{getContentCategoryLabel(latestArticle.data.category)}</span>
-            <time datetime={latestArticle.data.pubDate.toISOString()}>{latestDate}</time>
-            <span>{verificationLabel}</span>
-          </div>
-          <div class="home-latest-main">
-            <div>
-              <h3>{latestArticle.data.title}</h3>
-              <p>{latestArticle.data.description}</p>
-            </div>
-            <a class="home-text-link" href={`/content/${latestArticle.id}/`}>
-              Read article <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </article>
+      {articles.length > 0 ? (
+        <div class="xy-latest-grid">
+          {articles.map((article) => (
+            <article class="xy-article-card">
+              <div class="xy-article-topline">
+                <span>{categoryLabels[article.data.category] ?? "Article"}</span>
+                <time datetime={article.data.pubDate.toISOString()}>{dateFormatter.format(article.data.pubDate)}</time>
+              </div>
+              <p class="xy-article-game">{article.data.game ?? "Gaming"}</p>
+              <h3><a href={`/content/${article.id}/`}>{article.data.title}</a></h3>
+              <p class="xy-article-description">{article.data.description}</p>
+              <a class="xy-article-read" href={`/content/${article.id}/`}>Read article <span aria-hidden="true">↗</span></a>
+            </article>
+          ))}
+        </div>
       ) : (
-        <p class="home-latest-empty">Published articles will appear here when they are ready.</p>
+        <div class="xy-empty-state">
+          <h3>New discoveries are on the way.</h3>
+          <p>Published guides and gaming updates will appear here when they are ready.</p>
+        </div>
       )}
     </div>
   </section>
 
-  <section class="home-community" aria-labelledby="home-community-title">
-    <div class="container home-community-inner">
-      <div class="home-community-intro">
-        <p class="eyebrow">Community</p>
-        <h2 id="home-community-title">A place to hang out.</h2>
+  <section class="xy-creator-note section-block" aria-labelledby="xy-creator-note-title">
+    <div class="container xy-creator-note-inner">
+      <span class="xy-note-flower" aria-hidden="true">✳</span>
+      <div>
+        <p class="xy-section-eyebrow">A little more about XYCHEN</p>
+        <h2 id="xy-creator-note-title">Built around curiosity and community.</h2>
+        <p>Start with a game, stay for the discoveries, and find the people and projects that make this place what it is.</p>
       </div>
-      <a
-        class="home-community-marquee"
-        href="https://discord.com/invite/xychen-server-1417846380432719915"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Join Xychen Community on Discord"
-      >
-        <span class="home-community-track" aria-hidden="true">
-          {Array.from({ length: 2 }).map(() => (
-            <span class="home-community-group">
-              <span>Join the conversation</span>
-              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
-              <span>Hang out</span>
-              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
-              <span>Join our community</span>
-              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
-            </span>
-          ))}
-        </span>
-      </a>
+      <a class="xy-button xy-button-secondary" href="/about/">About XYCHEN <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .home-hero {
-    border-bottom: 1px solid var(--line);
-    background: var(--page);
-  }
-
-  .home-hero-layout {
-    min-height: 570px;
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-    align-items: center;
-    gap: clamp(36px, 6vw, 88px);
-    padding-block: clamp(76px, 9vw, 112px);
-  }
-
-  .home-hero-copy {
-    min-width: 0;
-    max-width: 700px;
-  }
-
-  .home-hero-copy h1 {
-    max-width: 760px;
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3.45rem, 7.3vw, 6.5rem);
-    font-weight: 500;
-    line-height: 0.96;
-    letter-spacing: -0.07em;
-  }
-
-  .home-hero-copy h1 span {
-    color: var(--text);
-  }
-
-  .home-hero-description {
-    max-width: 520px;
-    margin: 27px 0 0;
-    color: var(--muted);
-    font-size: clamp(1.02rem, 1.8vw, 1.16rem);
-    line-height: 1.75;
-  }
-
-  .home-hero-visual {
-    width: 100%;
-    max-width: 480px;
-    justify-self: end;
-    margin: 0;
-  }
-
-  .home-hero-art {
-    overflow: visible;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-  }
-
-  .home-hero-visual img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .home-hero-visual figcaption {
-    margin-top: 13px;
-    color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.12em;
-    text-align: center;
-  }
-
-  .home-explore-layout {
-    display: grid;
-    grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
-    gap: clamp(40px, 8vw, 120px);
-  }
-
-  .home-section-intro h2,
-  .home-section-heading h2,
-  .home-community h2 {
-    margin: 0;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.06em;
-  }
-
-  .home-section-intro > p:last-child {
-    max-width: 330px;
-    margin: 18px 0 0;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .home-explore-list {
-    border-top: 1px solid var(--line);
-  }
-
-  .home-explore-row {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) 24px;
-    align-items: center;
-    gap: 16px;
-    min-height: 96px;
-    padding: 17px 4px;
-    border-bottom: 1px solid var(--line);
-    transition: color 150ms ease, padding 150ms ease;
-  }
-
-  .home-explore-row:hover {
-    padding-inline: 10px;
-    color: var(--accent);
-  }
-
-  .home-explore-number {
-    color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-  }
-
-  .home-explore-copy strong,
-  .home-explore-copy small {
-    display: block;
-  }
-
-  .home-explore-copy strong {
-    font-size: 1.08rem;
-    font-weight: 700;
-  }
-
-  .home-explore-copy small {
-    margin-top: 5px;
-    color: var(--muted);
-    font-size: 0.86rem;
-    line-height: 1.5;
-  }
-
-  .home-explore-arrow {
-    color: var(--accent);
-    font-size: 1.1rem;
-    text-align: right;
-  }
-
-  .home-explore-row--garden .home-explore-number,
-  .home-explore-row--garden .home-explore-arrow {
-    color: #a9ca68;
-  }
-
-  :global(:root[data-theme="light"]) .home-explore-row--garden .home-explore-number,
-  :global(:root[data-theme="light"]) .home-explore-row--garden .home-explore-arrow {
-    color: #557c28;
-  }
-
-  .home-latest {
-    border-top: 1px solid var(--line);
-    background: var(--surface);
-  }
-
-  .home-section-heading {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 30px;
-  }
-
-  .home-text-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--accent);
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-underline-offset: 4px;
-  }
-
-  .home-text-link:hover {
-    text-decoration: underline;
-  }
-
-  .home-latest-article {
-    padding-block: 24px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .home-latest-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    color: var(--muted);
-    font-size: 0.78rem;
-  }
-
-  .home-latest-meta span:first-child {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .home-latest-main {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 30px;
-    margin-top: 18px;
-  }
-
-  .home-latest-main > div {
-    min-width: 0;
-  }
-
-  .home-latest-main h3 {
-    margin: 0;
-    font-size: clamp(1.35rem, 2.5vw, 1.9rem);
-    letter-spacing: -0.045em;
-  }
-
-  .home-latest-main p {
-    max-width: 650px;
-    margin: 9px 0 0;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  .home-latest-main .home-text-link {
-    flex: 0 0 auto;
-    margin-bottom: 3px;
-  }
-
-  .home-latest-empty {
-    margin: 0;
-    padding-block: 22px;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-  }
-
-  .home-community {
-    overflow: hidden;
-    padding-block: 64px 0;
-    border-top: 1px solid var(--line);
-    background: var(--page);
-  }
-
-  .home-community-inner {
-    display: grid;
-    gap: 30px;
-  }
-
-  .home-community-intro h2 {
-    margin: 0;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 500;
-    line-height: 1.08;
-    letter-spacing: -0.055em;
-  }
-
-  .home-community-marquee {
-    display: block;
-    position: relative;
-    left: 50%;
-    overflow: hidden;
-    box-sizing: border-box;
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: -50vw;
-    padding: clamp(22px, 3vw, 34px) clamp(18px, 4vw, 56px);
-    border-block: 1px solid rgba(255, 255, 255, 0.28);
-    background: #5865f2;
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .home-community-track {
-    display: flex;
-    width: max-content;
-    animation: community-marquee 32s linear infinite;
-    will-change: transform;
-  }
-
-  .home-community-group {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: clamp(22px, 3vw, 42px);
-    padding-right: clamp(22px, 3vw, 42px);
-    font-size: clamp(2rem, 5.3vw, 4.6rem);
-    font-weight: 500;
-    letter-spacing: -0.055em;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .home-community-group svg {
-    display: block;
-    flex: 0 0 auto;
-    width: clamp(26px, 3vw, 38px);
-    height: clamp(26px, 3vw, 38px);
-    fill: #dce0ff;
-  }
-
-  @keyframes community-marquee {
-    to { transform: translateX(-50%); }
-  }
-
-  @media (max-width: 900px) {
-    .home-hero-layout {
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);
-      gap: 34px;
-    }
-
-    .home-hero-copy h1 {
-      font-size: clamp(3.2rem, 7vw, 5rem);
-    }
-
-    .home-explore-layout {
-      grid-template-columns: minmax(190px, 0.7fr) minmax(0, 1.3fr);
-      gap: 42px;
-    }
-  }
-
-  @media (max-width: 760px) {
-    .home-hero-layout {
-      min-height: 0;
-      grid-template-columns: 1fr;
-      gap: 34px;
-      padding-block: 72px 58px;
-    }
-
-    .home-hero-copy h1 {
-      font-size: clamp(3.1rem, 13vw, 4.8rem);
-    }
-
-    .home-hero-visual {
-      max-width: 430px;
-      justify-self: center;
-    }
-
-    .home-explore-layout {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-
-    .home-section-intro > p:last-child {
-      max-width: 520px;
-    }
-
-    .home-latest-main {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-  }
-
-  @media (max-width: 520px) {
-    .home-hero-layout {
-      padding-block: 60px 48px;
-    }
-
-    .home-hero-description {
-      margin-top: 20px;
-    }
-
-    .home-section-heading {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .home-explore-row {
-      grid-template-columns: 30px minmax(0, 1fr) 20px;
-      gap: 12px;
-      min-height: 84px;
-    }
-
-    .home-community {
-      padding-top: 52px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .home-explore-row,
-    .home-community-track {
-      animation: none;
-      will-change: auto;
-    }
-  }
-</style>
