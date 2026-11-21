@@ -46,9 +46,9 @@ const verificationLabel = latestArticle
         <div class="home-hero-art">
           <img
             src={assets.heroArtwork}
-            alt=""
-            width="720"
-            height="560"
+            alt="Xychen character illustration"
+            width="512"
+            height="512"
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -133,16 +133,29 @@ const verificationLabel = latestArticle
 
   <section class="home-community" aria-labelledby="home-community-title">
     <div class="container home-community-inner">
-      <div>
+      <div class="home-community-intro">
         <p class="eyebrow">Community</p>
-        <h2 id="home-community-title">Continue the conversation.</h2>
-        <a class="home-community-discord" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer">
-          <span class="home-community-discord-mark" aria-hidden="true">◉</span>
-          <span>Join Xychen Community on Discord</span>
-        </a>
+        <h2 id="home-community-title">A place to hang out.</h2>
       </div>
-      <a class="home-community-marquee" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer" aria-label="Continue the conversation in Xychen Community on Discord">
-        <span aria-hidden="true">CONTINUE THE CONVERSATION ✳ JOIN XYCHEN COMMUNITY ✳ CONTINUE THE CONVERSATION ✳ JOIN XYCHEN COMMUNITY ✳</span>
+      <a
+        class="home-community-marquee"
+        href="https://discord.com/invite/xychen-server-1417846380432719915"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Join Xychen Community on Discord"
+      >
+        <span class="home-community-track" aria-hidden="true">
+          {Array.from({ length: 2 }).map(() => (
+            <span class="home-community-group">
+              <span>Join the conversation</span>
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+              <span>Hang out</span>
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+              <span>Join our community</span>
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M19.7 5.2A18 18 0 0 0 15.3 4l-.6 1.2a16.5 16.5 0 0 0-5.4 0L8.7 4a18 18 0 0 0-4.4 1.2C1.5 9.3.7 13.3 1.1 17.3a18 18 0 0 0 5.4 2.7l1.2-2a11 11 0 0 1-1.9-.9l.5-.4a12.8 12.8 0 0 0 11.4 0l.5.4a11 11 0 0 1-1.9.9l1.2 2a18 18 0 0 0 5.4-2.7c.5-4.6-.8-8.5-3.2-12.1ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+            </span>
+          ))}
+        </span>
       </a>
     </div>
   </section>
@@ -386,68 +399,66 @@ const verificationLabel = latestArticle
 
   .home-community {
     overflow: hidden;
-    padding-block: 64px 54px;
+    padding-block: 64px 0;
     border-top: 1px solid var(--line);
-    background: var(--surface);
+    background: var(--page);
   }
 
   .home-community-inner {
     display: grid;
-    gap: 32px;
+    gap: 30px;
   }
 
-  .home-community-discord {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 0.9rem;
-    font-weight: 650;
-  }
-
-  .home-community-discord-mark {
-    display: grid;
-    width: 28px;
-    height: 28px;
-    place-items: center;
-    border-radius: 8px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-size: 1.25rem;
+  .home-community-intro h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.055em;
   }
 
   .home-community-marquee {
     display: block;
     overflow: hidden;
-    padding-block: 20px;
-    border-block: 1px solid var(--line);
-    color: var(--text);
-    font-size: clamp(1.5rem, 4.5vw, 3.8rem);
-    font-weight: 850;
+    width: 100%;
+    margin-inline: calc((100vw - min(100vw, var(--container-width, 1200px))) / -2);
+    padding: clamp(22px, 3vw, 34px) 0;
+    border-block: 1px solid rgba(255, 255, 255, 0.28);
+    background: #5865f2;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .home-community-track {
+    display: flex;
+    width: max-content;
+    animation: community-marquee 32s linear infinite;
+    will-change: transform;
+  }
+
+  .home-community-group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: clamp(22px, 3vw, 42px);
+    padding-right: clamp(22px, 3vw, 42px);
+    font-size: clamp(2rem, 5.3vw, 4.6rem);
+    font-weight: 500;
     letter-spacing: -0.055em;
+    line-height: 1;
     white-space: nowrap;
   }
 
-  .home-community-marquee span {
+  .home-community-group svg {
     display: block;
-    width: max-content;
-    animation: community-marquee 26s linear infinite;
+    flex: 0 0 auto;
+    width: clamp(26px, 3vw, 38px);
+    height: clamp(26px, 3vw, 38px);
+    fill: #dce0ff;
   }
 
   @keyframes community-marquee {
-    to { transform: translateX(-25%); }
-  }
-
-  .home-community-marquee:hover span { animation-play-state: paused; }
-
-  .home-community h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.7rem);
-  }
-
-  .home-community-inner > div > p:last-child {
-    margin: 12px 0 0;
-    color: var(--muted);
+    to { transform: translateX(-50%); }
   }
 
   @media (max-width: 900px) {
@@ -498,10 +509,6 @@ const verificationLabel = latestArticle
       gap: 18px;
     }
 
-    .home-community-inner {
-      align-items: flex-start;
-      flex-direction: column;
-    }
   }
 
   @media (max-width: 520px) {
@@ -526,15 +533,15 @@ const verificationLabel = latestArticle
     }
 
     .home-community {
-      padding-block: 52px;
+      padding-top: 52px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .home-explore-row,
-    .home-community-marquee span {
+    .home-community-track {
       animation: none;
-      transition: none;
+      will-change: auto;
     }
   }
 </style>
