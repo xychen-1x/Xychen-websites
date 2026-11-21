@@ -6,7 +6,7 @@ const label = document.querySelector<HTMLElement>("[data-theme-label]");
 
 function applyTheme(theme: "dark" | "light") {
   root.dataset.theme = theme;
-  toggle?.setAttribute("aria-pressed", String(theme === "light"));
+  toggle?.setAttribute("aria-pressed", String(theme === "dark"));
 
   if (icon) icon.textContent = theme === "dark" ? "☼" : "☾";
   if (label) {
@@ -20,7 +20,7 @@ function applyTheme(theme: "dark" | "light") {
   }
 }
 
-let initialTheme: "dark" | "light" = "dark";
+let initialTheme: "dark" | "light" = "light";
 
 try {
   const savedTheme = localStorage.getItem(storageKey);
@@ -28,7 +28,7 @@ try {
     initialTheme = savedTheme;
   }
 } catch {
-  // Use the default theme when browser storage is unavailable.
+  // Use the default light woodland theme when browser storage is unavailable.
 }
 
 applyTheme(initialTheme);
