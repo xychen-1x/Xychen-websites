@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">XYCHEN</title>
   <rect width="64" height="64" rx="16" fill="#111318"/>
-  <path d="M18 13h12v13.5L43.5 13H57L36 33.5 57 51H41L30 41.5V51H18V13Z" fill="#EFB45E"/>
-  <path d="M18 13h12v13.5L43.5 13H57L36 33.5 57 51H41L30 41.5V51H18V13Z" fill="none" stroke="#FFD18C" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M9 12h14l9 15 9-15h14L38 39v13H26V39L9 12Z" fill="#EFB45E"/>
+  <path d="M9 12h14l9 15 9-15h14L38 39v13H26V39L9 12Z" fill="none" stroke="#FFD18C" stroke-width="1.1" stroke-linejoin="round"/>
 </svg>
