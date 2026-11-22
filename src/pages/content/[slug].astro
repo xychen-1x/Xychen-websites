@@ -20,9 +20,6 @@ const { article } = Astro.props as {
 };
 const { Content } = await render(article);
 const categoryLabel = getContentCategoryLabel(article.data.category);
-const publishedDate = new Intl.DateTimeFormat("en-PH", {
-  dateStyle: "long",
-}).format(article.data.pubDate);
 const updatedDate = article.data.updatedDate
   ? new Intl.DateTimeFormat("en-PH", { dateStyle: "long" }).format(
       article.data.updatedDate,
@@ -38,7 +35,7 @@ const updatedDate = article.data.updatedDate
       <h1>{article.data.title}</h1>
       <p class="article-description">{article.data.description}</p>
       <div class="article-meta">
-        <span>{publishedDate}</span>
+        {(article.data.category === "updates" || article.data.category === "announcements" || article.data.verificationStatus === "unconfirmed") && <time datetime={article.data.pubDate.toISOString()}>{new Intl.DateTimeFormat("en-PH", { dateStyle: "long" }).format(article.data.pubDate)}</time>}
         {updatedDate && <span>Updated {updatedDate}</span>}
         {article.data.game && <span>{article.data.game}</span>}
       </div>

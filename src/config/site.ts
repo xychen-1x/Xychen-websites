@@ -1,11 +1,10 @@
 export const siteConfig = {
   name: "XYCHEN",
-  description:
-    "Gaming guides, discoveries, and community updates from Xychen.",
+  description: "Gaming discoveries and a community space from Xychen.",
   navigation: [
     { label: "Home", href: "/" },
     { label: "Gaming", href: "/content/" },
-    { label: "Community", href: "/#community" },
+    { label: "Community", href: "/community/" },
     { label: "About", href: "/about/" },
   ],
   socials: [
@@ -14,7 +13,7 @@ export const siteConfig = {
     { label: "Instagram", href: "https://www.instagram.com/xychen.n?igsh=MTk0c3FmYzljMGUx" },
     { label: "Facebook", href: "https://www.facebook.com/share/r/1J6D51VMqP/" },
     { label: "X", href: "https://x.com/Xychen1nx" },
-    { label: "GitHub", href: "https://github.com/xychen-1x" },
+    { label: "GitHub", href: "https://github.com/xychen-1x/Xychen-websites" },
     { label: "Discord", href: "https://discord.com/invite/xychen-server-1417846380432719915" },
   ],
 } as const;

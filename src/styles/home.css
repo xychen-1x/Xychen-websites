@@ -1,410 +1,47 @@
-/* Immersive Woodland Garden homepage */
-.xy-hero {
-  position: relative;
-  min-height: 690px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    linear-gradient(180deg, rgb(234 240 223 / 12%), rgb(234 240 223 / 0%) 48%, #DDE9CF 100%),
-    radial-gradient(ellipse at 50% 24%, #F9F4D9 0%, #DCEBCB 42%, #B8D3A6 100%);
-}
-.xy-hero::before,
-.xy-hero::after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  pointer-events: none;
-}
-.xy-hero::before {
-  inset: 0;
-  opacity: .42;
-  background-image:
-    radial-gradient(circle at 14% 20%, rgb(255 255 255 / 68%) 0 2px, transparent 3px),
-    radial-gradient(circle at 82% 16%, rgb(255 255 255 / 72%) 0 2px, transparent 3px),
-    radial-gradient(circle at 72% 48%, rgb(255 255 255 / 56%) 0 1px, transparent 2px);
-  background-size: 180px 170px, 240px 210px, 130px 140px;
-}
-.xy-hero::after {
-  right: -9%;
-  bottom: -33%;
-  width: 54%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgb(110 148 94 / 12%);
-  filter: blur(8px);
-}
-.xy-hero-landscape { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
-.xy-sun {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  width: clamp(130px, 19vw, 230px);
-  aspect-ratio: 1;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, #FFFBE9 0 42%, rgb(255 249 219 / 45%) 70%, transparent 72%);
-  filter: blur(1px);
-}
-.xy-hill { position: absolute; right: -8%; left: -8%; bottom: -30%; height: 62%; border-radius: 50% 50% 0 0 / 28% 28% 0 0; }
-.xy-hill-back { bottom: -38%; background: linear-gradient(145deg, #B5D0A2, #9FBE8C); transform: rotate(-4deg); }
-.xy-hill-front { bottom: -49%; left: 18%; background: linear-gradient(135deg, #86A978, #A9C38E); transform: rotate(5deg); }
-.xy-cloud { position: absolute; width: 150px; height: 38px; border-radius: 999px; background: rgb(255 255 255 / 42%); filter: blur(2px); }
-.xy-cloud::before, .xy-cloud::after { position: absolute; bottom: 8px; width: 60px; height: 60px; border-radius: 50%; background: inherit; content: ""; }
-.xy-cloud::before { left: 25px; }
-.xy-cloud::after { right: 20px; width: 48px; height: 48px; }
-.xy-cloud-one { top: 24%; left: 9%; transform: scale(.8); }
-.xy-cloud-two { top: 33%; right: 10%; transform: scale(.62); opacity: .7; }
 
-.xy-hero-inner {
-  width: min(calc(100% - 40px), 900px);
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-block: 110px 230px;
-  text-align: center;
-}
-.xy-hero-eyebrow,
-.xy-section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 18px;
-  color: #42643A;
-  font-size: .74rem;
-  font-weight: 850;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
-.xy-hero-eyebrow span { width: 8px; height: 8px; border-radius: 50%; background: #6F9650; box-shadow: 0 0 0 5px rgb(111 150 80 / 14%); }
-.xy-hero h1 {
-  margin: 0;
-  color: #263B2A;
-  font-size: clamp(4.5rem, 12vw, 9.5rem);
-  font-weight: 900;
-  letter-spacing: -.09em;
-  line-height: .88;
-  text-shadow: 0 5px 0 rgb(255 255 255 / 24%);
-}
-.xy-hero-lead { max-width: 610px; margin: 24px 0 0; color: #40573D; font-size: clamp(1.02rem, 2vw, 1.2rem); line-height: 1.7; }
-.xy-hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
-.xy-button {
-  min-height: 50px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 0 21px;
-  border: 1px solid rgb(38 59 42 / 18%);
-  border-radius: 999px;
-  font-size: .9rem;
-  font-weight: 800;
-  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
-}
-.xy-button:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgb(38 59 42 / 13%); }
-.xy-button-primary { border-color: #263B2A; background: #263B2A; color: #F5F7EF; }
-.xy-button-primary:hover { background: #36572C; }
-.xy-button-secondary { background: rgb(255 255 255 / 58%); color: #263B2A; backdrop-filter: blur(8px); }
-.xy-button-secondary:hover { background: #FFFFFF; }
-.xy-hero-caption { margin-top: 42px; color: #54704D; font-size: .64rem; font-weight: 800; letter-spacing: .18em; }
-
-.xy-pillar-section { position: relative; z-index: 3; margin-top: -148px; padding-bottom: 76px; }
-.xy-pillar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 18px; }
-.xy-pillar-card {
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid rgb(65 91 59 / 13%);
-  border-radius: 25px;
-  background: #FAFBF5;
-  box-shadow: 0 20px 55px rgb(44 68 42 / 14%);
-  color: #263B2A;
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
-.xy-pillar-card:hover { transform: translateY(-8px); box-shadow: 0 28px 65px rgb(44 68 42 / 19%); }
-.xy-pillar-art { position: relative; min-height: 168px; overflow: hidden; isolation: isolate; }
-.xy-pillar-art::before, .xy-pillar-art::after { position: absolute; z-index: -1; content: ""; }
-.xy-pillar-art-gaming { background: linear-gradient(145deg, #E7EECF, #BBD4A6); }
-.xy-pillar-art-gaming::before { width: 230px; height: 150px; right: -24px; bottom: -95px; border-radius: 50%; background: #86A978; transform: rotate(-12deg); }
-.xy-pillar-art-gaming::after { width: 160px; height: 110px; left: -35px; bottom: -78px; border-radius: 50%; background: #A3C18E; }
-.xy-art-sun { position: absolute; top: 28px; right: 58px; width: 64px; height: 64px; border-radius: 50%; background: #FFF7D9; box-shadow: 0 0 0 13px rgb(255 247 217 / 22%); }
-.xy-art-island { position: absolute; left: 50%; bottom: -33px; width: 130px; height: 94px; transform: translateX(-50%); border-radius: 50% 50% 0 0; background: #6E9561; }
-.xy-art-spark { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: #FFFDF1; }
-.xy-spark-one { top: 42px; left: 26%; }
-.xy-spark-two { top: 88px; right: 27%; width: 6px; height: 6px; }
-.xy-pillar-art-community { background: linear-gradient(145deg, #E7E7D5, #C9DCC0); }
-.xy-community-flower { position: absolute; top: 43px; left: calc(50% - 30px); width: 60px; height: 60px; border-radius: 50%; background: #B8DC72; box-shadow: 0 -29px 0 -9px #789B69, 0 29px 0 -9px #789B69, 29px 0 0 -9px #91B37B, -29px 0 0 -9px #91B37B; }
-.xy-flower-two { left: calc(50% + 34px); top: 68px; transform: scale(.5); opacity: .7; }
-.xy-pillar-art-creator { background: linear-gradient(145deg, #F0E8D6, #D9CFAE); }
-.xy-creator-window { position: absolute; top: 28px; left: calc(50% - 53px); width: 106px; height: 112px; border: 7px solid #607D55; border-bottom: 0; border-radius: 58px 58px 0 0; background: linear-gradient(180deg, #F8F4DF, #C9D8B6); }
-.xy-creator-star { position: absolute; top: 51px; left: calc(50% - 15px); color: #789B69; font-size: 34px; }
-.xy-art-tag { position: absolute; bottom: 13px; left: 17px; color: rgb(38 59 42 / 72%); font-size: .62rem; font-weight: 850; letter-spacing: .13em; }
-.xy-pillar-copy { padding: 22px 23px 25px; }
-.xy-pillar-kicker { margin: 0 0 10px; color: #557A43; font-size: .7rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
-.xy-pillar-copy h2 { margin: 0; color: #263B2A; font-size: clamp(1.3rem, 2vw, 1.65rem); line-height: 1.12; letter-spacing: -.045em; }
-.xy-pillar-copy p { min-height: 76px; margin: 11px 0 20px; color: #52664F; font-size: .88rem; line-height: 1.6; }
-.xy-pillar-link { display: inline-flex; align-items: center; gap: 8px; color: #426A35; font-size: .82rem; font-weight: 850; }
-.xy-pillar-card:hover .xy-pillar-link { text-decoration: underline; text-underline-offset: 4px; }
-
-.xy-latest { padding-top: 36px; border-top: 1px solid var(--line); background: rgb(246 248 239 / 62%); }
-.xy-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
-.xy-section-heading .xy-section-eyebrow { margin-bottom: 10px; }
-.xy-section-heading h2, .xy-creator-note h2 { margin: 0; color: #263B2A; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.05; letter-spacing: -.06em; }
-.xy-text-link { display: inline-flex; align-items: center; gap: 8px; color: #426A35; font-size: .86rem; font-weight: 850; }
-.xy-text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
-.xy-latest-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
-.xy-article-card { min-width: 0; min-height: 250px; display: flex; flex-direction: column; padding: 22px; border: 1px solid #D5E0CC; border-radius: 20px; background: #FBFCF7; box-shadow: 0 8px 24px rgb(38 59 42 / 5%); }
-.xy-article-topline { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #64765D; font-size: .7rem; }
-.xy-article-topline span { color: #557A43; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
-.xy-article-game { margin: 27px 0 7px; color: #6C8063; font-size: .75rem; }
-.xy-article-card h3 { margin: 0; color: #263B2A; font-size: 1.2rem; line-height: 1.2; letter-spacing: -.035em; }
-.xy-article-card h3 a:hover { color: #426A35; }
-.xy-article-description { margin: 10px 0 18px; color: #52664F; font-size: .85rem; }
-.xy-article-read { display: inline-flex; gap: 8px; margin-top: auto; color: #426A35; font-size: .8rem; font-weight: 850; }
-.xy-empty-state { padding: 28px; border: 1px solid #D5E0CC; border-radius: 20px; background: #FBFCF7; }
-.xy-empty-state h3 { margin: 0; color: #263B2A; }
-.xy-empty-state p { margin: 8px 0 0; color: #52664F; }
-
-.xy-creator-note { padding-block: 70px; }
-.xy-creator-note-inner { display: flex; align-items: center; gap: 24px; padding: 30px; border: 1px solid #D5E0CC; border-radius: 26px; background: linear-gradient(120deg, #F8F8EE, #E6EEDC); }
-.xy-note-flower { flex: 0 0 64px; width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%; background: #B8DC72; color: #263B2A; font-size: 2rem; }
-.xy-creator-note-inner > div { flex: 1; }
-.xy-creator-note .xy-section-eyebrow { margin-bottom: 9px; }
-.xy-creator-note-inner > div > p:last-child { max-width: 640px; margin: 12px 0 0; color: #52664F; }
-.xy-creator-note .xy-button { flex: 0 0 auto; }
-
-@media (max-width: 900px) {
-  .xy-pillar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .xy-pillar-card:last-child { grid-column: 1 / -1; }
-  .xy-latest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .xy-article-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
-}
-@media (max-width: 650px) {
-  .xy-hero { min-height: 620px; }
-  .xy-hero-inner { width: min(calc(100% - 32px), 900px); padding-block: 88px 190px; }
-  .xy-hero h1 { font-size: clamp(4rem, 19vw, 6.5rem); }
-  .xy-hero-lead { max-width: 440px; font-size: 1rem; }
-  .xy-hero-actions { width: min(100%, 310px); flex-direction: column; }
-  .xy-button { width: 100%; }
-  .xy-hero-caption { margin-top: 30px; font-size: .56rem; }
-  .xy-pillar-section { margin-top: -125px; padding-bottom: 54px; }
-  .xy-pillar-grid { grid-template-columns: 1fr; gap: 14px; }
-  .xy-pillar-card:last-child { grid-column: auto; }
-  .xy-pillar-art { min-height: 145px; }
-  .xy-pillar-copy p { min-height: 0; }
-  .xy-section-heading { align-items: flex-start; flex-direction: column; }
-  .xy-latest-grid { grid-template-columns: 1fr; }
-  .xy-article-card:last-child:nth-child(odd) { grid-column: auto; }
-  .xy-creator-note-inner { align-items: flex-start; flex-direction: column; padding: 24px; }
-  .xy-creator-note .xy-button { width: auto; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .xy-button, .xy-pillar-card { transition: none; }
-  .xy-button:hover, .xy-pillar-card:hover { transform: none; }
-}
-
-
-/* Uploaded woodland GIFs: Home hero and Community feature. */
-.xy-hero {
-  min-height: clamp(500px, 66vw, 650px);
-  background-color: #526b49;
-  background-image:
-    linear-gradient(90deg, rgb(20 38 25 / 58%), rgb(20 38 25 / 20%) 72%),
-    linear-gradient(0deg, rgb(20 38 25 / 32%), transparent 60%),
-    url("/assets/backgrounds/home-landscape.gif");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.xy-hero::before,
-.xy-hero::after,
-.xy-hero-landscape {
-  display: none;
-}
-
-.xy-hero-inner {
-  align-items: flex-start;
-  padding-block: clamp(90px, 12vw, 145px);
-  text-align: left;
-}
-
-.xy-hero-eyebrow,
-.xy-hero-lead,
-.xy-hero-caption {
-  color: #fffdf1;
-}
-
-.xy-hero h1 {
-  color: #fffdf1;
-  text-shadow: 0 2px 18px rgb(0 0 0 / 22%);
-}
-
-.xy-hero-eyebrow span {
-  background: #B8DC72;
-  box-shadow: 0 0 0 5px rgb(184 220 114 / 22%);
-}
-
-.xy-hero-actions {
-  justify-content: flex-start;
-}
-
-.xy-button-secondary {
-  border-color: rgb(255 255 255 / 55%);
-  background: rgb(255 255 255 / 88%);
-  color: #263B2A;
-  backdrop-filter: none;
-}
-
-.xy-pillar-section {
-  margin-top: 0;
-  padding-block: clamp(30px, 4vw, 48px);
-}
-
-.xy-pillar-grid {
-  gap: clamp(12px, 1.8vw, 18px);
-}
-
-.xy-pillar-card {
-  border: 1px solid #D5E0CC;
-  border-radius: 14px;
-  box-shadow: none;
-}
-
-.xy-pillar-card:hover {
-  transform: translateY(-3px);
-  box-shadow: none;
-}
-
-.xy-pillar-art {
-  min-height: 145px;
-}
-
-.xy-pillar-art-community {
-  background:
-    linear-gradient(180deg, rgb(28 47 30 / 8%), rgb(28 47 30 / 28%)),
-    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
-}
-
-.xy-pillar-art-community .xy-community-flower {
-  display: none;
-}
-
-.xy-pillar-art-community .xy-art-tag {
-  color: #fff;
-  text-shadow: 0 1px 5px rgb(0 0 0 / 55%);
-}
-
-.xy-pillar-copy {
-  padding: 19px 20px 21px;
-}
-
-.xy-pillar-copy p {
-  min-height: 0;
-  margin-bottom: 16px;
-}
-
-.xy-latest {
-  padding-top: clamp(40px, 5vw, 60px);
-}
-
-.xy-article-card {
-  min-height: 220px;
-  padding: 19px;
-  border: 1px solid #D5E0CC;
-  border-radius: 14px;
-  box-shadow: none;
-}
-
-.xy-creator-note {
-  padding-block: clamp(38px, 5vw, 58px);
-}
-
+/* Wumpus artwork belongs to the Home community statement, not the Gaming card. */
 .xy-creator-note-inner {
-  gap: 20px;
-  padding: 24px;
-  border: 1px solid #D5E0CC;
-  border-radius: 14px;
-  background: #F6F8EF;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  background:
+    linear-gradient(90deg, rgb(19 36 22 / 78%), rgb(19 36 22 / 48%)),
+    url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
 }
-
-@media (max-width: 650px) {
-  .xy-hero {
-    min-height: 500px;
-    background-position: 55% center;
-  }
-
-  .xy-hero-inner {
-    width: min(calc(100% - 32px), 900px);
-    padding-block: 92px;
-  }
-
-  .xy-hero h1 {
-    font-size: clamp(3.8rem, 18vw, 6rem);
-  }
-
-  .xy-hero-actions {
-    width: min(100%, 310px);
-  }
-
-  .xy-pillar-section {
-    margin-top: 0;
-    padding-bottom: 36px;
-  }
-
-  .xy-pillar-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .xy-pillar-card:last-child {
-    grid-column: auto;
-  }
-
-  .xy-latest-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .xy-creator-note-inner {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 20px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .xy-hero {
-    background-image:
-      linear-gradient(90deg, rgb(20 38 25 / 68%), rgb(20 38 25 / 40%)),
-      url("/assets/backgrounds/grid-texture.svg");
-  }
-
-  .xy-pillar-art-community {
-    background-image: linear-gradient(120deg, #DDE9CF, #AFC79E);
-  }
-}
-
-/* Confirmed artwork mapping: 07 = Discord/Wumpus, 40 = global lake, 80 = About. */
+.xy-creator-note-inner > * { position: relative; z-index: 1; }
+.xy-creator-note-inner h2,
+.xy-creator-note-inner .xy-section-eyebrow,
+.xy-creator-note-inner > div > p:last-child { color: #fff; }
+.xy-creator-note-inner .xy-note-flower { display: none; }
+.xy-creator-note-inner .xy-button-secondary { border-color: rgb(255 255 255 / 55%); background: rgb(255 255 255 / 90%); color: #263B2A; }
 .xy-pillar-art-gaming {
   background:
     linear-gradient(180deg, rgb(20 38 25 / 12%), rgb(20 38 25 / 34%)),
     url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
 }
-.xy-pillar-art-gaming .xy-art-sun,
-.xy-pillar-art-gaming .xy-art-island,
-.xy-pillar-art-gaming .xy-art-spark { display: none; }
-.xy-pillar-art-gaming .xy-art-tag {
-  color: #fff;
-  text-shadow: 0 1px 5px rgb(0 0 0 / 55%);
-}
 .xy-pillar-art-community {
   background:
-    linear-gradient(180deg, rgb(20 38 25 / 10%), rgb(20 38 25 / 38%)),
+    linear-gradient(180deg, rgb(20 38 25 / 8%), rgb(20 38 25 / 28%)),
     url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
 }
+.xy-pillar-art-gaming .xy-art-sun,
+.xy-pillar-art-gaming .xy-art-island,
+.xy-pillar-art-gaming .xy-art-spark,
 .xy-pillar-art-community .xy-community-flower { display: none; }
-.xy-pillar-art-community .xy-art-tag {
-  color: #fff;
-  text-shadow: 0 1px 5px rgb(0 0 0 / 60%);
+@media (prefers-reduced-motion: reduce) {
+  .xy-hero { background-attachment: scroll; }
 }
+:root[data-theme="dark"] .xy-pillar-copy,
+:root[data-theme="dark"] .xy-article-card,
+:root[data-theme="dark"] .xy-empty-state {
+  color: var(--text);
+  background-color: color-mix(in srgb, var(--surface) 84%, transparent);
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .xy-pillar-copy h2,
+:root[data-theme="dark"] .xy-article-card h3,
+:root[data-theme="dark"] .xy-empty-state h3 { color: var(--text); }
+:root[data-theme="dark"] .xy-pillar-copy p,
+:root[data-theme="dark"] .xy-article-description,
+:root[data-theme="dark"] .xy-empty-state p { color: var(--muted); }
