@@ -1,0 +1,28 @@
+.content-search {
+  display: grid;
+  gap: 8px;
+  max-width: 620px;
+  margin: 0 0 22px;
+}
+.content-search label { color: var(--text); font-size: .88rem; font-weight: 750; }
+.content-search input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+}
+.content-search input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+.content-search-status, .content-search-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: .82rem;
+}
+.content-search-empty { padding-block: 20px; }
+.content-card[hidden] { display: none !important; }

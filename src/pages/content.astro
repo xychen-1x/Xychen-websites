@@ -17,16 +17,15 @@ const categoryCounts = Object.fromEntries(
 ---
 
 <BaseLayout
-  title="Content"
+  title="Gaming"
   description="Browse published game guides, tips, discoveries, and updates from Xychen."
 >
   <section class="page-hero content-library-hero">
     <div class="container">
-      <p class="eyebrow">Content library · {articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
-      <h1>Information, <span>organized.</span></h1>
+      <p class="eyebrow">Gaming · {articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
+      <h1>Game knowledge, <span>clearly organized.</span></h1>
       <p class="page-lead">
-        Game guides, useful details, discoveries, and updates — grouped by topic
-        and published with clear dates and source information.
+        Guides, useful details, discoveries, and updates with clear dates and source information.
       </p>
     </div>
   </section>
@@ -36,28 +35,18 @@ const categoryCounts = Object.fromEntries(
       <div class="section-heading">
         <div>
           <p class="eyebrow">Browse by topic</p>
-          <h2>Content categories</h2>
+          <h2>Categories</h2>
         </div>
-        <p class="section-intro">
-          Choose a category to see its published articles. Categories without
-          published articles remain visible as the library grows.
-        </p>
+        <p class="section-intro">Choose a category to browse its published articles.</p>
       </div>
 
       <div class="content-category-grid">
-        {contentCategories.map((category, index) => (
-          <a
-            class="content-category-card"
-            href={`/content/category/${category.slug}/`}
-          >
-            <span class="content-category-index">
-              {String(index + 1).padStart(2, "0")} / CATEGORY
-            </span>
+        {contentCategories.map((category) => (
+          <a class="content-category-card" href={`/content/category/${category.slug}/`}>
             <h2>{category.label}</h2>
             <p>{category.description}</p>
             <span class="content-category-count">
-              {categoryCounts[category.slug]} published
-              <span aria-hidden="true">↗</span>
+              {categoryCounts[category.slug]} published <span aria-hidden="true">↗</span>
             </span>
           </a>
         ))}
@@ -69,29 +58,50 @@ const categoryCounts = Object.fromEntries(
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">The library</p>
-          <h2>Latest content</h2>
+          <p class="eyebrow">Published library</p>
+          <h2>Latest gaming content</h2>
         </div>
-        <p class="section-intro">
-          Only published articles appear here. Drafts remain out of the public
-          website.
-        </p>
+      </div>
+
+      <div class="content-search">
+        <label for="content-search">Search gaming content</label>
+        <input id="content-search" type="search" placeholder="Search guides, tips, games..." autocomplete="off" />
+        <p class="content-search-status" aria-live="polite">{articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
       </div>
 
       {articles.length > 0 ? (
-        <div class="content-grid">
+        <div class="content-grid" data-search-grid>
           {articles.map((article) => <ContentCard article={article} />)}
         </div>
       ) : (
         <div class="content-empty-state">
-          <p class="eyebrow">Library is being prepared</p>
           <h2>No articles published yet.</h2>
-          <p>
-            This section will show guides, tips, discoveries, and game updates
-            after they have been researched and approved for publication.
-          </p>
+          <p>Published guides, discoveries, and game updates will appear here when ready.</p>
         </div>
       )}
+      <p class="content-search-empty" data-search-empty hidden>No matching articles. Try another search.</p>
     </div>
   </section>
+  <script>
+    const searchInput = document.querySelector<HTMLInputElement>("#content-search");
+    const searchCards = Array.from(document.querySelectorAll<HTMLElement>("[data-search-grid] .content-card"));
+    const searchStatus = document.querySelector<HTMLElement>(".content-search-status");
+    const searchEmpty = document.querySelector<HTMLElement>("[data-search-empty]");
+
+    searchInput?.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      let visibleCount = 0;
+      for (const card of searchCards) {
+        const matches = card.textContent?.toLocaleLowerCase().includes(query) ?? false;
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      }
+      if (searchStatus) {
+        searchStatus.textContent = query
+          ? `${visibleCount} matching ${visibleCount === 1 ? "article" : "articles"}`
+          : `${searchCards.length} published ${searchCards.length === 1 ? "article" : "articles"}`;
+      }
+      if (searchEmpty) searchEmpty.hidden = visibleCount !== 0;
+    });
+  </script>
 </BaseLayout>

@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "XYCHEN",
   description:
-    "A cozy community creator platform for gaming, shared discoveries, and creative projects.",
+    "Gaming guides, discoveries, and community updates from Xychen.",
   navigation: [
     { label: "Home", href: "/" },
     { label: "Gaming", href: "/content/" },
     { label: "Community", href: "/#community" },
-    { label: "Creator", href: "/about/" },
+    { label: "About", href: "/about/" },
   ],
   socials: [
     { label: "TikTok", href: "https://tiktok.com/@x1ychen" },
