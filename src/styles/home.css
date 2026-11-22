@@ -204,3 +204,183 @@
   .xy-button, .xy-pillar-card { transition: none; }
   .xy-button:hover, .xy-pillar-card:hover { transform: none; }
 }
+
+
+/* Uploaded woodland GIFs: Home hero and Community feature. */
+.xy-hero {
+  min-height: clamp(500px, 66vw, 650px);
+  background-color: #526b49;
+  background-image:
+    linear-gradient(90deg, rgb(20 38 25 / 58%), rgb(20 38 25 / 20%) 72%),
+    linear-gradient(0deg, rgb(20 38 25 / 32%), transparent 60%),
+    url("/assets/backgrounds/home-landscape.gif");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.xy-hero::before,
+.xy-hero::after,
+.xy-hero-landscape {
+  display: none;
+}
+
+.xy-hero-inner {
+  align-items: flex-start;
+  padding-block: clamp(90px, 12vw, 145px);
+  text-align: left;
+}
+
+.xy-hero-eyebrow,
+.xy-hero-lead,
+.xy-hero-caption {
+  color: #fffdf1;
+}
+
+.xy-hero h1 {
+  color: #fffdf1;
+  text-shadow: 0 2px 18px rgb(0 0 0 / 22%);
+}
+
+.xy-hero-eyebrow span {
+  background: #B8DC72;
+  box-shadow: 0 0 0 5px rgb(184 220 114 / 22%);
+}
+
+.xy-hero-actions {
+  justify-content: flex-start;
+}
+
+.xy-button-secondary {
+  border-color: rgb(255 255 255 / 55%);
+  background: rgb(255 255 255 / 88%);
+  color: #263B2A;
+  backdrop-filter: none;
+}
+
+.xy-pillar-section {
+  margin-top: 0;
+  padding-block: clamp(30px, 4vw, 48px);
+}
+
+.xy-pillar-grid {
+  gap: clamp(12px, 1.8vw, 18px);
+}
+
+.xy-pillar-card {
+  border: 1px solid #D5E0CC;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.xy-pillar-card:hover {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.xy-pillar-art {
+  min-height: 145px;
+}
+
+.xy-pillar-art-community {
+  background:
+    linear-gradient(180deg, rgb(28 47 30 / 8%), rgb(28 47 30 / 28%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+}
+
+.xy-pillar-art-community .xy-community-flower {
+  display: none;
+}
+
+.xy-pillar-art-community .xy-art-tag {
+  color: #fff;
+  text-shadow: 0 1px 5px rgb(0 0 0 / 55%);
+}
+
+.xy-pillar-copy {
+  padding: 19px 20px 21px;
+}
+
+.xy-pillar-copy p {
+  min-height: 0;
+  margin-bottom: 16px;
+}
+
+.xy-latest {
+  padding-top: clamp(40px, 5vw, 60px);
+}
+
+.xy-article-card {
+  min-height: 220px;
+  padding: 19px;
+  border: 1px solid #D5E0CC;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.xy-creator-note {
+  padding-block: clamp(38px, 5vw, 58px);
+}
+
+.xy-creator-note-inner {
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid #D5E0CC;
+  border-radius: 14px;
+  background: #F6F8EF;
+}
+
+@media (max-width: 650px) {
+  .xy-hero {
+    min-height: 500px;
+    background-position: 55% center;
+  }
+
+  .xy-hero-inner {
+    width: min(calc(100% - 32px), 900px);
+    padding-block: 92px;
+  }
+
+  .xy-hero h1 {
+    font-size: clamp(3.8rem, 18vw, 6rem);
+  }
+
+  .xy-hero-actions {
+    width: min(100%, 310px);
+  }
+
+  .xy-pillar-section {
+    margin-top: 0;
+    padding-bottom: 36px;
+  }
+
+  .xy-pillar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .xy-pillar-card:last-child {
+    grid-column: auto;
+  }
+
+  .xy-latest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .xy-creator-note-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xy-hero {
+    background-image:
+      linear-gradient(90deg, rgb(20 38 25 / 68%), rgb(20 38 25 / 40%)),
+      url("/assets/backgrounds/grid-texture.svg");
+  }
+
+  .xy-pillar-art-community {
+    background-image: linear-gradient(120deg, #DDE9CF, #AFC79E);
+  }
+}
