@@ -24,4 +24,6 @@
 .content-card[hidden] { display: none !important; }
 .xy-pillar-card { border-color: transparent !important; }
 .xy-creator-note-inner { border: 0 !important; }
+.xy-latest { background: transparent !important; border-color: transparent !important; }
+.site-footer { background: color-mix(in srgb, var(--surface) 56%, transparent) !important; border-top-color: transparent !important; }
 @media (max-width: 520px) { .site-search-field { flex-direction: column; } .site-search-field button { width: 100%; } }
