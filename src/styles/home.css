@@ -384,3 +384,27 @@
     background-image: linear-gradient(120deg, #DDE9CF, #AFC79E);
   }
 }
+
+/* Confirmed artwork mapping: 07 = Discord/Wumpus, 40 = global lake, 80 = About. */
+.xy-pillar-art-gaming {
+  background:
+    linear-gradient(180deg, rgb(20 38 25 / 12%), rgb(20 38 25 / 34%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+}
+.xy-pillar-art-gaming .xy-art-sun,
+.xy-pillar-art-gaming .xy-art-island,
+.xy-pillar-art-gaming .xy-art-spark { display: none; }
+.xy-pillar-art-gaming .xy-art-tag {
+  color: #fff;
+  text-shadow: 0 1px 5px rgb(0 0 0 / 55%);
+}
+.xy-pillar-art-community {
+  background:
+    linear-gradient(180deg, rgb(20 38 25 / 10%), rgb(20 38 25 / 38%)),
+    url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
+}
+.xy-pillar-art-community .xy-community-flower { display: none; }
+.xy-pillar-art-community .xy-art-tag {
+  color: #fff;
+  text-shadow: 0 1px 5px rgb(0 0 0 / 60%);
+}

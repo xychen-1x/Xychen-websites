@@ -854,3 +854,60 @@ img, svg { max-width: 100%; }
   .content-card-copy { min-height: 0; padding: 19px; }
   .content-card-copy h2 { margin-top: 22px; }
 }
+
+/* Shared woodland lake backdrop across the site. */
+body {
+  background-color: #EAF0DF;
+  background-image:
+    linear-gradient(180deg, rgb(234 240 223 / 78%), rgb(234 240 223 / 86%)),
+    url("/assets/backgrounds/40ca2ce2bafa78c55d43a1289ef2785a.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+html[data-theme="dark"] body {
+  background-color: #17251B;
+  background-image:
+    linear-gradient(180deg, rgb(18 31 22 / 82%), rgb(18 31 22 / 88%)),
+    url("/assets/backgrounds/40ca2ce2bafa78c55d43a1289ef2785a.jpg");
+}
+.site-header {
+  background: color-mix(in srgb, var(--page) 82%, transparent);
+  backdrop-filter: blur(14px);
+}
+.page-hero,
+.xy-latest {
+  background: color-mix(in srgb, var(--page) 62%, transparent);
+}
+.about-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+}
+.about-hero-copy h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 850;
+  line-height: 1.02;
+}
+.about-hero-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.about-content-section { background: color-mix(in srgb, var(--page) 64%, transparent); }
+.about-copy h2 {
+  margin-top: 28px;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: 800;
+}
+.about-copy p { line-height: 1.75; }
+@media (max-width: 760px) {
+  body { background-attachment: scroll; }
+  .about-hero-layout { grid-template-columns: 1fr; }
+  .about-hero-image { order: -1; }
+  .about-hero-copy h1 { font-size: clamp(2.5rem, 11vw, 4rem); }
+}
