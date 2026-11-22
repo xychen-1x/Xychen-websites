@@ -46,18 +46,20 @@ const currentPath = Astro.url.pathname;
 <script>
   const dialog = document.querySelector<HTMLDialogElement>("[data-search-dialog]");
   const searchField = document.querySelector<HTMLInputElement>("#site-search-input");
+  let activeSearchTrigger: HTMLButtonElement | null = null;
+
   document.querySelectorAll<HTMLButtonElement>("[data-search-open]").forEach((button) => {
     button.addEventListener("click", () => {
       if (!dialog) return;
+      activeSearchTrigger = button;
       dialog.showModal();
       searchField?.focus();
     });
   });
+
   document.querySelector<HTMLButtonElement>("[data-search-close]")?.addEventListener("click", () => dialog?.close());
   dialog?.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close();
   });
-  dialog?.addEventListener("close", () => {
-    document.querySelector<HTMLButtonElement>("[data-search-open]")?.focus();
-  });
+  dialog?.addEventListener("close", () => activeSearchTrigger?.focus());
 </script>
