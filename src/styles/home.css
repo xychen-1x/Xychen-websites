@@ -252,3 +252,6 @@
 :root[data-theme="dark"] .xy-article-description,
 :root[data-theme="dark"] .xy-empty-state p { color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .xy-hero { background-attachment: scroll; } }
+
+.xy-creator-note-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 650px) { .xy-creator-note-actions { width: 100%; flex-direction: column; } }
