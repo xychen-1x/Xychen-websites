@@ -1,4 +1,4 @@
-import { syncYouTubeFeed } from "../../lib/youtube";
+import { syncYouTubeFeed } from "../../lib/youtube.js";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
