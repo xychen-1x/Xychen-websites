@@ -103,10 +103,21 @@ const categoryCounts = Object.fromEntries(
         {articles.map((article) => <ContentCard article={article} />)}
       </div>
 
-      <div class="content-empty-state" data-filter-empty hidden>
-        <h2 data-filter-empty-title>No matching published articles.</h2>
-        <p data-filter-empty-description>Try another search or choose a different category.</p>
-        <button class="button button-secondary" type="button" data-clear-filters>
+      <div class="content-empty-state" data-filter-empty hidden={articles.length > 0}>
+        <h2 data-filter-empty-title>
+          {articles.length === 0 ? "No published articles yet." : "No matching published articles."}
+        </h2>
+        <p data-filter-empty-description>
+          {articles.length === 0
+            ? "Articles will appear here after their information and sources have been reviewed."
+            : "Try another search or choose a different category."}
+        </p>
+        <button
+          class="button button-secondary"
+          type="button"
+          data-clear-filters
+          hidden={articles.length === 0}
+        >
           Clear filters
         </button>
       </div>
