@@ -29,6 +29,33 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Audit dependency tree
+        shell: bash
+        run: |
+          npm audit --json > npm-audit.json || true
+          node --input-type=commonjs -e '
+            const report = require("./npm-audit.json");
+            const vulnerabilities = Object.entries(report.vulnerabilities || {});
+            console.log("Dependency audit summary:", JSON.stringify(report.metadata?.vulnerabilities || {}));
+            for (const [name, item] of vulnerabilities) {
+              console.log(JSON.stringify({
+                name,
+                severity: item.severity,
+                direct: item.isDirect,
+                range: item.range,
+                fixAvailable: item.fixAvailable,
+                via: (item.via || []).map((entry) =>
+                  typeof entry === "string" ? entry : {
+                    name: entry.name,
+                    title: entry.title,
+                    url: entry.url,
+                    range: entry.range
+                  }
+                )
+              }));
+            }
+          '
+
       - name: Type-check Astro project
         run: npm run check
 
