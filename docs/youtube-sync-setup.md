@@ -4,7 +4,7 @@ The YouTube feed uses a daily Vercel Cron invocation, the public YouTube Data AP
 
 ## Required Vercel resources
 
-1. Create a **private** Vercel Blob store and connect it to the `xychen-website` project. Vercel should add `BLOB_READ_WRITE_TOKEN` to the project environment.
+1. Create a **private** Vercel Blob store and connect it to the `xychen-website` project. Prefer Vercel's OIDC connection: Vercel supplies `BLOB_STORE_ID` and short-lived, automatically rotated authentication for Functions. The Blob SDK handles this automatically. A legacy `BLOB_READ_WRITE_TOKEN` can be used as a fallback, but it is not required for OIDC.
 2. In Google Cloud, create or select a project, enable **YouTube Data API v3**, and create an API key restricted to the YouTube Data API. Keep the key private.
 3. Create a strong, random cron secret. Do not reuse a password.
 
@@ -14,9 +14,10 @@ Add these environment variables to the Vercel project:
 | --- | --- | --- |
 | `YOUTUBE_API_KEY` | Reads public uploads and public view counts for `@xychenxycz` | Production, Preview |
 | `CRON_SECRET` | Authorizes the scheduled sync endpoint | Production |
-| `BLOB_READ_WRITE_TOKEN` | Private snapshot storage; supplied when the Blob store is connected | Production, Preview |
+| `BLOB_STORE_ID` | Identifies the connected private store for OIDC authentication; supplied by Vercel | Production, Preview |
+| `BLOB_READ_WRITE_TOKEN` | Optional legacy authentication fallback; do not add it when OIDC is already configured | Only if using token authentication |
 
-Do not commit these values or paste them into GitHub issues, pull requests, or chat. Add them directly in Vercel Project Settings → Environment Variables. After changing environment variables, redeploy the relevant environment so the functions receive them.
+Do not commit credentials or paste them into GitHub issues, pull requests, or chat. Connect the Blob store through Vercel so its store ID and OIDC authentication are configured automatically. Add `YOUTUBE_API_KEY` and `CRON_SECRET` directly in Vercel Project Settings → Environment Variables. If you use the legacy token method, keep `BLOB_READ_WRITE_TOKEN` in Vercel only. After changing environment variables or storage connections, redeploy the relevant environment so the Functions receive the configuration.
 
 ## Endpoints
 
