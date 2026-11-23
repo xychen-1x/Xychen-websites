@@ -1,4 +1,4 @@
-import { syncYouTubeFeed } from "../_lib/youtube";
+import { syncYouTubeFeed } from "../../lib/youtube";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -11,7 +11,7 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function handleRequest(request: Request): Promise<Response> {
   if (request.method !== "GET") {
     return json({ error: "Method not allowed." }, 405);
   }
@@ -42,3 +42,5 @@ export default async function handler(request: Request): Promise<Response> {
     return json({ error: "YouTube sync failed. The previous snapshot was preserved." }, 502);
   }
 }
+
+export default { fetch: handleRequest };
