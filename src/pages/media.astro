@@ -1,0 +1,231 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@styles/media.css";
+
+const featuredTikToks = [
+  { label: "Featured TikTok 01", href: "https://vt.tiktok.com/ZSsLALB2v/" },
+  { label: "Featured TikTok 02", href: "https://vt.tiktok.com/ZSsLSgN91/" },
+  { label: "Featured TikTok 03", href: "https://vt.tiktok.com/ZSsLSaqhS/" },
+];
+
+const featuredYouTubeShorts = [
+  { id: "mJ4sNqUdTQQ", label: "YouTube Short 01" },
+  { id: "QLzWryv1i3E", label: "YouTube Short 02" },
+  { id: "rmLW6b0upuk", label: "YouTube Short 03" },
+];
+
+const platforms = [
+  {
+    name: "YouTube",
+    handle: "@xychenxycz",
+    description: "Gameplay videos, Shorts, highlights, and streams.",
+    href: "https://www.youtube.com/@xychenxycz",
+    action: "Visit YouTube",
+    mark: "YT",
+    className: "youtube",
+    formats: [
+      { label: "Videos", href: "https://www.youtube.com/@xychenxycz/videos" },
+      { label: "Shorts", href: "https://www.youtube.com/@xychenxycz/shorts" },
+      { label: "Streams", href: "https://www.youtube.com/@xychenxycz/streams" },
+    ],
+  },
+  {
+    name: "TikTok",
+    handle: "@x1ychen",
+    description: "Short-form gameplay, clips, and quick updates.",
+    href: "https://www.tiktok.com/@x1ychen",
+    action: "Visit TikTok",
+    mark: "♪",
+    className: "tiktok",
+    formats: [],
+  },
+];
+---
+
+<BaseLayout
+  title="Media"
+  description="Watch Xychen's own TikTok and YouTube videos, clips, Shorts, and livestreams."
+>
+  <section class="media-hero page-hero">
+    <div class="container media-hero-inner">
+      <p class="eyebrow">Xychen · Creator media</p>
+      <h1>Videos, clips, <span>and moments.</span></h1>
+      <p class="page-lead">
+        One place for my uploads on TikTok and YouTube. Browse each platform or explore selected videos as this collection grows.
+      </p>
+      <div class="media-hero-actions">
+        <a class="button button-primary" href="#platforms">Explore platforms <span aria-hidden="true">↓</span></a>
+        <a class="button media-hero-secondary" href="/links/">All links <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block media-platform-section" id="platforms" aria-labelledby="platforms-title">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">My channels</p>
+          <h2 id="platforms-title">Find me on</h2>
+        </div>
+        <p class="section-intro">Only content published on my own accounts is included here.</p>
+      </div>
+
+      <div class="media-platform-grid">
+        {platforms.map((platform) => (
+          <article class:list={["media-platform-card", `media-platform-card--${platform.className}`]}>
+            <div class="media-platform-top">
+              <span class="media-platform-mark" aria-hidden="true">{platform.mark}</span>
+              <span class="media-platform-label">{platform.name}</span>
+            </div>
+            <p class="media-platform-handle">{platform.handle}</p>
+            <p class="media-platform-description">{platform.description}</p>
+            {platform.formats.length > 0 && (
+              <nav class="media-format-links" aria-label={`Browse ${platform.name} formats`}>
+                {platform.formats.map((format) => (
+                  <a href={format.href} target="_blank" rel="noopener noreferrer">{format.label}<span aria-hidden="true">↗</span></a>
+                ))}
+              </nav>
+            )}
+            <a class="media-platform-action" href={platform.href} target="_blank" rel="noopener noreferrer">
+              {platform.action} <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block media-feed-section" aria-labelledby="trending-title">
+    <div class="container">
+      <div class="section-heading media-feed-heading">
+        <div>
+          <p class="eyebrow">Picked from my uploads</p>
+          <h2 id="trending-title">Featured & trending</h2>
+        </div>
+        <p class="section-intro">A shortlist of my videos. Popularity labels and view counts will only appear when verified platform data is available.</p>
+      </div>
+      <div class="media-featured-grid">
+        {featuredTikToks.map((video) => (
+          <article class="media-featured-card">
+            <div class="media-featured-art" aria-hidden="true">
+              <span>♪</span>
+              <small>TIKTOK</small>
+            </div>
+            <div class="media-featured-content">
+              <p class="media-featured-platform">My TikTok upload</p>
+              <h3>{video.label}</h3>
+              <a href={video.href} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.label} on TikTok`}>
+                Watch on TikTok <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="media-youtube-shorts">
+        <div class="media-subheading">
+          <div>
+            <p class="eyebrow">YouTube</p>
+            <h3>Selected Shorts</h3>
+          </div>
+          <a href="https://www.youtube.com/@xychenxycz/shorts" target="_blank" rel="noopener noreferrer">View all Shorts <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="media-shorts-grid">
+          {featuredYouTubeShorts.map((video) => (
+            <article class="media-short-card">
+              <div class="media-short-embed">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                  title={video.label}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="media-short-caption">
+                <strong>{video.label}</strong>
+                <a href={`https://youtube.com/shorts/${video.id}`} target="_blank" rel="noopener noreferrer">Open on YouTube <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <p class="media-featured-note">The YouTube Shorts above are embedded from the links provided. TikTok posts currently link directly to TikTok; their thumbnails, embedded playback, and verified view counts are not available in this page yet.</p>
+    </div>
+  </section>
+
+  <section class="section-block media-latest-section" aria-labelledby="latest-title">
+    <div class="container">
+      <div class="section-heading media-feed-heading">
+        <div>
+          <p class="eyebrow">Across both platforms</p>
+          <h2 id="latest-title">Latest posts</h2>
+        </div>
+        <p class="section-intro">New uploads will be listed here after the platform connections are configured.</p>
+      </div>
+      <div class="media-latest-panel">
+        <div>
+          <span class="media-sync-indicator" aria-hidden="true"></span>
+          <strong>Automatic updates are not connected yet</strong>
+        </div>
+        <p>The page will show the last successful sync time when the YouTube and TikTok integrations are available. No fake live status or estimated view counts will be shown.</p>
+      </div>
+    </div>
+  </section>
+  <style>
+    .media-hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+    .media-hero-secondary { border-color:rgb(255 255 255 / 45%); background:rgb(255 255 255 / 12%); color:#fff; }
+    .media-platform-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .media-platform-card { min-width:0; display:flex; flex-direction:column; align-items:flex-start; padding:clamp(22px,3vw,32px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 84%,transparent); box-shadow:var(--shadow-soft); }
+    .media-platform-top { display:flex; align-items:center; gap:12px; }
+    .media-platform-mark { width:44px; height:44px; display:grid; place-items:center; border-radius:13px; background:var(--accent-soft); color:var(--accent); font-size:1.25rem; font-weight:900; }
+    .media-platform-label { font-size:1.05rem; font-weight:850; }
+    .media-platform-handle { margin:24px 0 4px; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:850; letter-spacing:-.055em; }
+    .media-platform-description { margin:0; color:var(--muted); }
+    .media-format-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+    .media-format-links a { display:inline-flex; gap:8px; padding:7px 11px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:.8rem; font-weight:700; }
+    .media-format-links a:hover { border-color:var(--accent); color:var(--accent); }
+    .media-platform-action { display:inline-flex; gap:10px; align-items:center; margin-top:auto; padding-top:26px; color:var(--accent); font-weight:800; }
+    .media-platform-card--tiktok .media-platform-mark { background:#202020; color:#fff; }
+    .media-feed-section { padding-top:34px; }
+    .media-empty-state,.media-latest-panel { display:flex; align-items:flex-start; gap:20px; padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 82%,transparent); }
+    .media-featured-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .media-featured-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); box-shadow:var(--shadow-soft); }
+    .media-featured-art { min-height:150px; display:flex; align-items:center; justify-content:center; position:relative; background:linear-gradient(135deg,#18251d,#435d42); color:#fff; }
+    .media-featured-art > span { font-size:3rem; font-weight:900; }
+    .media-featured-art small { position:absolute; right:14px; bottom:12px; font-size:.68rem; font-weight:850; letter-spacing:.14em; }
+    .media-featured-content { padding:18px; }
+    .media-featured-platform { margin:0 0 6px; color:var(--muted); font-size:.75rem; font-weight:750; }
+    .media-featured-content h3 { margin:0; font-size:1.08rem; }
+    .media-featured-content a { display:inline-flex; gap:8px; margin-top:16px; color:var(--accent); font-size:.86rem; font-weight:800; }
+    .media-featured-note { margin:14px 0 0; color:var(--muted); font-size:.84rem; }
+    .media-youtube-shorts { margin-top:34px; }
+    .media-subheading { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .media-subheading .eyebrow { margin:0 0 5px; }
+    .media-subheading h3 { margin:0; font-size:1.35rem; letter-spacing:-.035em; }
+    .media-subheading > a,.media-short-caption a { color:var(--accent); font-size:.82rem; font-weight:800; }
+    .media-shorts-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .media-short-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); box-shadow:var(--shadow-soft); }
+    .media-short-embed { width:100%; aspect-ratio:9/16; background:#111; }
+    .media-short-embed iframe { display:block; width:100%; height:100%; border:0; }
+    .media-short-caption { display:flex; flex-direction:column; gap:8px; padding:14px; }
+    .media-short-caption strong { font-size:.9rem; }
+    .media-empty-mark { flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; }
+    .media-empty-state h3 { margin:0; font-size:1.2rem; letter-spacing:-.03em; }
+    .media-empty-state p,.media-latest-panel p { max-width:760px; margin:8px 0 0; color:var(--muted); }
+    .media-latest-section { padding-top:12px; }
+    .media-latest-panel { display:block; }
+    .media-latest-panel > div { display:flex; align-items:center; gap:11px; }
+    .media-sync-indicator { width:9px; height:9px; border-radius:50%; background:var(--muted); }
+    .media-latest-panel p { margin-left:20px; }
+    @media (max-width:760px) {
+      .media-platform-grid,.media-featured-grid,.media-shorts-grid { grid-template-columns:1fr; }
+      .media-short-card { max-width:340px; margin-inline:auto; width:100%; }
+      .media-subheading { align-items:flex-start; flex-direction:column; }
+      .media-hero-actions { align-items:stretch; flex-direction:column; max-width:290px; }
+      .media-empty-state { gap:14px; }
+    }
+    @media (prefers-reduced-motion:reduce) { .media-platform-card { transition:none; } }
+    :root[data-theme="dark"] .media-platform-card,:root[data-theme="dark"] .media-empty-state,:root[data-theme="dark"] .media-latest-panel { background:color-mix(in srgb,var(--surface) 86%,transparent); }
+  </style>
+</BaseLayout>
