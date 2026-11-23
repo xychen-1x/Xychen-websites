@@ -2,82 +2,122 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "@styles/media.css";
 
-const channelUrl = "https://www.youtube.com/@xychenxycz";
-const mediaSections = [
+const platforms = [
   {
-    label: "Videos",
-    description: "Full gameplay uploads, walkthroughs, and longer videos.",
-    href: `${channelUrl}/videos`,
-    mark: "01",
+    name: "YouTube",
+    handle: "@xychenxycz",
+    description: "Gameplay videos, Shorts, highlights, and streams.",
+    href: "https://www.youtube.com/@xychenxycz",
+    action: "Visit YouTube",
+    mark: "YT",
+    className: "youtube",
+    formats: [
+      { label: "Videos", href: "https://www.youtube.com/@xychenxycz/videos" },
+      { label: "Shorts", href: "https://www.youtube.com/@xychenxycz/shorts" },
+      { label: "Streams", href: "https://www.youtube.com/@xychenxycz/streams" },
+    ],
   },
   {
-    label: "Shorts & Clips",
-    description: "Short gameplay moments, quick clips, and highlights.",
-    href: `${channelUrl}/shorts`,
-    mark: "02",
-  },
-  {
-    label: "Streams",
-    description: "Livestreams and saved broadcasts when available.",
-    href: `${channelUrl}/streams`,
-    mark: "03",
+    name: "TikTok",
+    handle: "@x1ychen",
+    description: "Short-form gameplay, clips, and quick updates.",
+    href: "https://www.tiktok.com/@x1ychen",
+    action: "Visit TikTok",
+    mark: "♪",
+    className: "tiktok",
+    formats: [],
   },
 ];
 ---
 
 <BaseLayout
   title="Media"
-  description="Watch Xychen's Roblox and gaming videos, Shorts, clips, and livestreams."
+  description="Watch Xychen's own TikTok and YouTube videos, clips, Shorts, and livestreams."
 >
   <section class="media-hero page-hero">
     <div class="container media-hero-inner">
-      <p class="eyebrow">Creator media</p>
-      <h1>Watch, catch up, <span>and explore.</span></h1>
+      <p class="eyebrow">Xychen · Creator media</p>
+      <h1>Videos, clips, <span>and moments.</span></h1>
       <p class="page-lead">
-        A home for Xychen's gaming videos, quick clips, and livestreams. Start with a format and browse the channel.
+        One place for my uploads on TikTok and YouTube. Browse each platform or explore selected videos as this collection grows.
       </p>
-      <a class="button button-primary media-channel-button" href={channelUrl} target="_blank" rel="noopener noreferrer">
-        Visit YouTube channel <span aria-hidden="true">↗</span>
-      </a>
+      <div class="media-hero-actions">
+        <a class="button button-primary" href="#platforms">Explore platforms <span aria-hidden="true">↓</span></a>
+        <a class="button media-hero-secondary" href="/links/">All links <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
   </section>
 
-  <section class="section-block media-library-section" aria-labelledby="media-library-title">
+  <section class="section-block media-platform-section" id="platforms" aria-labelledby="platforms-title">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Browse by format</p>
-          <h2 id="media-library-title">The media library</h2>
+          <p class="eyebrow">My channels</p>
+          <h2 id="platforms-title">Find me on</h2>
         </div>
-        <p class="section-intro">
-          Choose what you want to watch. Each section opens the matching public tab on the official YouTube channel.
-        </p>
+        <p class="section-intro">Only content published on my own accounts is included here.</p>
       </div>
 
-      <div class="media-format-grid">
-        {mediaSections.map((section) => (
-          <a class="media-format-card" href={section.href} target="_blank" rel="noopener noreferrer">
-            <span class="media-format-index">{section.mark}</span>
-            <span class="media-format-arrow" aria-hidden="true">↗</span>
-            <h2>{section.label}</h2>
-            <p>{section.description}</p>
-            <span class="media-format-link">Open on YouTube</span>
-          </a>
+      <div class="media-platform-grid">
+        {platforms.map((platform) => (
+          <article class:list={["media-platform-card", `media-platform-card--${platform.className}`]}>
+            <div class="media-platform-top">
+              <span class="media-platform-mark" aria-hidden="true">{platform.mark}</span>
+              <span class="media-platform-label">{platform.name}</span>
+            </div>
+            <p class="media-platform-handle">{platform.handle}</p>
+            <p class="media-platform-description">{platform.description}</p>
+            {platform.formats.length > 0 && (
+              <nav class="media-format-links" aria-label={`Browse ${platform.name} formats`}>
+                {platform.formats.map((format) => (
+                  <a href={format.href} target="_blank" rel="noopener noreferrer">{format.label}<span aria-hidden="true">↗</span></a>
+                ))}
+              </nav>
+            )}
+            <a class="media-platform-action" href={platform.href} target="_blank" rel="noopener noreferrer">
+              {platform.action} <span aria-hidden="true">↗</span>
+            </a>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section-block media-note-section">
-    <div class="container media-note">
-      <div>
-        <p class="eyebrow">A growing collection</p>
-        <h2>Selected videos will be featured here.</h2>
-        <p>
-          This page currently links directly to the channel's real video sections. Individual featured entries can be added as specific uploads are selected, so the site never displays made-up or outdated video cards.
-        </p>
+  <section class="section-block media-feed-section" aria-labelledby="trending-title">
+    <div class="container">
+      <div class="section-heading media-feed-heading">
+        <div>
+          <p class="eyebrow">Picked from my uploads</p>
+          <h2 id="trending-title">Featured & trending</h2>
+        </div>
+        <p class="section-intro">A shortlist of my videos. Popularity labels and view counts will only appear when verified platform data is available.</p>
       </div>
-      <a class="button button-secondary" href="/links/">All creator links <span aria-hidden="true">↗</span></a>
+      <div class="media-empty-state">
+        <span class="media-empty-mark" aria-hidden="true">✳</span>
+        <div>
+          <h3>Featured videos are coming here.</h3>
+          <p>Once specific uploads are selected and their details are verified, they can appear here with thumbnails, platform labels, view counts, and an option to watch on this page.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block media-latest-section" aria-labelledby="latest-title">
+    <div class="container">
+      <div class="section-heading media-feed-heading">
+        <div>
+          <p class="eyebrow">Across both platforms</p>
+          <h2 id="latest-title">Latest posts</h2>
+        </div>
+        <p class="section-intro">New uploads will be listed here after the platform connections are configured.</p>
+      </div>
+      <div class="media-latest-panel">
+        <div>
+          <span class="media-sync-indicator" aria-hidden="true"></span>
+          <strong>Automatic updates are not connected yet</strong>
+        </div>
+        <p>The page will show the last successful sync time when the YouTube and TikTok integrations are available. No fake live status or estimated view counts will be shown.</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
