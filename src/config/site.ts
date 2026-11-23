@@ -4,6 +4,7 @@ export const siteConfig = {
   navigation: [
     { label: "Home", href: "/" },
     { label: "Gaming", href: "/content/" },
+    { label: "Media", href: "/media/" },
     { label: "Community", href: "/community/" },
     { label: "About", href: "/about/" },
   ],
