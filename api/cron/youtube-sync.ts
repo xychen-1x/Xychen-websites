@@ -21,7 +21,10 @@ async function handleRequest(request: Request): Promise<Response> {
     return json({ error: "Unauthorized." }, 401);
   }
 
-  if (!process.env.YOUTUBE_API_KEY || !process.env.BLOB_READ_WRITE_TOKEN) {
+  const hasBlobConnection = Boolean(
+    process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN,
+  );
+  if (!process.env.YOUTUBE_API_KEY || !hasBlobConnection) {
     return json({ error: "YouTube sync is not configured." }, 503);
   }
 
