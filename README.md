@@ -69,3 +69,10 @@ The project uses static output and is deployed on Vercel. Pull requests run the 
 ## Contribution workflow
 
 Create a feature branch and open a pull request against `main`. Changes should pass the CI check and production build before merging.
+
+
+## Automatic YouTube media sync
+
+The Media page can display the latest 24 public uploads from the `@xychenxycz` channel. The feed is refreshed once daily by Vercel Cron and saved as a private Vercel Blob snapshot. Public page views read the stored snapshot and do not call the YouTube API directly.
+
+See [YouTube daily sync setup](docs/youtube-sync-setup.md) for required Vercel storage and environment configuration. The integration reports view counts as daily snapshots, not live metrics. TikTok synchronization remains a separate future phase.
