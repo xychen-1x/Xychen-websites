@@ -14,10 +14,7 @@ const searchableText = [
   article.data.description,
   article.data.game ?? "",
   article.data.category,
-  article.data.verificationStatus,
   ...article.data.tags,
-  ...article.data.sources.flatMap((source) => [source.name, source.url]),
-  article.body ?? "",
 ].join(" ");
 ---
 <article class="content-card" data-search-text={searchableText}>
