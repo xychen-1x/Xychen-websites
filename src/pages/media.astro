@@ -2,6 +2,12 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "@styles/media.css";
 
+const featuredTikToks = [
+  { label: "Featured TikTok 01", href: "https://vt.tiktok.com/ZSsLALB2v/" },
+  { label: "Featured TikTok 02", href: "https://vt.tiktok.com/ZSsLSgN91/" },
+  { label: "Featured TikTok 03", href: "https://vt.tiktok.com/ZSsLSaqhS/" },
+];
+
 const platforms = [
   {
     name: "YouTube",
@@ -92,13 +98,24 @@ const platforms = [
         </div>
         <p class="section-intro">A shortlist of my videos. Popularity labels and view counts will only appear when verified platform data is available.</p>
       </div>
-      <div class="media-empty-state">
-        <span class="media-empty-mark" aria-hidden="true">✳</span>
-        <div>
-          <h3>Featured videos are coming here.</h3>
-          <p>Once specific uploads are selected and their details are verified, they can appear here with thumbnails, platform labels, view counts, and an option to watch on this page.</p>
-        </div>
+      <div class="media-featured-grid">
+        {featuredTikToks.map((video) => (
+          <article class="media-featured-card">
+            <div class="media-featured-art" aria-hidden="true">
+              <span>♪</span>
+              <small>TIKTOK</small>
+            </div>
+            <div class="media-featured-content">
+              <p class="media-featured-platform">My TikTok upload</p>
+              <h3>{video.label}</h3>
+              <a href={video.href} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.label} on TikTok`}>
+                Watch on TikTok <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+        ))}
       </div>
+      <p class="media-featured-note">These are direct links to selected posts from my TikTok account. Video thumbnails, embedded playback, and view counts will be added only after the post details can be verified.</p>
     </div>
   </section>
 
@@ -137,6 +154,16 @@ const platforms = [
     .media-platform-card--tiktok .media-platform-mark { background:#202020; color:#fff; }
     .media-feed-section { padding-top:34px; }
     .media-empty-state,.media-latest-panel { display:flex; align-items:flex-start; gap:20px; padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 82%,transparent); }
+    .media-featured-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .media-featured-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); box-shadow:var(--shadow-soft); }
+    .media-featured-art { min-height:150px; display:flex; align-items:center; justify-content:center; position:relative; background:linear-gradient(135deg,#18251d,#435d42); color:#fff; }
+    .media-featured-art > span { font-size:3rem; font-weight:900; }
+    .media-featured-art small { position:absolute; right:14px; bottom:12px; font-size:.68rem; font-weight:850; letter-spacing:.14em; }
+    .media-featured-content { padding:18px; }
+    .media-featured-platform { margin:0 0 6px; color:var(--muted); font-size:.75rem; font-weight:750; }
+    .media-featured-content h3 { margin:0; font-size:1.08rem; }
+    .media-featured-content a { display:inline-flex; gap:8px; margin-top:16px; color:var(--accent); font-size:.86rem; font-weight:800; }
+    .media-featured-note { margin:14px 0 0; color:var(--muted); font-size:.84rem; }
     .media-empty-mark { flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; }
     .media-empty-state h3 { margin:0; font-size:1.2rem; letter-spacing:-.03em; }
     .media-empty-state p,.media-latest-panel p { max-width:760px; margin:8px 0 0; color:var(--muted); }
@@ -146,7 +173,7 @@ const platforms = [
     .media-sync-indicator { width:9px; height:9px; border-radius:50%; background:var(--muted); }
     .media-latest-panel p { margin-left:20px; }
     @media (max-width:760px) {
-      .media-platform-grid { grid-template-columns:1fr; }
+      .media-platform-grid,.media-featured-grid { grid-template-columns:1fr; }
       .media-hero-actions { align-items:stretch; flex-direction:column; max-width:290px; }
       .media-empty-state { gap:14px; }
     }
