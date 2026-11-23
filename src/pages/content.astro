@@ -77,7 +77,11 @@ const articles = (await getCollection("articles"))
         if (matches) visibleCount += 1;
       }
 
-      if (status) status.textContent = query ? "Search results updated" : "Showing published articles";
+      if (status) {
+        status.textContent = query
+          ? `Found ${visibleCount} of ${cards.length} published articles`
+          : `Showing all ${cards.length} published articles`;
+      }
       if (empty) empty.hidden = visibleCount !== 0;
     }
 
