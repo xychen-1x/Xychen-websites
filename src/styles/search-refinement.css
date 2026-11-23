@@ -1,0 +1,29 @@
+.header-home-link { flex: 0 0 auto; color: var(--text); font-size: 1.08rem; font-weight: 900; letter-spacing: .08em; }
+.header-home-link:hover { color: var(--accent); }
+.site-search-dialog {
+  width: min(560px, calc(100% - 32px)); max-width: none; margin: auto; padding: 0;
+  border: 1px solid var(--line); border-radius: 18px; color: var(--text);
+  background: var(--surface-raised); box-shadow: var(--shadow-raised);
+}
+.site-search-dialog::backdrop { background: rgb(13 25 16 / 55%); backdrop-filter: blur(4px); }
+.site-search-form { display: grid; gap: 14px; padding: clamp(20px, 4vw, 30px); }
+.site-search-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.site-search-heading h2 { margin: 0; font-size: 1.35rem; }
+.site-search-close { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; color: var(--text); background: transparent; font-size: 1.4rem; cursor: pointer; }
+.site-search-form label { color: var(--muted); font-size: .9rem; font-weight: 650; }
+.site-search-field { display: flex; gap: 8px; }
+.site-search-field input { min-width: 0; flex: 1; min-height: 48px; padding: 0 13px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--page); font: inherit; }
+.site-search-field button, .mobile-menu nav button { min-height: 44px; padding: 0 16px; border: 0; border-radius: 10px; color: var(--accent-ink); background: var(--accent); font: inherit; font-weight: 750; cursor: pointer; }
+.site-search-form > p { margin: 0; color: var(--muted); font-size: .82rem; }
+.content-search { display: grid; gap: 8px; max-width: 680px; margin: 0 0 22px; }
+.content-search label { color: var(--text); font-size: .9rem; font-weight: 700; }
+.content-search input { width: 100%; min-height: 48px; padding: 0 15px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--surface-raised); font: inherit; }
+.content-search input:focus-visible, .site-search-field input:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 2px; }
+.content-search-status, .content-search-empty { margin: 0; color: var(--muted); font-size: .84rem; }
+.content-search-empty { padding-block: 20px; }
+.content-card[hidden] { display: none !important; }
+.xy-pillar-card { border-color: transparent !important; }
+.xy-creator-note-inner { border: 0 !important; }
+.xy-latest { background: transparent !important; border-color: transparent !important; }
+.site-footer { background: color-mix(in srgb, var(--surface) 56%, transparent) !important; border-top-color: transparent !important; }
+@media (max-width: 520px) { .site-search-field { flex-direction: column; } .site-search-field button { width: 100%; } }

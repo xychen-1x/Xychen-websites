@@ -46,7 +46,6 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
         <a class="xy-button xy-button-primary" href="/content/">Explore gaming <span aria-hidden="true">↗</span></a>
         <a class="xy-button xy-button-secondary" href="#community">Meet the community</a>
       </div>
-      <span class="xy-hero-caption" aria-hidden="true">YOUR LITTLE CORNER OF THE INTERNET</span>
     </div>
   </section>
 
@@ -61,7 +60,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
           <span class="xy-art-tag">PLAY & DISCOVER</span>
         </div>
         <div class="xy-pillar-copy">
-          <span class="xy-pillar-kicker">01 · Gaming</span>
+          <span class="xy-pillar-kicker">Gaming</span>
           <h2>Find your next discovery.</h2>
           <p>Explore guides, tips, discoveries, and carefully sourced updates for games Xychen covers.</p>
           <span class="xy-pillar-link">Explore gaming <span aria-hidden="true">↗</span></span>
@@ -71,9 +70,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
       <a
         class="xy-pillar-card xy-pillar-community"
         id="community"
-        href="https://discord.com/invite/xychen-server-1417846380432719915"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/community/"
       >
         <div class="xy-pillar-art xy-pillar-art-community" aria-hidden="true">
           <span class="xy-community-flower xy-flower-one"></span>
@@ -81,7 +78,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
           <span class="xy-art-tag">MEET & CONNECT</span>
         </div>
         <div class="xy-pillar-copy">
-          <span class="xy-pillar-kicker">02 · Community</span>
+          <span class="xy-pillar-kicker">Community</span>
           <h2>Good things grow together.</h2>
           <p>Visit the Discord community to chat, connect, and keep up with the people around XYCHEN.</p>
           <span class="xy-pillar-link">Visit the community <span aria-hidden="true">↗</span></span>
@@ -95,7 +92,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
           <span class="xy-art-tag">MAKE & SHARE</span>
         </div>
         <div class="xy-pillar-copy">
-          <span class="xy-pillar-kicker">03 · Creator</span>
+          <span class="xy-pillar-kicker">Creator</span>
           <h2>A little about the creator.</h2>
           <p>Get to know Xychen, explore projects, and find the official social channels.</p>
           <span class="xy-pillar-link">Meet Xychen <span aria-hidden="true">↗</span></span>
@@ -120,7 +117,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-PH", {
             <article class="xy-article-card">
               <div class="xy-article-topline">
                 <span>{categoryLabels[article.data.category] ?? "Article"}</span>
-                <time datetime={article.data.pubDate.toISOString()}>{dateFormatter.format(article.data.pubDate)}</time>
+                {(article.data.category === "updates" || article.data.category === "announcements" || article.data.verificationStatus === "unconfirmed") && <time datetime={article.data.pubDate.toISOString()}>{dateFormatter.format(article.data.pubDate)}</time>}
               </div>
               <p class="xy-article-game">{article.data.game ?? "Gaming"}</p>
               <h3><a href={`/content/${article.id}/`}>{article.data.title}</a></h3>

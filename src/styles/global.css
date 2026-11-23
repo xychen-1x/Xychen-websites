@@ -854,3 +854,104 @@ img, svg { max-width: 100%; }
   .content-card-copy { min-height: 0; padding: 19px; }
   .content-card-copy h2 { margin-top: 22px; }
 }
+
+
+/* XYCHEN woodland treatment: preserve the base design system and keep the shared photo visible. */
+body {
+  background-color: var(--page);
+  background-image: url("/assets/backgrounds/40ca2ce2bafa78c55d43a1289ef2785a.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.site-header {
+  background: color-mix(in srgb, var(--page) 58%, transparent);
+  border-bottom-color: transparent;
+  backdrop-filter: blur(8px);
+}
+.page-hero,
+.article-hero,
+.content-latest-section,
+.garden-content-section,
+.about-content-section,
+.community-links-section,
+.community-note-section,
+.section-block {
+  background-color: transparent;
+}
+.content-category-card,
+.content-card,
+.feature-card,
+.content-empty-state,
+.notice,
+.xy-article-card,
+.xy-empty-state,
+.xy-creator-note-inner,
+.garden-status-panel,
+.community-social-card {
+  background-color: color-mix(in srgb, var(--surface) 76%, transparent);
+  border-color: color-mix(in srgb, var(--line) 65%, transparent);
+}
+.content-card-visual {
+  min-height: 142px;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgb(19 38 23 / 10%), rgb(19 38 23 / 58%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+}
+.content-card-visual span { font-size: 1.05rem; font-weight: 800; text-shadow: 0 1px 8px rgb(0 0 0 / 55%); }
+.gaming-image-card {
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgb(19 38 23 / 36%), rgb(19 38 23 / 68%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+}
+.gaming-image-card h2,
+.gaming-image-card p,
+.gaming-image-card .content-category-count { color: #fff; text-shadow: 0 1px 7px rgb(0 0 0 / 45%); }
+.gaming-image-card .content-category-count { border-top: 1px solid rgb(255 255 255 / 32%); }
+.community-hero {
+  min-height: 410px;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgb(15 31 19 / 70%), rgb(15 31 19 / 22%)),
+    url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
+}
+.community-hero-inner { padding-block: clamp(72px, 10vw, 120px); }
+.community-hero-copy { max-width: 650px; color: #fff; }
+.community-hero-copy .eyebrow,
+.community-hero-copy .page-lead { color: #fff; }
+.community-hero-copy h1 { margin: 0; color: #fff; font-size: clamp(3rem, 7vw, 5.4rem); line-height: 1; letter-spacing: -.065em; }
+.community-hero-copy h1 span { color: #D5F0A4; }
+.community-hero-copy .page-lead { margin: 20px 0 26px; }
+.community-social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.community-social-card { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 13px; color: var(--text); font-weight: 750; }
+.community-social-card span:last-child { color: var(--accent); }
+.community-social-card:hover { border-color: var(--accent); }
+.community-note-section h2 { margin: 0 0 12px; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.community-note-section p { color: var(--muted); }
+.about-hero .page-lead { max-width: 590px; }
+.about-copy a { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.site-search-dialog { margin: auto; }
+@media (max-width: 760px) {
+  body { background-attachment: scroll; }
+  .community-hero { min-height: 390px; background-position: 58% center; }
+  .community-social-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) { .community-social-grid { grid-template-columns: 1fr; } }
+:root[data-theme="dark"] body { background-color: #17291D; }
+:root[data-theme="dark"] .content-card,
+:root[data-theme="dark"] .content-category-card,
+:root[data-theme="dark"] .community-social-card,
+:root[data-theme="dark"] .xy-article-card,
+:root[data-theme="dark"] .xy-creator-note-inner {
+  background-color: color-mix(in srgb, var(--surface) 78%, transparent);
+  border-color: color-mix(in srgb, var(--line) 75%, transparent);
+}

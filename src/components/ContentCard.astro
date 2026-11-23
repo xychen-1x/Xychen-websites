@@ -1,58 +1,39 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getContentCategoryLabel } from "../config/content";
-
-interface Props {
-  article: CollectionEntry<"articles">;
-}
-
+interface Props { article: CollectionEntry<"articles">; }
 const { article } = Astro.props;
 const categoryLabel = getContentCategoryLabel(article.data.category);
-const publishedDate = new Intl.DateTimeFormat("en-PH", {
-  dateStyle: "medium",
-}).format(article.data.pubDate);
-
 const verificationLabel = {
   verified: "Source checked",
   unconfirmed: "Unconfirmed",
   editorial: "Original",
 }[article.data.verificationStatus];
-
-const categoryIndex = {
-  guides: "01",
-  tips: "02",
-  discoveries: "03",
-  updates: "04",
-  announcements: "05",
-}[article.data.category] ?? "00";
+const searchableText = [
+  article.data.title,
+  article.data.description,
+  article.data.game ?? "",
+  article.data.category,
+  article.data.verificationStatus,
+  ...article.data.tags,
+  ...article.data.sources.flatMap((source) => [source.name, source.url]),
+  article.body ?? "",
+].join(" ");
 ---
-
-<article class="content-card">
+<article class="content-card" data-search-text={searchableText}>
   <a class="content-card-link" href={`/content/${article.id}/`}>
-    <div
-      class:list={["content-card-visual", `content-card-visual--${article.data.category}`]}
-      aria-hidden="true"
-    >
-      <span class="content-card-visual-index">{categoryIndex} / XYCHEN CONTENT</span>
-      <span class="content-card-visual-title">{categoryLabel}</span>
-      <span class="content-card-visual-mark"></span>
-    </div>
+    <div class="content-card-visual" aria-hidden="true"><span>{categoryLabel}</span></div>
     <div class="content-card-copy">
       <div class="content-card-meta">
         <span class="content-card-category">{categoryLabel}</span>
-        <time datetime={article.data.pubDate.toISOString()}>{publishedDate}</time>
+        {(article.data.category === "updates" || article.data.category === "announcements" || article.data.verificationStatus === "unconfirmed") && (
+          <time datetime={article.data.pubDate.toISOString()}>{new Intl.DateTimeFormat("en-PH", { dateStyle: "medium" }).format(article.data.pubDate)}</time>
+        )}
       </div>
       <h2>{article.data.title}</h2>
       <p>{article.data.description}</p>
       <div class="content-card-footer">
-        <span
-          class:list={[
-            "content-verification",
-            `content-verification--${article.data.verificationStatus}`,
-          ]}
-        >
-          {verificationLabel}
-        </span>
+        <span class:list={["content-verification", `content-verification--${article.data.verificationStatus}`]}>{verificationLabel}</span>
         <span class="content-card-read">Read article <span aria-hidden="true">↗</span></span>
       </div>
     </div>

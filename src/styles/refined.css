@@ -1,0 +1,166 @@
+/* Shared visual refinement: compact spacing, restrained surfaces, and clear responsive layouts. */
+:root {
+  --page-gutter: clamp(16px, 3vw, 28px);
+}
+
+.container {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--max-width));
+}
+
+.site-header {
+  background: color-mix(in srgb, var(--page) 94%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  min-height: 68px;
+}
+
+.desktop-nav a,
+.mobile-menu nav a {
+  padding: 8px 11px;
+}
+
+.section-block {
+  padding-block: clamp(48px, 6vw, 76px);
+}
+
+.page-hero {
+  padding-block: clamp(64px, 8vw, 92px) clamp(38px, 5vw, 58px);
+}
+
+.page-hero .page-lead {
+  max-width: 650px;
+  margin-top: 18px;
+  line-height: 1.65;
+}
+
+.section-heading {
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.feature-grid,
+.content-category-grid,
+.content-grid {
+  gap: clamp(12px, 1.8vw, 18px);
+}
+
+.feature-card,
+.content-category-card,
+.content-card,
+.content-empty-state,
+.notice,
+.hero-side-panel {
+  box-shadow: none;
+  border-radius: 14px;
+}
+
+.feature-card {
+  min-height: 210px;
+  padding: 22px;
+}
+
+.feature-card h3,
+.feature-card h2 {
+  margin-top: 28px;
+}
+
+.content-category-card {
+  min-height: 190px;
+  padding: 21px;
+}
+
+.content-category-card h2 {
+  margin-top: 22px;
+}
+
+.content-card-link {
+  min-height: 220px;
+}
+
+.external-link-row {
+  padding-block: 17px;
+}
+
+.prose h2 {
+  margin-top: 30px;
+}
+
+:where(a, button, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 760px) {
+  .header-inner {
+    min-height: 62px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu {
+    position: relative;
+    display: block;
+  }
+
+  .mobile-menu summary {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+  }
+
+  .mobile-menu nav {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 25;
+    width: min(260px, calc(100vw - 32px));
+    display: grid;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .mobile-menu nav a {
+    display: block;
+    padding: 11px 12px;
+    border-radius: 8px;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-intro {
+    margin-top: 12px;
+  }
+
+  .feature-grid,
+  .content-category-grid,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card:last-child {
+    grid-column: auto;
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
