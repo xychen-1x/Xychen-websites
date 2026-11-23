@@ -46,51 +46,42 @@ const platforms = [
   title="Media"
   description="Watch Xychen's own TikTok and YouTube videos, clips, Shorts, and livestreams."
 >
-  <section class="media-hero page-hero">
-    <div class="container media-hero-inner">
-      <p class="eyebrow">Xychen · Creator media</p>
-      <h1>Videos, clips, <span>and moments.</span></h1>
-      <p class="page-lead">
-        One place for my uploads on TikTok and YouTube. Browse each platform or explore selected videos as this collection grows.
-      </p>
-      <div class="media-hero-actions">
-        <a class="button button-primary" href="#platforms">Explore platforms <span aria-hidden="true">↓</span></a>
-        <a class="button media-hero-secondary" href="/links/">All links <span aria-hidden="true">↗</span></a>
-      </div>
+  <section class="section-block creator-profile-section" aria-labelledby="creator-profile-title">
+    <div class="container">
+      <article class="creator-profile-card">
+        <div class="creator-profile-main">
+          <div class="creator-avatar" aria-hidden="true">X</div>
+          <div class="creator-profile-copy">
+            <p class="eyebrow">CREATOR PROFILE</p>
+            <h1 id="creator-profile-title">Xychen</h1>
+            <p class="creator-handle">@x1ychen · Roblox gaming creator</p>
+            <p class="creator-bio">Gameplay, clips, guides, discoveries, and updates from my own channels.</p>
+          </div>
+        </div>
+        <div class="creator-profile-platforms" aria-label="Xychen's social accounts">
+          <a class="creator-platform-link creator-platform-link--youtube" href="https://www.youtube.com/@xychenxycz" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.simpleicons.org/youtube/FF0033" alt="" width="22" height="22" loading="lazy" />
+            <span><strong>YouTube</strong><small>@xychenxycz</small></span>
+            <span class="creator-platform-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="creator-platform-link creator-platform-link--tiktok" href="https://www.tiktok.com/@x1ychen" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.simpleicons.org/tiktok/111111" alt="" width="22" height="22" loading="lazy" />
+            <span><strong>TikTok</strong><small>@x1ychen</small></span>
+            <span class="creator-platform-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
     </div>
   </section>
 
-  <section class="section-block media-platform-section" id="platforms" aria-labelledby="platforms-title">
+  <section class="section-block media-content-intro" aria-labelledby="media-content-title">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">My channels</p>
-          <h2 id="platforms-title">Find me on</h2>
+          <p class="eyebrow">CREATOR LIBRARY</p>
+          <h2 id="media-content-title">Content</h2>
         </div>
-        <p class="section-intro">Only content published on my own accounts is included here.</p>
-      </div>
-
-      <div class="media-platform-grid">
-        {platforms.map((platform) => (
-          <article class:list={["media-platform-card", `media-platform-card--${platform.className}`]}>
-            <div class="media-platform-top">
-              <span class="media-platform-mark" aria-hidden="true">{platform.mark}</span>
-              <span class="media-platform-label">{platform.name}</span>
-            </div>
-            <p class="media-platform-handle">{platform.handle}</p>
-            <p class="media-platform-description">{platform.description}</p>
-            {platform.formats.length > 0 && (
-              <nav class="media-format-links" aria-label={`Browse ${platform.name} formats`}>
-                {platform.formats.map((format) => (
-                  <a href={format.href} target="_blank" rel="noopener noreferrer">{format.label}<span aria-hidden="true">↗</span></a>
-                ))}
-              </nav>
-            )}
-            <a class="media-platform-action" href={platform.href} target="_blank" rel="noopener noreferrer">
-              {platform.action} <span aria-hidden="true">↗</span>
-            </a>
-          </article>
-        ))}
+        <p class="section-intro">Videos and posts published on my own accounts, collected in one place.</p>
       </div>
     </div>
   </section>
@@ -143,7 +134,7 @@ const platforms = [
                 ></iframe>
               </div>
               <div class="media-short-caption">
-                <strong>{video.label}</strong>
+                <strong class="media-short-platform"><img src="https://cdn.simpleicons.org/youtube/FF0033" alt="" width="18" height="18" loading="lazy" /> {video.label}</strong>
                 <a href={`https://youtube.com/shorts/${video.id}`} target="_blank" rel="noopener noreferrer">Open on YouTube <span aria-hidden="true">↗</span></a>
               </div>
             </article>
@@ -383,5 +374,48 @@ const platforms = [
     }
     @media (prefers-reduced-motion:reduce) { .media-platform-card { transition:none; } }
     :root[data-theme="dark"] .media-platform-card,:root[data-theme="dark"] .media-latest-panel { background:color-mix(in srgb,var(--surface) 86%,transparent); }
+    .creator-profile-section { padding-top:clamp(30px,5vw,58px); }
+    .creator-profile-card { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,.72fr); gap:28px; align-items:center; padding:clamp(22px,4vw,38px); border:1px solid var(--line); border-radius:calc(var(--radius-card) + 6px); background:var(--surface); box-shadow:var(--shadow-soft); }
+    .creator-profile-main { display:flex; align-items:center; gap:22px; min-width:0; }
+    .creator-avatar { width:clamp(76px,11vw,104px); height:clamp(76px,11vw,104px); flex:0 0 auto; display:grid; place-items:center; border-radius:28px; background:var(--accent-soft); color:var(--accent); font-size:2.5rem; font-weight:900; letter-spacing:-.08em; }
+    .creator-profile-copy .eyebrow { margin:0 0 8px; }
+    .creator-profile-copy h1 { margin:0; font-size:clamp(2rem,5vw,3.2rem); line-height:1; letter-spacing:-.065em; }
+    .creator-handle { margin:9px 0 0; color:var(--muted); font-size:.9rem; font-weight:750; }
+    .creator-bio { max-width:520px; margin:13px 0 0; color:var(--muted); line-height:1.65; }
+    .creator-profile-platforms { display:grid; gap:10px; }
+    .creator-platform-link { display:flex; align-items:center; gap:13px; min-width:0; padding:14px 15px; border:1px solid var(--line); border-radius:16px; color:inherit; background:color-mix(in srgb,var(--surface) 80%,var(--accent-soft)); transition:border-color .18s ease,transform .18s ease; }
+    .creator-platform-link:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .creator-platform-link img { flex:0 0 auto; object-fit:contain; }
+    .creator-platform-link > span:nth-child(2) { display:grid; gap:3px; min-width:0; }
+    .creator-platform-link strong { font-size:.9rem; }
+    .creator-platform-link small { color:var(--muted); font-size:.78rem; }
+    .creator-platform-arrow { margin-left:auto; color:var(--muted); }
+    .media-content-intro { padding-top:clamp(30px,5vw,52px); padding-bottom:8px; }
+    .media-featured-art { min-height:130px; }
+    .media-featured-art img { display:block; object-fit:contain; }
+    .media-short-platform { display:flex; align-items:center; gap:8px; }
+    .media-short-platform img { object-fit:contain; }
+    .media-featured-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .media-featured-card,.media-short-card,.media-latest-card { border-radius:18px; }
+    @media (max-width:760px) {
+      .creator-profile-card { grid-template-columns:1fr; gap:22px; }
+      .creator-profile-main { align-items:flex-start; gap:16px; }
+      .creator-avatar { border-radius:22px; }
+      .creator-profile-platforms { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .creator-platform-link { gap:9px; padding:12px 10px; }
+      .creator-platform-link img { width:19px; height:19px; }
+      .creator-platform-arrow { display:none; }
+      .media-featured-grid,.media-shorts-grid,.media-latest-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .media-short-card,.media-latest-card { max-width:none; margin:0; }
+    }
+    @media (max-width:460px) {
+      .creator-profile-platforms { grid-template-columns:1fr; }
+      .media-featured-grid,.media-shorts-grid,.media-latest-grid { grid-template-columns:1fr; }
+      .media-short-card,.media-latest-card { max-width:360px; margin-inline:auto; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .creator-platform-link { transition:none; }
+      .creator-platform-link:hover { transform:none; }
+    }
   </style>
 </BaseLayout>
