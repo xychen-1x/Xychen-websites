@@ -17,7 +17,11 @@ const searchableText = [
   ...article.data.tags,
 ].join(" ");
 ---
-<article class="content-card" data-search-text={searchableText}>
+<article
+  class="content-card"
+  data-category={article.data.category}
+  data-search-text={searchableText}
+>
   <a class="content-card-link" href={`/content/${article.id}/`}>
     <div class="content-card-visual" aria-hidden="true"><span>{categoryLabel}</span></div>
     <div class="content-card-copy">

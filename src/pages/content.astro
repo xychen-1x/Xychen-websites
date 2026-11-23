@@ -3,10 +3,18 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContentCard from "@components/ContentCard.astro";
 import { contentCategories } from "@config/content";
+import "@styles/content-hub.css";
 
 const articles = (await getCollection("articles"))
   .filter((article) => article.data.publicationStatus === "published")
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const categoryCounts = Object.fromEntries(
+  contentCategories.map((category) => [
+    category.slug,
+    articles.filter((article) => article.data.category === category.slug).length,
+  ]),
+) as Record<(typeof contentCategories)[number]["slug"], number>;
 ---
 
 <BaseLayout title="Gaming" description="Browse published game guides, tips, discoveries, and updates from Xychen.">
@@ -18,74 +26,212 @@ const articles = (await getCollection("articles"))
     </div>
   </section>
 
-  <section class="section-block gaming-category-section">
+  <section class="section-block gaming-category-section" aria-labelledby="content-categories-title">
     <div class="container">
       <div class="section-heading">
-        <div><p class="eyebrow">Browse by topic</p><h2>Categories</h2></div>
-        <p class="section-intro">Choose a topic to see its published articles.</p>
+        <div>
+          <p class="eyebrow">Browse by topic</p>
+          <h2 id="content-categories-title">Categories</h2>
+        </div>
+        <p class="section-intro">Choose a category to filter the library instantly. Each category also has a dedicated page.</p>
       </div>
+
+      <div class="content-filter-toolbar">
+        <button
+          class="content-filter-reset"
+          type="button"
+          data-category-filter="all"
+          data-category-label="All content"
+          aria-pressed="true"
+        >
+          All content
+        </button>
+      </div>
+
       <div class="content-category-grid">
         {contentCategories.map((category) => (
-          <a class="content-category-card gaming-image-card" href={`/content/category/${category.slug}/`}>
-            <h2>{category.label}</h2>
+          <article class="content-category-card gaming-image-card">
+            <h2>
+              <button
+                class="content-category-filter"
+                type="button"
+                data-category-filter={category.slug}
+                data-category-label={category.label}
+                aria-pressed="false"
+              >
+                {category.label}
+              </button>
+            </h2>
             <p>{category.description}</p>
-            <span class="content-category-count">Browse <span aria-hidden="true">↗</span></span>
-          </a>
+            <div class="content-category-footer">
+              <span class="content-category-count">
+                {categoryCounts[category.slug]} published {categoryCounts[category.slug] === 1 ? "article" : "articles"}
+              </span>
+              <a class="content-category-open" href={`/content/category/${category.slug}/`}>
+                Open page <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section-block content-latest-section">
+  <section class="section-block content-latest-section" aria-labelledby="content-results-title">
     <div class="container">
       <div class="section-heading">
-        <div><p class="eyebrow">Published library</p><h2>Gaming content</h2></div>
+        <div>
+          <p class="eyebrow">Published library</p>
+          <h2 id="content-results-title" data-results-heading>All published content</h2>
+        </div>
       </div>
+
       <div class="content-search">
         <label for="content-search">Search published content</label>
-        <input id="content-search" type="search" placeholder="Search guides, seeds, mechanics, updates…" autocomplete="off">
-        <p class="content-search-status" aria-live="polite">Showing published articles</p>
+        <input
+          id="content-search"
+          type="search"
+          placeholder="Search guides, seeds, mechanics, updates…"
+          autocomplete="off"
+        >
+        <p class="content-search-status" aria-live="polite">
+          Showing all {articles.length} published {articles.length === 1 ? "article" : "articles"}
+        </p>
       </div>
-      {articles.length > 0 ? (
-        <div class="content-grid" data-search-grid>
-          {articles.map((article) => <ContentCard article={article} />)}
-        </div>
-      ) : (
-        <div class="content-empty-state"><h2>No published articles yet.</h2><p>Articles will appear here after they are ready for publication.</p></div>
-      )}
-      <p class="content-search-empty" data-search-empty hidden>No matching published articles. Try another search.</p>
+
+      <div class="content-grid" data-search-grid>
+        {articles.map((article) => <ContentCard article={article} />)}
+      </div>
+
+      <div class="content-empty-state" data-filter-empty hidden={articles.length > 0}>
+        <h2 data-filter-empty-title>
+          {articles.length === 0 ? "No published articles yet." : "No matching published articles."}
+        </h2>
+        <p data-filter-empty-description>
+          {articles.length === 0
+            ? "Articles will appear here after their information and sources have been reviewed."
+            : "Try another search or choose a different category."}
+        </p>
+        <button
+          class="button button-secondary"
+          type="button"
+          data-clear-filters
+          hidden={articles.length === 0}
+        >
+          Clear filters
+        </button>
+      </div>
     </div>
   </section>
 
   <script>
     const input = document.querySelector<HTMLInputElement>("#content-search");
-    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-search-grid] .content-card"));
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-search-grid] .content-card"),
+    );
+    const filterButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>("[data-category-filter]"),
+    );
     const status = document.querySelector<HTMLElement>(".content-search-status");
-    const empty = document.querySelector<HTMLElement>("[data-search-empty]");
+    const empty = document.querySelector<HTMLElement>("[data-filter-empty]");
+    const emptyTitle = document.querySelector<HTMLElement>("[data-filter-empty-title]");
+    const emptyDescription = document.querySelector<HTMLElement>("[data-filter-empty-description]");
+    const clearButton = document.querySelector<HTMLButtonElement>("[data-clear-filters]");
+    const resultsHeading = document.querySelector<HTMLElement>("[data-results-heading]");
     const initialQuery = new URLSearchParams(window.location.search).get("q")?.trim() ?? "";
+
+    let activeCategory = "all";
 
     if (input && initialQuery) input.value = initialQuery;
 
-    function filterArticles() {
+    function updateResults() {
       const query = input?.value.trim().toLocaleLowerCase() ?? "";
+      const activeButton = filterButtons.find(
+        (button) => button.dataset.categoryFilter === activeCategory,
+      );
+      const activeLabel = activeButton?.dataset.categoryLabel ?? "All content";
       let visibleCount = 0;
+      const categoryCount = cards.filter(
+        (card) => activeCategory === "all" || card.dataset.category === activeCategory,
+      ).length;
+
+      for (const button of filterButtons) {
+        const isActive = button.dataset.categoryFilter === activeCategory;
+        button.setAttribute("aria-pressed", String(isActive));
+        button.closest(".content-category-card")?.classList.toggle("is-active", isActive);
+      }
 
       for (const card of cards) {
+        const categoryMatches =
+          activeCategory === "all" || card.dataset.category === activeCategory;
         const searchable = card.dataset.searchText ?? card.textContent ?? "";
-        const matches = searchable.toLocaleLowerCase().includes(query);
-        card.hidden = !matches;
-        if (matches) visibleCount += 1;
+        const queryMatches = searchable.toLocaleLowerCase().includes(query);
+        const isVisible = categoryMatches && queryMatches;
+
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
       }
 
+      const articleWord = visibleCount === 1 ? "article" : "articles";
       if (status) {
-        status.textContent = query
-          ? `Found ${visibleCount} of ${cards.length} published articles`
-          : `Showing all ${cards.length} published articles`;
+        if (query) {
+          status.textContent = `Found ${visibleCount} matching ${articleWord}${activeCategory === "all" ? "" : ` in ${activeLabel}`}`;
+        } else if (activeCategory === "all") {
+          status.textContent = `Showing all ${cards.length} published ${cards.length === 1 ? "article" : "articles"}`;
+        } else {
+          status.textContent = `Showing ${visibleCount} of ${categoryCount} published ${categoryCount === 1 ? "article" : "articles"} in ${activeLabel}`;
+        }
       }
-      if (empty) empty.hidden = visibleCount !== 0;
+
+      if (resultsHeading) {
+        resultsHeading.textContent = activeCategory === "all"
+          ? "All published content"
+          : activeLabel;
+      }
+
+      if (empty) {
+        empty.hidden = visibleCount > 0;
+      }
+
+      if (visibleCount === 0) {
+        if (emptyTitle) {
+          if (cards.length === 0) {
+            emptyTitle.textContent = "No published articles yet.";
+          } else if (query && activeCategory !== "all") {
+            emptyTitle.textContent = `No matching articles in ${activeLabel.toLowerCase()}.`;
+          } else if (query) {
+            emptyTitle.textContent = "No matching published articles.";
+          } else {
+            emptyTitle.textContent = `Nothing published in ${activeLabel.toLowerCase()} yet.`;
+          }
+        }
+
+        if (emptyDescription) {
+          emptyDescription.textContent = cards.length === 0
+            ? "Articles will appear here after their information and sources have been reviewed."
+            : query
+              ? "Try different keywords or clear the filters to see more published content."
+              : "This category is being prepared. Browse all content to see the articles that are currently available.";
+        }
+      }
     }
 
-    input?.addEventListener("input", filterArticles);
-    if (initialQuery) filterArticles();
+    for (const button of filterButtons) {
+      button.addEventListener("click", () => {
+        activeCategory = button.dataset.categoryFilter ?? "all";
+        updateResults();
+      });
+    }
+
+    input?.addEventListener("input", updateResults);
+
+    clearButton?.addEventListener("click", () => {
+      activeCategory = "all";
+      if (input) input.value = "";
+      updateResults();
+      input?.focus();
+    });
+
+    updateResults();
   </script>
 </BaseLayout>

@@ -15,9 +15,9 @@ export async function getStaticPaths() {
     params: { category: category.slug },
     props: {
       category,
-      articles: publishedArticles.filter(
-        (article) => article.data.category === category.slug,
-      ),
+      articles: publishedArticles
+        .filter((article) => article.data.category === category.slug)
+        .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
     },
   }));
 }
@@ -51,7 +51,7 @@ const { category, articles } = Astro.props as {
               <h2>Latest in {category.label.toLowerCase()}</h2>
             </div>
             <p class="section-intro">
-              Only published articles appear in this category.
+              {articles.length} published {articles.length === 1 ? "article" : "articles"} in this category.
             </p>
           </div>
           <div class="content-grid">
