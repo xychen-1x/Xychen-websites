@@ -1,5 +1,5 @@
 import { get } from "@vercel/blob";
-import { YOUTUBE_FEED_PATH, type YouTubeFeed } from "../lib/youtube";
+import { YOUTUBE_FEED_PATH, type YouTubeFeed } from "../lib/youtube.js";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
