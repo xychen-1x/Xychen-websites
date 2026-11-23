@@ -1,5 +1,5 @@
 import { get } from "@vercel/blob";
-import { YOUTUBE_FEED_PATH, type YouTubeFeed } from "./_lib/youtube";
+import { YOUTUBE_FEED_PATH, type YouTubeFeed } from "../lib/youtube";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -12,7 +12,7 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function handleRequest(request: Request): Promise<Response> {
   if (request.method !== "GET") {
     return json({ error: "Method not allowed." }, 405);
   }
@@ -51,3 +51,5 @@ export default async function handler(request: Request): Promise<Response> {
     return json({ status: "unavailable", lastSyncedAt: null, items: [] }, 503);
   }
 }
+
+export default { fetch: handleRequest };
