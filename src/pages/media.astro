@@ -8,6 +8,12 @@ const featuredTikToks = [
   { label: "Featured TikTok 03", href: "https://vt.tiktok.com/ZSsLSaqhS/" },
 ];
 
+const featuredYouTubeShorts = [
+  { id: "mJ4sNqUdTQQ", label: "YouTube Short 01" },
+  { id: "QLzWryv1i3E", label: "YouTube Short 02" },
+  { id: "rmLW6b0upuk", label: "YouTube Short 03" },
+];
+
 const platforms = [
   {
     name: "YouTube",
@@ -115,7 +121,36 @@ const platforms = [
           </article>
         ))}
       </div>
-      <p class="media-featured-note">These are direct links to selected posts from my TikTok account. Video thumbnails, embedded playback, and view counts will be added only after the post details can be verified.</p>
+      <div class="media-youtube-shorts">
+        <div class="media-subheading">
+          <div>
+            <p class="eyebrow">YouTube</p>
+            <h3>Selected Shorts</h3>
+          </div>
+          <a href="https://www.youtube.com/@xychenxycz/shorts" target="_blank" rel="noopener noreferrer">View all Shorts <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="media-shorts-grid">
+          {featuredYouTubeShorts.map((video) => (
+            <article class="media-short-card">
+              <div class="media-short-embed">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                  title={video.label}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="media-short-caption">
+                <strong>{video.label}</strong>
+                <a href={`https://youtube.com/shorts/${video.id}`} target="_blank" rel="noopener noreferrer">Open on YouTube <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <p class="media-featured-note">The YouTube Shorts above are embedded from the links provided. TikTok posts currently link directly to TikTok; their thumbnails, embedded playback, and verified view counts are not available in this page yet.</p>
     </div>
   </section>
 
@@ -164,6 +199,17 @@ const platforms = [
     .media-featured-content h3 { margin:0; font-size:1.08rem; }
     .media-featured-content a { display:inline-flex; gap:8px; margin-top:16px; color:var(--accent); font-size:.86rem; font-weight:800; }
     .media-featured-note { margin:14px 0 0; color:var(--muted); font-size:.84rem; }
+    .media-youtube-shorts { margin-top:34px; }
+    .media-subheading { display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .media-subheading .eyebrow { margin:0 0 5px; }
+    .media-subheading h3 { margin:0; font-size:1.35rem; letter-spacing:-.035em; }
+    .media-subheading > a,.media-short-caption a { color:var(--accent); font-size:.82rem; font-weight:800; }
+    .media-shorts-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .media-short-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); box-shadow:var(--shadow-soft); }
+    .media-short-embed { width:100%; aspect-ratio:9/16; background:#111; }
+    .media-short-embed iframe { display:block; width:100%; height:100%; border:0; }
+    .media-short-caption { display:flex; flex-direction:column; gap:8px; padding:14px; }
+    .media-short-caption strong { font-size:.9rem; }
     .media-empty-mark { flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; }
     .media-empty-state h3 { margin:0; font-size:1.2rem; letter-spacing:-.03em; }
     .media-empty-state p,.media-latest-panel p { max-width:760px; margin:8px 0 0; color:var(--muted); }
@@ -173,7 +219,9 @@ const platforms = [
     .media-sync-indicator { width:9px; height:9px; border-radius:50%; background:var(--muted); }
     .media-latest-panel p { margin-left:20px; }
     @media (max-width:760px) {
-      .media-platform-grid,.media-featured-grid { grid-template-columns:1fr; }
+      .media-platform-grid,.media-featured-grid,.media-shorts-grid { grid-template-columns:1fr; }
+      .media-short-card { max-width:340px; margin-inline:auto; width:100%; }
+      .media-subheading { align-items:flex-start; flex-direction:column; }
       .media-hero-actions { align-items:stretch; flex-direction:column; max-width:290px; }
       .media-empty-state { gap:14px; }
     }
