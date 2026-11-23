@@ -1,0 +1,83 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "@styles/media.css";
+
+const channelUrl = "https://www.youtube.com/@xychenxycz";
+const mediaSections = [
+  {
+    label: "Videos",
+    description: "Full gameplay uploads, walkthroughs, and longer videos.",
+    href: `${channelUrl}/videos`,
+    mark: "01",
+  },
+  {
+    label: "Shorts & Clips",
+    description: "Short gameplay moments, quick clips, and highlights.",
+    href: `${channelUrl}/shorts`,
+    mark: "02",
+  },
+  {
+    label: "Streams",
+    description: "Livestreams and saved broadcasts when available.",
+    href: `${channelUrl}/streams`,
+    mark: "03",
+  },
+];
+---
+
+<BaseLayout
+  title="Media"
+  description="Watch Xychen's Roblox and gaming videos, Shorts, clips, and livestreams."
+>
+  <section class="media-hero page-hero">
+    <div class="container media-hero-inner">
+      <p class="eyebrow">Creator media</p>
+      <h1>Watch, catch up, <span>and explore.</span></h1>
+      <p class="page-lead">
+        A home for Xychen's gaming videos, quick clips, and livestreams. Start with a format and browse the channel.
+      </p>
+      <a class="button button-primary media-channel-button" href={channelUrl} target="_blank" rel="noopener noreferrer">
+        Visit YouTube channel <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-block media-library-section" aria-labelledby="media-library-title">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Browse by format</p>
+          <h2 id="media-library-title">The media library</h2>
+        </div>
+        <p class="section-intro">
+          Choose what you want to watch. Each section opens the matching public tab on the official YouTube channel.
+        </p>
+      </div>
+
+      <div class="media-format-grid">
+        {mediaSections.map((section) => (
+          <a class="media-format-card" href={section.href} target="_blank" rel="noopener noreferrer">
+            <span class="media-format-index">{section.mark}</span>
+            <span class="media-format-arrow" aria-hidden="true">↗</span>
+            <h2>{section.label}</h2>
+            <p>{section.description}</p>
+            <span class="media-format-link">Open on YouTube</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block media-note-section">
+    <div class="container media-note">
+      <div>
+        <p class="eyebrow">A growing collection</p>
+        <h2>Selected videos will be featured here.</h2>
+        <p>
+          This page currently links directly to the channel's real video sections. Individual featured entries can be added as specific uploads are selected, so the site never displays made-up or outdated video cards.
+        </p>
+      </div>
+      <a class="button button-secondary" href="/links/">All creator links <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</BaseLayout>
