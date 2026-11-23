@@ -120,4 +120,37 @@ const platforms = [
       </div>
     </div>
   </section>
+  <style>
+    .media-hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+    .media-hero-secondary { border-color:rgb(255 255 255 / 45%); background:rgb(255 255 255 / 12%); color:#fff; }
+    .media-platform-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .media-platform-card { min-width:0; display:flex; flex-direction:column; align-items:flex-start; padding:clamp(22px,3vw,32px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 84%,transparent); box-shadow:var(--shadow-soft); }
+    .media-platform-top { display:flex; align-items:center; gap:12px; }
+    .media-platform-mark { width:44px; height:44px; display:grid; place-items:center; border-radius:13px; background:var(--accent-soft); color:var(--accent); font-size:1.25rem; font-weight:900; }
+    .media-platform-label { font-size:1.05rem; font-weight:850; }
+    .media-platform-handle { margin:24px 0 4px; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:850; letter-spacing:-.055em; }
+    .media-platform-description { margin:0; color:var(--muted); }
+    .media-format-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+    .media-format-links a { display:inline-flex; gap:8px; padding:7px 11px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:.8rem; font-weight:700; }
+    .media-format-links a:hover { border-color:var(--accent); color:var(--accent); }
+    .media-platform-action { display:inline-flex; gap:10px; align-items:center; margin-top:auto; padding-top:26px; color:var(--accent); font-weight:800; }
+    .media-platform-card--tiktok .media-platform-mark { background:#202020; color:#fff; }
+    .media-feed-section { padding-top:34px; }
+    .media-empty-state,.media-latest-panel { display:flex; align-items:flex-start; gap:20px; padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 82%,transparent); }
+    .media-empty-mark { flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; }
+    .media-empty-state h3 { margin:0; font-size:1.2rem; letter-spacing:-.03em; }
+    .media-empty-state p,.media-latest-panel p { max-width:760px; margin:8px 0 0; color:var(--muted); }
+    .media-latest-section { padding-top:12px; }
+    .media-latest-panel { display:block; }
+    .media-latest-panel > div { display:flex; align-items:center; gap:11px; }
+    .media-sync-indicator { width:9px; height:9px; border-radius:50%; background:var(--muted); }
+    .media-latest-panel p { margin-left:20px; }
+    @media (max-width:760px) {
+      .media-platform-grid { grid-template-columns:1fr; }
+      .media-hero-actions { align-items:stretch; flex-direction:column; max-width:290px; }
+      .media-empty-state { gap:14px; }
+    }
+    @media (prefers-reduced-motion:reduce) { .media-platform-card { transition:none; } }
+    :root[data-theme="dark"] .media-platform-card,:root[data-theme="dark"] .media-empty-state,:root[data-theme="dark"] .media-latest-panel { background:color-mix(in srgb,var(--surface) 86%,transparent); }
+  </style>
 </BaseLayout>
