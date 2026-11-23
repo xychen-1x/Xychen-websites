@@ -4,7 +4,7 @@
  */
 export const assets = {
   brandMark: "/assets/brand/xychen-mark.svg",
-  heroArtwork: "/assetsxychen-character.webp",
+  heroArtwork: "/assets/illustrations/xychen-hero.svg",
   sectionFeature: "/assets/banners/section-feature.svg",
   gridTexture: "/assets/backgrounds/grid-texture.svg",
   favicon: "/favicon.svg",
