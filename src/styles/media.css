@@ -1,0 +1,89 @@
+.media-hero {
+  background:
+    linear-gradient(110deg, rgb(18 39 24 / 76%), rgb(18 39 24 / 35%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+  border-bottom: 0;
+}
+.media-hero-inner { padding-block: clamp(78px, 10vw, 128px); color: #fff; }
+.media-hero .eyebrow,
+.media-hero .page-lead { color: #fff; }
+.media-hero h1 { max-width: 780px; color: #fff; }
+.media-hero h1 span { color: #D5F0A4; }
+.media-hero .page-lead { max-width: 640px; }
+.media-channel-button { margin-top: 28px; }
+.media-library-section { padding-top: 76px; }
+.media-format-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.media-format-card {
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 25px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow: var(--shadow-soft);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.media-format-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.media-format-index {
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 850;
+  letter-spacing: .12em;
+}
+.media-format-arrow {
+  position: absolute;
+  top: 21px;
+  right: 23px;
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+.media-format-card h2 {
+  margin: 54px 0 9px;
+  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+  line-height: 1.1;
+  letter-spacing: -.05em;
+}
+.media-format-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+.media-format-link {
+  margin-top: auto;
+  padding-top: 24px;
+  color: var(--accent);
+  font-size: .82rem;
+  font-weight: 800;
+}
+.media-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+.media-note > div { max-width: 680px; }
+.media-note h2 { margin: 0; font-size: clamp(1.65rem, 3.5vw, 2.5rem); line-height: 1.1; letter-spacing: -.055em; }
+.media-note p:last-child { margin: 12px 0 0; color: var(--muted); }
+.media-note .button { flex: 0 0 auto; }
+@media (max-width: 760px) {
+  .media-format-grid { grid-template-columns: 1fr; }
+  .media-format-card { min-height: 215px; }
+  .media-note { align-items: flex-start; flex-direction: column; }
+  .media-note .button { width: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .media-format-card { transition: none; }
+  .media-format-card:hover { transform: none; }
+}
+:root[data-theme="dark"] .media-format-card,
+:root[data-theme="dark"] .media-note {
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+}
