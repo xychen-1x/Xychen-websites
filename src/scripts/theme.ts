@@ -6,7 +6,7 @@ const label = document.querySelector<HTMLElement>("[data-theme-label]");
 function applyTheme(theme: "dark" | "light") {
   root.dataset.theme = theme;
   toggle?.setAttribute("aria-pressed", String(theme === "dark"));
-  toggle?.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+
   if (label) {
     label.textContent = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
   }
