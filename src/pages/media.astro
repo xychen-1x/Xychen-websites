@@ -14,32 +14,7 @@ const featuredYouTubeShorts = [
   { id: "rmLW6b0upuk", label: "YouTube Short 03" },
 ];
 
-const platforms = [
-  {
-    name: "YouTube",
-    handle: "@xychenxycz",
-    description: "Gameplay videos, Shorts, highlights, and streams.",
-    href: "https://www.youtube.com/@xychenxycz",
-    action: "Visit YouTube",
-    mark: "YT",
-    className: "youtube",
-    formats: [
-      { label: "Videos", href: "https://www.youtube.com/@xychenxycz/videos" },
-      { label: "Shorts", href: "https://www.youtube.com/@xychenxycz/shorts" },
-      { label: "Streams", href: "https://www.youtube.com/@xychenxycz/streams" },
-    ],
-  },
-  {
-    name: "TikTok",
-    handle: "@x1ychen",
-    description: "Short-form gameplay, clips, and quick updates.",
-    href: "https://www.tiktok.com/@x1ychen",
-    action: "Visit TikTok",
-    mark: "♪",
-    className: "tiktok",
-    formats: [],
-  },
-];
+
 ---
 
 <BaseLayout
@@ -65,7 +40,7 @@ const platforms = [
             <span class="creator-platform-arrow" aria-hidden="true">↗</span>
           </a>
           <a class="creator-platform-link creator-platform-link--tiktok" href="https://www.tiktok.com/@x1ychen" target="_blank" rel="noopener noreferrer">
-            <img src="https://cdn.simpleicons.org/tiktok/111111" alt="" width="22" height="22" loading="lazy" />
+            <img src="https://cdn.simpleicons.org/tiktok/25F4EE" alt="" width="22" height="22" loading="lazy" />
             <span><strong>TikTok</strong><small>@x1ychen</small></span>
             <span class="creator-platform-arrow" aria-hidden="true">↗</span>
           </a>
@@ -219,6 +194,15 @@ const platforms = [
         link.rel = "noopener noreferrer";
         link.setAttribute("aria-label", `Watch ${item.title} on YouTube`);
 
+        const brand = document.createElement("img");
+        brand.className = "media-latest-brand";
+        brand.src = "https://cdn.simpleicons.org/youtube/FFFFFF";
+        brand.alt = "YouTube";
+        brand.width = 18;
+        brand.height = 18;
+        brand.loading = "lazy";
+        link.append(brand);
+
         if (item.thumbnailUrl) {
           const image = document.createElement("img");
           image.src = item.thumbnailUrl;
@@ -360,7 +344,7 @@ const platforms = [
     .media-sync-time { font-size:.8rem; }
     .media-latest-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:22px; }
     .media-latest-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); }
-    .media-latest-thumb { display:block; aspect-ratio:16/9; overflow:hidden; background:var(--accent-soft); }
+    .media-latest-thumb { display:block; position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--accent-soft); }\n    .media-latest-brand { position:absolute; top:10px; left:10px; width:30px; height:30px; padding:6px; border-radius:9px; background:rgb(0 0 0 / 72%); object-fit:contain; z-index:1; }
     .media-latest-thumb img { display:block; width:100%; height:100%; object-fit:cover; }
     .media-latest-thumb > span { display:grid; width:100%; height:100%; place-items:center; color:var(--muted); font-weight:800; }
     .media-latest-card h3 { margin:14px 14px 0; font-size:.98rem; line-height:1.4; }
