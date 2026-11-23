@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { siteConfig } from "@config/site";
+---
+<BaseLayout
+  title="Community"
+  description="Visit the XYCHEN Discord community and find Xychen's official creator channels."
+>
+  <section class="community-hero">
+    <div class="container community-hero-inner">
+      <div class="community-hero-copy">
+        <p class="eyebrow">XYCHEN Community</p>
+        <h1>Find your <span>people.</span></h1>
+        <p class="page-lead">Join the Discord community or follow the official XYCHEN channels.</p>
+        <a class="button button-primary" href="https://discord.com/invite/xychen-server-1417846380432719915" target="_blank" rel="noopener noreferrer">Open Discord invite <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="section-block community-links-section">
+    <div class="container">
+      <div class="section-heading">
+        <div><p class="eyebrow">Official channels</p><h2>Follow XYCHEN</h2></div>
+        <p class="section-intro">These links lead to the creator profiles and community invite.</p>
+      </div>
+      <div class="community-social-grid">
+        {siteConfig.socials.filter((social) => social.label !== "GitHub").map((social) => (
+          <a class="community-social-card" href={social.href} target="_blank" rel="noopener noreferrer">
+            <span>{social.label}</span><span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section-block community-note-section">
+    <div class="container narrow-content">
+      <h2>What is available here?</h2>
+      <p>This page currently provides the official Discord invitation and creator channel links. Server-specific features, events, member counts, and video listings are not displayed unless they can be confirmed.</p>
+    </div>
+  </section>
+</BaseLayout>

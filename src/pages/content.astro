@@ -7,58 +7,29 @@ import { contentCategories } from "@config/content";
 const articles = (await getCollection("articles"))
   .filter((article) => article.data.publicationStatus === "published")
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
-
-const categoryCounts = Object.fromEntries(
-  contentCategories.map((category) => [
-    category.slug,
-    articles.filter((article) => article.data.category === category.slug).length,
-  ]),
-) as Record<(typeof contentCategories)[number]["slug"], number>;
 ---
 
-<BaseLayout
-  title="Content"
-  description="Browse published game guides, tips, discoveries, and updates from Xychen."
->
+<BaseLayout title="Gaming" description="Browse published game guides, tips, discoveries, and updates from Xychen.">
   <section class="page-hero content-library-hero">
     <div class="container">
-      <p class="eyebrow">Content library · {articles.length} published {articles.length === 1 ? "article" : "articles"}</p>
-      <h1>Information, <span>organized.</span></h1>
-      <p class="page-lead">
-        Game guides, useful details, discoveries, and updates — grouped by topic
-        and published with clear dates and source information.
-      </p>
+      <p class="eyebrow">Gaming library</p>
+      <h1>Explore the <span>game library.</span></h1>
+      <p class="page-lead">Browse published guides, discoveries, and game updates.</p>
     </div>
   </section>
 
-  <section class="section-block">
+  <section class="section-block gaming-category-section">
     <div class="container">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">Browse by topic</p>
-          <h2>Content categories</h2>
-        </div>
-        <p class="section-intro">
-          Choose a category to see its published articles. Categories without
-          published articles remain visible as the library grows.
-        </p>
+        <div><p class="eyebrow">Browse by topic</p><h2>Categories</h2></div>
+        <p class="section-intro">Choose a topic to see its published articles.</p>
       </div>
-
       <div class="content-category-grid">
-        {contentCategories.map((category, index) => (
-          <a
-            class="content-category-card"
-            href={`/content/category/${category.slug}/`}
-          >
-            <span class="content-category-index">
-              {String(index + 1).padStart(2, "0")} / CATEGORY
-            </span>
+        {contentCategories.map((category) => (
+          <a class="content-category-card gaming-image-card" href={`/content/category/${category.slug}/`}>
             <h2>{category.label}</h2>
             <p>{category.description}</p>
-            <span class="content-category-count">
-              {categoryCounts[category.slug]} published
-              <span aria-hidden="true">↗</span>
-            </span>
+            <span class="content-category-count">Browse <span aria-hidden="true">↗</span></span>
           </a>
         ))}
       </div>
@@ -68,30 +39,53 @@ const categoryCounts = Object.fromEntries(
   <section class="section-block content-latest-section">
     <div class="container">
       <div class="section-heading">
-        <div>
-          <p class="eyebrow">The library</p>
-          <h2>Latest content</h2>
-        </div>
-        <p class="section-intro">
-          Only published articles appear here. Drafts remain out of the public
-          website.
-        </p>
+        <div><p class="eyebrow">Published library</p><h2>Gaming content</h2></div>
       </div>
-
+      <div class="content-search">
+        <label for="content-search">Search published content</label>
+        <input id="content-search" type="search" placeholder="Search guides, seeds, mechanics, updates…" autocomplete="off">
+        <p class="content-search-status" aria-live="polite">Showing published articles</p>
+      </div>
       {articles.length > 0 ? (
-        <div class="content-grid">
+        <div class="content-grid" data-search-grid>
           {articles.map((article) => <ContentCard article={article} />)}
         </div>
       ) : (
-        <div class="content-empty-state">
-          <p class="eyebrow">Library is being prepared</p>
-          <h2>No articles published yet.</h2>
-          <p>
-            This section will show guides, tips, discoveries, and game updates
-            after they have been researched and approved for publication.
-          </p>
-        </div>
+        <div class="content-empty-state"><h2>No published articles yet.</h2><p>Articles will appear here after they are ready for publication.</p></div>
       )}
+      <p class="content-search-empty" data-search-empty hidden>No matching published articles. Try another search.</p>
     </div>
   </section>
+
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#content-search");
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-search-grid] .content-card"));
+    const status = document.querySelector<HTMLElement>(".content-search-status");
+    const empty = document.querySelector<HTMLElement>("[data-search-empty]");
+    const initialQuery = new URLSearchParams(window.location.search).get("q")?.trim() ?? "";
+
+    if (input && initialQuery) input.value = initialQuery;
+
+    function filterArticles() {
+      const query = input?.value.trim().toLocaleLowerCase() ?? "";
+      let visibleCount = 0;
+
+      for (const card of cards) {
+        const searchable = card.dataset.searchText ?? card.textContent ?? "";
+        const matches = searchable.toLocaleLowerCase().includes(query);
+        card.hidden = !matches;
+        if (matches) visibleCount += 1;
+      }
+
+      if (status) {
+        status.textContent = query
+          ? `Found ${visibleCount} of ${cards.length} published articles`
+          : `Showing all ${cards.length} published articles`;
+      }
+      if (empty) empty.hidden = visibleCount !== 0;
+    }
+
+    input?.addEventListener("input", filterArticles);
+    if (initialQuery) filterArticles();
+  </script>
 </BaseLayout>

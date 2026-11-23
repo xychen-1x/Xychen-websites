@@ -204,3 +204,51 @@
   .xy-button, .xy-pillar-card { transition: none; }
   .xy-button:hover, .xy-pillar-card:hover { transform: none; }
 }
+
+
+/* Home artwork refinements: keep the Wumpus illustration behind the community statement. */
+.xy-creator-note-inner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  background:
+    linear-gradient(90deg, rgb(19 36 22 / 78%), rgb(19 36 22 / 48%)),
+    url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
+}
+.xy-creator-note-inner > * { position: relative; z-index: 1; }
+.xy-creator-note-inner h2,
+.xy-creator-note-inner .xy-section-eyebrow,
+.xy-creator-note-inner > div > p:last-child { color: #fff; }
+.xy-creator-note-inner .xy-note-flower { display: none; }
+.xy-creator-note-inner .xy-button-secondary { border-color: rgb(255 255 255 / 55%); background: rgb(255 255 255 / 90%); color: #263B2A; }
+.xy-pillar-art-gaming {
+  background:
+    linear-gradient(180deg, rgb(20 38 25 / 12%), rgb(20 38 25 / 34%)),
+    url("/assets/backgrounds/community-dreamland.gif") center / cover no-repeat;
+}
+.xy-pillar-art-community {
+  background:
+    linear-gradient(180deg, rgb(20 38 25 / 8%), rgb(20 38 25 / 28%)),
+    url("/assets/backgrounds/078581ca5dc2d80d880b7669e212a723.jpg") center / cover no-repeat;
+}
+.xy-pillar-art-gaming .xy-art-sun,
+.xy-pillar-art-gaming .xy-art-island,
+.xy-pillar-art-gaming .xy-art-spark,
+.xy-pillar-art-community .xy-community-flower { display: none; }
+.xy-pillar-kicker { letter-spacing: .08em; }
+.xy-latest { background: transparent; border-color: transparent; }
+:root[data-theme="dark"] .xy-pillar-copy,
+:root[data-theme="dark"] .xy-article-card,
+:root[data-theme="dark"] .xy-empty-state {
+  color: var(--text);
+  background-color: color-mix(in srgb, var(--surface) 84%, transparent);
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .xy-pillar-copy h2,
+:root[data-theme="dark"] .xy-article-card h3,
+:root[data-theme="dark"] .xy-empty-state h3 { color: var(--text); }
+:root[data-theme="dark"] .xy-pillar-copy p,
+:root[data-theme="dark"] .xy-article-description,
+:root[data-theme="dark"] .xy-empty-state p { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .xy-hero { background-attachment: scroll; } }

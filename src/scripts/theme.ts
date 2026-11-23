@@ -1,14 +1,12 @@
 const storageKey = "xychen-theme";
 const root = document.documentElement;
 const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
-const icon = document.querySelector<HTMLElement>("[data-theme-icon]");
 const label = document.querySelector<HTMLElement>("[data-theme-label]");
 
 function applyTheme(theme: "dark" | "light") {
   root.dataset.theme = theme;
   toggle?.setAttribute("aria-pressed", String(theme === "dark"));
 
-  if (icon) icon.textContent = theme === "dark" ? "☼" : "☾";
   if (label) {
     label.textContent = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
   }
@@ -16,24 +14,19 @@ function applyTheme(theme: "dark" | "light") {
   try {
     localStorage.setItem(storageKey, theme);
   } catch {
-    // The theme still works for this page when storage is unavailable.
+    // Theme switching remains available for the current page.
   }
 }
 
 let initialTheme: "dark" | "light" = "light";
-
 try {
   const savedTheme = localStorage.getItem(storageKey);
-  if (savedTheme === "light" || savedTheme === "dark") {
-    initialTheme = savedTheme;
-  }
+  if (savedTheme === "light" || savedTheme === "dark") initialTheme = savedTheme;
 } catch {
-  // Use the default light woodland theme when browser storage is unavailable.
+  // Default to the light woodland theme.
 }
 
 applyTheme(initialTheme);
-
 toggle?.addEventListener("click", () => {
-  const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-  applyTheme(nextTheme);
+  applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
 });
