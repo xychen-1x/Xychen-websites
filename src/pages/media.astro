@@ -158,20 +158,170 @@ const platforms = [
     <div class="container">
       <div class="section-heading media-feed-heading">
         <div>
-          <p class="eyebrow">Across both platforms</p>
-          <h2 id="latest-title">Latest posts</h2>
+          <p class="eyebrow">YouTube channel</p>
+          <h2 id="latest-title">Latest uploads</h2>
         </div>
-        <p class="section-intro">New uploads will be listed here after the platform connections are configured.</p>
+        <p class="section-intro">Recent public uploads from @xychenxycz, refreshed once a day. View counts are snapshots from the last successful sync.</p>
       </div>
-      <div class="media-latest-panel">
-        <div>
+      <div class="media-latest-panel" id="youtube-latest" data-feed-url="/api/media">
+        <div class="media-latest-status" role="status" aria-live="polite">
           <span class="media-sync-indicator" aria-hidden="true"></span>
-          <strong>Automatic updates are not connected yet</strong>
+          <strong>Waiting for the first YouTube sync</strong>
         </div>
-        <p>The page will show the last successful sync time when the YouTube and TikTok integrations are available. No fake live status or estimated view counts will be shown.</p>
+        <p class="media-latest-message">The YouTube connection will appear here after its API key and private storage are configured.</p>
+        <p class="media-sync-time" id="youtube-sync-time"></p>
+        <div class="media-latest-grid" id="youtube-latest-grid"></div>
       </div>
     </div>
   </section>
+
+  <script>
+    type FeedItem = {
+      id: string;
+      title: string;
+      publishedAt: string;
+      thumbnailUrl: string | null;
+      url: string;
+      viewCount: number | null;
+    };
+
+    type FeedResponse = {
+      status: "ready" | "not-configured" | "pending-first-sync" | "unavailable";
+      lastSyncedAt: string | null;
+      items: FeedItem[];
+    };
+
+    const panel = document.querySelector<HTMLElement>("#youtube-latest");
+    const status = panel?.querySelector<HTMLElement>(".media-latest-status");
+    const message = panel?.querySelector<HTMLElement>(".media-latest-message");
+    const syncTime = panel?.querySelector<HTMLElement>("#youtube-sync-time");
+    const grid = panel?.querySelector<HTMLElement>("#youtube-latest-grid");
+
+    const setStatus = (heading: string, detail: string) => {
+      if (status) {
+        const strong = document.createElement("strong");
+        strong.textContent = heading;
+        status.replaceChildren(strong);
+      }
+      if (message) message.textContent = detail;
+    };
+
+    const formatDate = (value: string) => {
+      const date = new Date(value);
+      return Number.isNaN(date.getTime())
+        ? "Date unavailable"
+        : new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
+    };
+
+    const renderFeed = (items: FeedItem[]) => {
+      if (!grid) return;
+      grid.replaceChildren();
+
+      for (const item of items) {
+        const article = document.createElement("article");
+        article.className = "media-latest-card";
+
+        const link = document.createElement("a");
+        link.className = "media-latest-thumb";
+        link.href = item.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.setAttribute("aria-label", `Watch ${item.title} on YouTube`);
+
+        if (item.thumbnailUrl) {
+          const image = document.createElement("img");
+          image.src = item.thumbnailUrl;
+          image.alt = "";
+          image.loading = "lazy";
+          image.width = 480;
+          image.height = 360;
+          link.append(image);
+        } else {
+          const fallback = document.createElement("span");
+          fallback.textContent = "YouTube";
+          link.append(fallback);
+        }
+
+        const title = document.createElement("h3");
+        const titleLink = document.createElement("a");
+        titleLink.href = item.url;
+        titleLink.target = "_blank";
+        titleLink.rel = "noopener noreferrer";
+        titleLink.textContent = item.title;
+        title.append(titleLink);
+
+        const meta = document.createElement("p");
+        meta.className = "media-latest-meta";
+        const viewLabel = item.viewCount === null
+          ? "Views unavailable"
+          : `${new Intl.NumberFormat().format(item.viewCount)} views at last sync`;
+        meta.textContent = `${formatDate(item.publishedAt)} · ${viewLabel}`;
+
+        article.append(link, title, meta);
+        grid.append(article);
+      }
+    };
+
+    const loadYouTubeFeed = async () => {
+      if (!panel || !status || !message || !grid) return;
+
+      try {
+        const response = await fetch(panel.dataset.feedUrl ?? "/api/media", {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error("Feed request failed");
+
+        const feed = (await response.json()) as FeedResponse;
+
+        if (feed.status === "not-configured") {
+          setStatus(
+            "YouTube sync is not configured yet",
+            "The API key and private storage still need to be connected in Vercel.",
+          );
+          return;
+        }
+
+        if (feed.status === "pending-first-sync") {
+          setStatus(
+            "Waiting for the first YouTube sync",
+            "The connection is configured, but the first daily snapshot has not been saved yet.",
+          );
+          return;
+        }
+
+        if (feed.status !== "ready") {
+          setStatus(
+            "Latest uploads are temporarily unavailable",
+            "The saved feed could not be loaded. The selected Shorts above are still available.",
+          );
+          return;
+        }
+
+        if (feed.lastSyncedAt && syncTime) {
+          syncTime.textContent = `Last successful sync: ${formatDate(feed.lastSyncedAt)}. Counts are not live.`;
+        }
+
+        if (!feed.items.length) {
+          setStatus(
+            "No public uploads were returned",
+            "The YouTube API did not return public uploads for this channel at the last sync.",
+          );
+          return;
+        }
+
+        setStatus("Latest uploads from YouTube", `${feed.items.length} recent public uploads.`);
+        renderFeed(feed.items);
+      } catch {
+        setStatus(
+          "Latest uploads could not be loaded",
+          "Please try again later. The selected Shorts above remain available.",
+        );
+      }
+    };
+
+    void loadYouTubeFeed();
+  </script>
+
   <style>
     .media-hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
     .media-hero-secondary { border-color:rgb(255 255 255 / 45%); background:rgb(255 255 255 / 12%); color:#fff; }
@@ -188,7 +338,7 @@ const platforms = [
     .media-platform-action { display:inline-flex; gap:10px; align-items:center; margin-top:auto; padding-top:26px; color:var(--accent); font-weight:800; }
     .media-platform-card--tiktok .media-platform-mark { background:#202020; color:#fff; }
     .media-feed-section { padding-top:34px; }
-    .media-empty-state,.media-latest-panel { display:flex; align-items:flex-start; gap:20px; padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 82%,transparent); }
+    .media-latest-panel { padding:clamp(22px,4vw,34px); border:1px solid var(--line); border-radius:var(--radius-card); background:color-mix(in srgb,var(--surface) 82%,transparent); }
     .media-featured-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
     .media-featured-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); box-shadow:var(--shadow-soft); }
     .media-featured-art { min-height:150px; display:flex; align-items:center; justify-content:center; position:relative; background:linear-gradient(135deg,#18251d,#435d42); color:#fff; }
@@ -210,22 +360,28 @@ const platforms = [
     .media-short-embed iframe { display:block; width:100%; height:100%; border:0; }
     .media-short-caption { display:flex; flex-direction:column; gap:8px; padding:14px; }
     .media-short-caption strong { font-size:.9rem; }
-    .media-empty-mark { flex:0 0 42px; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; }
-    .media-empty-state h3 { margin:0; font-size:1.2rem; letter-spacing:-.03em; }
-    .media-empty-state p,.media-latest-panel p { max-width:760px; margin:8px 0 0; color:var(--muted); }
+    .media-short-caption a { color:var(--accent); font-size:.82rem; font-weight:800; }
+    .media-featured-note { margin:14px 0 0; color:var(--muted); font-size:.84rem; }
     .media-latest-section { padding-top:12px; }
-    .media-latest-panel { display:block; }
-    .media-latest-panel > div { display:flex; align-items:center; gap:11px; }
-    .media-sync-indicator { width:9px; height:9px; border-radius:50%; background:var(--muted); }
-    .media-latest-panel p { margin-left:20px; }
+    .media-latest-status { display:flex; align-items:center; gap:11px; }
+    .media-sync-indicator { width:9px; height:9px; flex:0 0 9px; border-radius:50%; background:var(--muted); }
+    .media-latest-message,.media-sync-time { margin:8px 0 0; color:var(--muted); }
+    .media-sync-time { font-size:.8rem; }
+    .media-latest-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:22px; }
+    .media-latest-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); }
+    .media-latest-thumb { display:block; aspect-ratio:16/9; overflow:hidden; background:var(--accent-soft); }
+    .media-latest-thumb img { display:block; width:100%; height:100%; object-fit:cover; }
+    .media-latest-thumb > span { display:grid; width:100%; height:100%; place-items:center; color:var(--muted); font-weight:800; }
+    .media-latest-card h3 { margin:14px 14px 0; font-size:.98rem; line-height:1.4; }
+    .media-latest-card h3 a { color:inherit; }
+    .media-latest-meta { margin:8px 14px 14px; color:var(--muted); font-size:.78rem; line-height:1.5; }
     @media (max-width:760px) {
-      .media-platform-grid,.media-featured-grid,.media-shorts-grid { grid-template-columns:1fr; }
-      .media-short-card { max-width:340px; margin-inline:auto; width:100%; }
+      .media-platform-grid,.media-featured-grid,.media-shorts-grid,.media-latest-grid { grid-template-columns:1fr; }
+      .media-short-card,.media-latest-card { max-width:340px; margin-inline:auto; width:100%; }
       .media-subheading { align-items:flex-start; flex-direction:column; }
       .media-hero-actions { align-items:stretch; flex-direction:column; max-width:290px; }
-      .media-empty-state { gap:14px; }
     }
     @media (prefers-reduced-motion:reduce) { .media-platform-card { transition:none; } }
-    :root[data-theme="dark"] .media-platform-card,:root[data-theme="dark"] .media-empty-state,:root[data-theme="dark"] .media-latest-panel { background:color-mix(in srgb,var(--surface) 86%,transparent); }
+    :root[data-theme="dark"] .media-platform-card,:root[data-theme="dark"] .media-latest-panel { background:color-mix(in srgb,var(--surface) 86%,transparent); }
   </style>
 </BaseLayout>
