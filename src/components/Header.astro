@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
       <button class="icon-control search-control" type="button" data-search-open aria-label="Open site search" title="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"></circle><path d="m16 16 4.2 4.2"></path></svg>
       </button>
-      <button class="icon-control theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false" title="Change theme">
+      <button class="icon-control theme-toggle" type="button" data-theme-toggle aria-pressed="false" title="Change theme">
         <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.7"></circle><path d="M12 2.2v2.1M12 19.7v2.1M4.1 4.1l1.5 1.5m12.8 12.8 1.5 1.5M2.2 12h2.1m15.4 0h2.1M4.1 19.9l1.5-1.5M18.4 5.6l1.5-1.5"></path></svg>
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 15.2A8.2 8.2 0 0 1 8.8 4.6 8.5 8.5 0 1 0 19.4 15.2Z"></path></svg>
         <span class="sr-only" data-theme-label>Switch to dark theme</span>
@@ -40,7 +40,7 @@ const currentPath = Astro.url.pathname;
       <input id="site-search-input" name="q" type="search" placeholder="Try a game, seed, guide, or update…" autocomplete="off">
       <button type="submit">Search</button>
     </div>
-    <p>Results include published articles and their available text.</p>
+    <p>Results match article titles, summaries, games, and tags.</p>
   </form>
 </dialog>
 <script>
@@ -52,6 +52,7 @@ const currentPath = Astro.url.pathname;
     button.addEventListener("click", () => {
       if (!dialog) return;
       activeSearchTrigger = button;
+      button.closest("details")?.removeAttribute("open");
       dialog.showModal();
       searchField?.focus();
     });
