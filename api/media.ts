@@ -17,7 +17,10 @@ async function handleRequest(request: Request): Promise<Response> {
     return json({ error: "Method not allowed." }, 405);
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const hasBlobConnection = Boolean(
+    process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN,
+  );
+  if (!hasBlobConnection) {
     return json({
       status: "not-configured",
       lastSyncedAt: null,
