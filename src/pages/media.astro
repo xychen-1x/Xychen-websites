@@ -211,7 +211,7 @@ const featuredYouTubeShorts = [
           ? "Subscriber count hidden"
           : channel.subscriberCount === null
             ? "Subscriber count unavailable"
-            : `${new Intl.NumberFormat().format(channel.subscriberCount)} subscribers`;
+            : `${new Intl.NumberFormat(undefined, { notation: "compact", maximumSignificantDigits: 3 }).format(channel.subscriberCount)} subscribers`;
       }
     };
 
@@ -502,7 +502,7 @@ const featuredYouTubeShorts = [
     .creator-platform-link small { color:var(--muted); font-size:.78rem; }
     .creator-platform-arrow { margin-left:auto; color:var(--muted); }
     .media-content-intro { padding-top:clamp(30px,5vw,52px); padding-bottom:8px; }
-    .media-featured-art { min-height:130px; position:relative; overflow:hidden; }
+    .media-featured-art { aspect-ratio:9/16; min-height:0; position:relative; overflow:hidden; background:#111; }
     .media-featured-art img { display:block; width:100%; height:100%; object-fit:cover; }
     .media-featured-art--playing { aspect-ratio:9/16; min-height:0; background:#111; }
     .media-featured-art--playing iframe { display:block; width:100%; height:100%; min-height:420px; border:0; }
