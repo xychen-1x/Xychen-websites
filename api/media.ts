@@ -43,6 +43,7 @@ async function handleRequest(request: Request): Promise<Response> {
       status: "ready",
       platform: feed.platform,
       channelHandle: feed.channelHandle,
+      channel: feed.channel ?? null,
       lastSyncedAt: feed.lastSyncedAt,
       items: Array.isArray(feed.items) ? feed.items : [],
     });

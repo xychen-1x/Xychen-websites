@@ -11,6 +11,15 @@ type YouTubeListResponse<T> = {
 };
 
 type ChannelItem = {
+  snippet?: {
+    title?: string;
+    customUrl?: string;
+    thumbnails?: Record<string, { url?: string }>;
+  };
+  statistics?: {
+    subscriberCount?: string;
+    hiddenSubscriberCount?: boolean;
+  };
   contentDetails?: {
     relatedPlaylists?: { uploads?: string };
   };
@@ -45,6 +54,13 @@ export type YouTubeFeedItem = {
 export type YouTubeFeed = {
   platform: "youtube";
   channelHandle: string;
+  channel: {
+    title: string;
+    url: string;
+    thumbnailUrl: string | null;
+    subscriberCount: number | null;
+    hiddenSubscriberCount: boolean;
+  };
   lastSyncedAt: string;
   items: YouTubeFeedItem[];
 };
@@ -92,13 +108,14 @@ export async function syncYouTubeFeed(): Promise<YouTubeFeed> {
 
   const channelResponse = await youtubeGet<ChannelItem>(
     "channels",
-    { part: "contentDetails", forHandle: CHANNEL_HANDLE },
+    { part: "snippet,statistics,contentDetails", forHandle: CHANNEL_HANDLE },
     apiKey,
   );
+  const channelItem = channelResponse.items?.[0];
   const uploadsPlaylistId =
-    channelResponse.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+    channelItem?.contentDetails?.relatedPlaylists?.uploads;
 
-  if (!uploadsPlaylistId) {
+  if (!channelItem || !uploadsPlaylistId) {
     throw new Error("The configured YouTube channel or uploads playlist was not found.");
   }
 
@@ -153,9 +170,28 @@ export async function syncYouTubeFeed(): Promise<YouTubeFeed> {
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
     );
 
+  const rawSubscriberCount = channelItem.statistics?.subscriberCount;
+  const parsedSubscriberCount =
+    rawSubscriberCount === undefined ? null : Number(rawSubscriberCount);
+  const hiddenSubscriberCount = Boolean(
+    channelItem.statistics?.hiddenSubscriberCount,
+  );
+
   const feed: YouTubeFeed = {
     platform: "youtube",
     channelHandle: CHANNEL_HANDLE,
+    channel: {
+      title: channelItem.snippet?.title?.trim() || "Xychen",
+      url: `https://www.youtube.com/${CHANNEL_HANDLE}`,
+      thumbnailUrl: selectThumbnail(channelItem.snippet?.thumbnails),
+      subscriberCount:
+        !hiddenSubscriberCount &&
+        parsedSubscriberCount !== null &&
+        Number.isSafeInteger(parsedSubscriberCount)
+          ? parsedSubscriberCount
+          : null,
+      hiddenSubscriberCount,
+    },
     lastSyncedAt: new Date().toISOString(),
     items,
   };

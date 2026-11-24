@@ -2,12 +2,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "@styles/media.css";
 
-const featuredTikToks = [
-  { label: "Featured TikTok 01", href: "https://vt.tiktok.com/ZSsLALB2v/" },
-  { label: "Featured TikTok 02", href: "https://vt.tiktok.com/ZSsLSgN91/" },
-  { label: "Featured TikTok 03", href: "https://vt.tiktok.com/ZSsLSaqhS/" },
-];
-
 const featuredYouTubeShorts = [
   { id: "mJ4sNqUdTQQ", label: "YouTube Short 01" },
   { id: "QLzWryv1i3E", label: "YouTube Short 02" },
@@ -34,9 +28,9 @@ const featuredYouTubeShorts = [
           </div>
         </div>
         <div class="creator-profile-platforms" aria-label="Xychen's social accounts">
-          <a class="creator-platform-link creator-platform-link--youtube" href="https://www.youtube.com/@xychenxycz" target="_blank" rel="noopener noreferrer">
-            <img src="https://cdn.simpleicons.org/youtube/FF0033" alt="" width="22" height="22" loading="lazy" />
-            <span><strong>YouTube</strong><small>@xychenxycz</small></span>
+          <a class="creator-platform-link creator-platform-link--youtube" id="youtube-profile-link" href="https://www.youtube.com/@xychenxycz" target="_blank" rel="noopener noreferrer">
+            <img id="youtube-channel-avatar" src="https://cdn.simpleicons.org/youtube/FF0033" alt="" width="22" height="22" loading="lazy" />
+            <span><strong id="youtube-channel-title">YouTube</strong><small id="youtube-channel-handle">@xychenxycz</small><small id="youtube-subscriber-count">Channel profile</small></span>
             <span class="creator-platform-arrow" aria-hidden="true">↗</span>
           </a>
           <a class="creator-platform-link creator-platform-link--tiktok" href="https://www.tiktok.com/@x1ychen" target="_blank" rel="noopener noreferrer">
@@ -46,6 +40,18 @@ const featuredYouTubeShorts = [
           </a>
         </div>
       </article>
+      <div class="creator-tiktok-embed" aria-label="TikTok creator profile">
+        <p class="eyebrow">TIKTOK CREATOR PROFILE</p>
+        <blockquote
+          class="tiktok-embed"
+          cite="https://www.tiktok.com/@x1ychen"
+          data-unique-id="x1ychen"
+          data-embed-type="creator"
+          style="max-width: 720px; min-width: 288px;"
+        >
+          <section><a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@x1ychen?refer=creator_embed">@x1ychen</a></section>
+        </blockquote>
+      </div>
     </div>
   </section>
 
@@ -70,22 +76,8 @@ const featuredYouTubeShorts = [
         </div>
         <p class="section-intro">A shortlist of my videos. Popularity labels and view counts will only appear when verified platform data is available.</p>
       </div>
-      <div class="media-featured-grid">
-        {featuredTikToks.map((video) => (
-          <article class="media-featured-card">
-            <div class="media-featured-art" aria-hidden="true">
-              <span>♪</span>
-              <small>TIKTOK</small>
-            </div>
-            <div class="media-featured-content">
-              <p class="media-featured-platform">My TikTok upload</p>
-              <h3>{video.label}</h3>
-              <a href={video.href} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.label} on TikTok`}>
-                Watch on TikTok <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </article>
-        ))}
+      <div class="media-featured-grid" id="tiktok-featured-grid" aria-live="polite">
+        <p class="media-featured-note">Loading selected TikTok videos…</p>
       </div>
       <div class="media-youtube-shorts">
         <div class="media-subheading">
@@ -151,9 +143,27 @@ const featuredYouTubeShorts = [
       viewCount: number | null;
     };
 
+    type YouTubeChannel = {
+      title: string;
+      url: string;
+      thumbnailUrl: string | null;
+      subscriberCount: number | null;
+      hiddenSubscriberCount: boolean;
+    };
+
+    type TikTokItem = {
+      label: string;
+      url: string;
+      title: string;
+      authorName: string;
+      thumbnailUrl: string | null;
+      embedUrl: string | null;
+    };
+
     type FeedResponse = {
       status: "ready" | "not-configured" | "pending-first-sync" | "unavailable";
       lastSyncedAt: string | null;
+      channel?: YouTubeChannel | null;
       items: FeedItem[];
     };
 
@@ -162,6 +172,7 @@ const featuredYouTubeShorts = [
     const message = panel?.querySelector<HTMLElement>(".media-latest-message");
     const syncTime = panel?.querySelector<HTMLElement>("#youtube-sync-time");
     const grid = panel?.querySelector<HTMLElement>("#youtube-latest-grid");
+    const tiktokGrid = document.querySelector<HTMLElement>("#tiktok-featured-grid");
 
     const setStatus = (heading: string, detail: string) => {
       if (status) {
@@ -177,6 +188,118 @@ const featuredYouTubeShorts = [
       return Number.isNaN(date.getTime())
         ? "Date unavailable"
         : new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
+    };
+
+    const renderYouTubeChannel = (channel: YouTubeChannel | null | undefined) => {
+      if (!channel) return;
+
+      const profileLink = document.querySelector<HTMLAnchorElement>("#youtube-profile-link");
+      const avatar = document.querySelector<HTMLImageElement>("#youtube-channel-avatar");
+      const title = document.querySelector<HTMLElement>("#youtube-channel-title");
+      const handle = document.querySelector<HTMLElement>("#youtube-channel-handle");
+      const subscribers = document.querySelector<HTMLElement>("#youtube-subscriber-count");
+
+      if (profileLink) profileLink.href = channel.url;
+      if (title) title.textContent = channel.title;
+      if (handle) handle.textContent = "@xychenxycz";
+      if (avatar && channel.thumbnailUrl) {
+        avatar.src = channel.thumbnailUrl;
+        avatar.alt = `${channel.title} channel avatar`;
+      }
+      if (subscribers) {
+        subscribers.textContent = channel.hiddenSubscriberCount
+          ? "Subscriber count hidden"
+          : channel.subscriberCount === null
+            ? "Subscriber count unavailable"
+            : `${new Intl.NumberFormat(undefined, { notation: "compact", maximumSignificantDigits: 3 }).format(channel.subscriberCount)} subscribers`;
+      }
+    };
+
+    const renderTikTokFeed = (items: TikTokItem[]) => {
+      if (!tiktokGrid) return;
+      tiktokGrid.replaceChildren();
+
+      for (const item of items) {
+        const article = document.createElement("article");
+        article.className = "media-featured-card";
+
+        const art = document.createElement("div");
+        art.className = "media-featured-art";
+
+        if (item.thumbnailUrl) {
+          const image = document.createElement("img");
+          image.src = item.thumbnailUrl;
+          image.alt = "";
+          image.loading = "lazy";
+          image.width = 360;
+          image.height = 640;
+          art.append(image);
+        } else {
+          const fallback = document.createElement("span");
+          fallback.textContent = "TikTok";
+          art.append(fallback);
+        }
+
+        if (item.embedUrl) {
+          const play = document.createElement("button");
+          play.type = "button";
+          play.className = "media-tiktok-play";
+          play.textContent = "Play video";
+          play.addEventListener("click", () => {
+            const iframe = document.createElement("iframe");
+            iframe.src = item.embedUrl as string;
+            iframe.title = item.title;
+            iframe.loading = "lazy";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share";
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            iframe.allowFullscreen = true;
+            art.replaceChildren(iframe);
+            art.classList.add("media-featured-art--playing");
+          }, { once: true });
+          art.append(play);
+        }
+
+        const content = document.createElement("div");
+        content.className = "media-featured-content";
+
+        const platform = document.createElement("p");
+        platform.className = "media-featured-platform";
+        platform.textContent = `TikTok · ${item.authorName}`;
+
+        const heading = document.createElement("h3");
+        heading.textContent = item.title;
+
+        const link = document.createElement("a");
+        link.href = item.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Open on TikTok ↗";
+
+        content.append(platform, heading, link);
+        article.append(art, content);
+        tiktokGrid.append(article);
+      }
+    };
+
+    const loadTikTokFeed = async () => {
+      if (!tiktokGrid) return;
+      try {
+        const response = await fetch("/api/tiktok", {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error("TikTok preview request failed.");
+        const feed = (await response.json()) as { items?: TikTokItem[] };
+        if (!Array.isArray(feed.items) || feed.items.length === 0) {
+          throw new Error("No TikTok previews returned.");
+        }
+        renderTikTokFeed(feed.items);
+      } catch {
+        tiktokGrid.replaceChildren();
+        const fallback = document.createElement("p");
+        fallback.className = "media-featured-note";
+        fallback.textContent = "TikTok previews are temporarily unavailable. Use the profile and video links to open the original posts.";
+        tiktokGrid.append(fallback);
+      }
     };
 
     const renderFeed = (items: FeedItem[]) => {
@@ -247,6 +370,7 @@ const featuredYouTubeShorts = [
         if (!response.ok) throw new Error("Feed request failed");
 
         const feed = (await response.json()) as FeedResponse;
+        renderYouTubeChannel(feed.channel);
 
         if (feed.status === "not-configured") {
           setStatus(
@@ -294,8 +418,10 @@ const featuredYouTubeShorts = [
       }
     };
 
+    void loadTikTokFeed();
     void loadYouTubeFeed();
   </script>
+  <script async src="https://www.tiktok.com/embed.js"></script>
 
   <style>
     .media-hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
@@ -344,7 +470,8 @@ const featuredYouTubeShorts = [
     .media-sync-time { font-size:.8rem; }
     .media-latest-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:22px; }
     .media-latest-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); }
-    .media-latest-thumb { display:block; position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--accent-soft); }\n    .media-latest-brand { position:absolute; top:10px; left:10px; width:30px; height:30px; padding:6px; border-radius:9px; background:rgb(0 0 0 / 72%); object-fit:contain; z-index:1; }
+    .media-latest-thumb { display:block; position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--accent-soft); }
+    .media-latest-brand { position:absolute; top:10px; left:10px; width:30px; height:30px; padding:6px; border-radius:9px; background:rgb(0 0 0 / 72%); object-fit:contain; z-index:1; }
     .media-latest-thumb img { display:block; width:100%; height:100%; object-fit:cover; }
     .media-latest-thumb > span { display:grid; width:100%; height:100%; place-items:center; color:var(--muted); font-weight:800; }
     .media-latest-card h3 { margin:14px 14px 0; font-size:.98rem; line-height:1.4; }
@@ -375,8 +502,14 @@ const featuredYouTubeShorts = [
     .creator-platform-link small { color:var(--muted); font-size:.78rem; }
     .creator-platform-arrow { margin-left:auto; color:var(--muted); }
     .media-content-intro { padding-top:clamp(30px,5vw,52px); padding-bottom:8px; }
-    .media-featured-art { min-height:130px; }
-    .media-featured-art img { display:block; object-fit:contain; }
+    .media-featured-art { aspect-ratio:9/16; min-height:0; position:relative; overflow:hidden; background:#111; }
+    .media-featured-art img { display:block; width:100%; height:100%; object-fit:cover; }
+    .media-featured-art--playing { aspect-ratio:9/16; min-height:0; background:#111; }
+    .media-featured-art--playing iframe { display:block; width:100%; height:100%; min-height:420px; border:0; }
+    .media-tiktok-play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); padding:10px 15px; border:1px solid rgb(255 255 255 / 55%); border-radius:999px; background:rgb(0 0 0 / 78%); color:#fff; font:inherit; font-size:.82rem; font-weight:800; cursor:pointer; }
+    .creator-tiktok-embed { max-width:720px; margin:24px auto 0; padding:18px; border:1px solid var(--line); border-radius:var(--radius-card); background:var(--surface); }
+    .creator-tiktok-embed > .eyebrow { margin:0 0 12px; }
+    .creator-tiktok-embed blockquote { margin:0 auto; }
     .media-short-platform { display:flex; align-items:center; gap:8px; }
     .media-short-platform img { object-fit:contain; }
     .media-featured-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
